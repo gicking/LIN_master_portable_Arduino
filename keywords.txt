@@ -1,0 +1,61 @@
+###############################################
+# Syntax coloring Map For LIN Master library
+###############################################
+
+###################################
+# Classes and Datatypes (KEYWORD1)
+###################################
+
+# instances
+LIN_Master_HardwareSerial	KEYWORD1
+LIN_Master_SoftwareSerial	KEYWORD1
+LIN_Master_HardwareSerial_ESP8266	KEYWORD1
+LIN_Master_HardwareSerial_ESP32	KEYWORD1
+
+
+###################################
+# Methods and Functions (KEYWORD2)
+###################################
+
+# class variables
+nameLIN				KEYWORD2
+
+# class methods
+begin				KEYWORD2
+end				KEYWORD2
+resetStateMachine		KEYWORD2
+getState			KEYWORD2
+resetError			KEYWORD2
+getError			KEYWORD2
+getFrame			KEYWORD2
+sendMasterRequest		KEYWORD2
+sendMasterRequestBlocking	KEYWORD2
+receiveSlaveResponse		KEYWORD2
+receiveSlaveResponseBlocking	KEYWORD2
+handler				KEYWORD2
+
+
+###################################
+# Constants (LITERAL1)
+###################################
+
+LIN_V1				LITERAL1
+LIN_V2				LITERAL1
+
+MASTER_REQUEST			LITERAL1
+SLAVE_RESPONSE			LITERAL1
+
+STATE_OFF			LITERAL1
+STATE_IDLE			LITERAL1
+STATE_BREAK			LITERAL1
+STATE_BODY			LITERAL1
+STATE_DONE			LITERAL1
+
+NO_ERROR			LITERAL1
+ERROR_STATE			LITERAL1
+ERROR_ECHO			LITERAL1
+ERROR_TIMEOUT			LITERAL1
+ERROR_CHK			LITERAL1
+ERROR_MISC			LITERAL1
+
+##################### END #####################
