@@ -25,5 +25,6 @@ The class structure is very flexible and aims at supporting different Serial int
 **Notes:**
   - The sender state machine relies on reading back its 1-wire echo. If no LIN or K-Line transceiver is used, connect Rx&Tx (only on same device!)
   - for background operation, the `handler()` method must be called at least every 1ms, especially after initiating a frame
+  - For SoftwareSerial on ESP32 install [ESPSoftwareSerial](https://github.com/plerup/espsoftwareserial) and uncomment "*defined(ARDUINO_ARCH_ESP32)*" at top of *src/LIN_master_SoftwareSerial.cpp*
 
 Have fun!, Georg
