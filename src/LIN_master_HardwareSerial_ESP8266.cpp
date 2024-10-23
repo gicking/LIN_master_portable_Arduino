@@ -24,8 +24,8 @@
 LIN_Master::state_t LIN_Master_HardwareSerial_ESP8266::_sendBreak(void)
 {
   // print debug message
-  #if defined(LIN_DEBUG_SERIAL) && (LIN_DEBUG_LEVEL >= 2)
-    LIN_DEBUG_SERIAL.println("LIN_Master_HardwareSerial::_sendBreak()");
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
+    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_HardwareSerial::_sendBreak()");
   #endif
   
   // if state is wrong, exit immediately
@@ -65,8 +65,8 @@ LIN_Master::state_t LIN_Master_HardwareSerial_ESP8266::_sendBreak(void)
 LIN_Master::state_t LIN_Master_HardwareSerial_ESP8266::_sendFrame(void)
 {
   // print debug message
-  #if defined(LIN_DEBUG_SERIAL) && (LIN_DEBUG_LEVEL >= 2)
-    LIN_DEBUG_SERIAL.println("LIN_Master_HardwareSerial::_sendFrame()");
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
+    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_HardwareSerial::_sendFrame()");
   #endif
     
   // if state is wrong, exit immediately

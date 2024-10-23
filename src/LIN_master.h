@@ -17,10 +17,10 @@
   GLOBAL DEFINES
 -----------------------------------------------------------------------------*/
 
-#define BUFLEN_NAME        30           //!< max. length of node name
+#define LIN_MASTER_BUFLEN_NAME        30           //!< max. length of node name
 
-//#define LIN_DEBUG_SERIAL   Serial       //!< Serial interface used for debug output
-//#define LIN_DEBUG_LEVEL    2            //!< Debug level (0=no output, 1=error msg, 2=sent/received bytes)
+//#define LIN_MASTER_DEBUG_SERIAL   Serial       //!< Serial interface used for debug output
+//#define LIN_MASTER_DEBUG_LEVEL    2            //!< Debug level (0=no output, 1=error msg, 2=sent/received bytes)
 
 
 /*-----------------------------------------------------------------------------
@@ -87,6 +87,7 @@ class LIN_Master
   protected:
 
     // node properties
+    Stream                *pSerial;               //!< pointer to serial I/F
     uint16_t              baudrate;               //!< communication baudrate [Baud]
     LIN_Master::state_t   state;                  //!< status of LIN state machine
     LIN_Master::error_t   error;                  //!< error state. Is latched until cleared
@@ -107,7 +108,7 @@ class LIN_Master
   // PUBLIC VARIABLES
   public:
 
-    char                  nameLIN[BUFLEN_NAME];   //!< LIN node name, e.g. for debug
+    char                  nameLIN[LIN_MASTER_BUFLEN_NAME];    //!< LIN node name, e.g. for debug
 
 
   // PROTECTED METHODS

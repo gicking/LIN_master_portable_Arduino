@@ -86,21 +86,21 @@ uint8_t LIN_Master::_calculateChecksum(uint8_t NumData, uint8_t Data[])
 LIN_Master::error_t LIN_Master::_checkFrame(void)
 {
   // print debug message
-  #if defined(LIN_DEBUG_SERIAL) && (LIN_DEBUG_LEVEL >= 2)
-    LIN_DEBUG_SERIAL.println("LIN_Master::_receiveFrame()");
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
+    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master::_receiveFrame()");
 
     // print data to check
-    LIN_DEBUG_SERIAL.print('\t');
+    LIN_MASTER_DEBUG_SERIAL.print('\t');
     for (uint8_t i=0; i<this->lenTx; i++)
     {
-      LIN_DEBUG_SERIAL.print((int) i);
-      LIN_DEBUG_SERIAL.print('\t');
-      LIN_DEBUG_SERIAL.print(this->bufTx[i]);
-      LIN_DEBUG_SERIAL.print('\t');
-      LIN_DEBUG_SERIAL.print(this->bufRx[i]);
-      LIN_DEBUG_SERIAL.println();
+      LIN_MASTER_DEBUG_SERIAL.print((int) i);
+      LIN_MASTER_DEBUG_SERIAL.print('\t');
+      LIN_MASTER_DEBUG_SERIAL.print(this->bufTx[i]);
+      LIN_MASTER_DEBUG_SERIAL.print('\t');
+      LIN_MASTER_DEBUG_SERIAL.print(this->bufRx[i]);
+      LIN_MASTER_DEBUG_SERIAL.println();
     }
-    LIN_DEBUG_SERIAL.println();
+    LIN_MASTER_DEBUG_SERIAL.println();
 
   #endif
 
@@ -129,8 +129,8 @@ LIN_Master::error_t LIN_Master::_checkFrame(void)
 LIN_Master::state_t LIN_Master::_sendBreak(void)
 {
   // print debug message
-  #if defined(LIN_DEBUG_SERIAL) && (LIN_DEBUG_LEVEL >= 2)
-    LIN_DEBUG_SERIAL.println("LIN_Master::_sendBreak()");
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
+    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master::_sendBreak()");
   #endif
     
   // if bus is not idle, return immediately
@@ -159,8 +159,8 @@ LIN_Master::state_t LIN_Master::_sendBreak(void)
 LIN_Master::state_t LIN_Master::_sendFrame(void)
 {
   // print debug message
-  #if defined(LIN_DEBUG_SERIAL) && (LIN_DEBUG_LEVEL >= 2)
-    LIN_DEBUG_SERIAL.println("LIN_Master::_sendFrame()");
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
+    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master::_sendFrame()");
   #endif
 
   // progress state
@@ -181,8 +181,8 @@ LIN_Master::state_t LIN_Master::_sendFrame(void)
 LIN_Master::state_t LIN_Master::_receiveFrame(void)
 {
   // print debug message
-  #if defined(LIN_DEBUG_SERIAL) && (LIN_DEBUG_LEVEL >= 2)
-    LIN_DEBUG_SERIAL.println("LIN_Master::_receiveFrame()");
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
+    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master::_receiveFrame()");
   #endif
 
   // dummy: just progress state
@@ -208,7 +208,7 @@ LIN_Master::state_t LIN_Master::_receiveFrame(void)
 LIN_Master::LIN_Master(const char NameLIN[])
 {
   // store parameters in class variables
-  memcpy(this->nameLIN, NameLIN, BUFLEN_NAME);                // node name e.g. for debug
+  memcpy(this->nameLIN, NameLIN, LIN_MASTER_BUFLEN_NAME);     // node name e.g. for debug
 
   // initialize master node properties
   this->error = LIN_Master::NO_ERROR;                         // last LIN error. Is latched
