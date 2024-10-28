@@ -21,7 +21,7 @@ Supported (=successfully tested) boards:
 #define PIN_ERROR     32
 
 // pause between LIN frames
-#define LIN_PAUSE     100
+#define LIN_PAUSE     500
 
 // skip serial output (for time measurements)
 //#define SKIP_CONSOLE
@@ -94,7 +94,7 @@ void loop()
 
 
   // send/receive slave response frame and get result immediately
-  error = LIN.receiveSlaveResponseBlocking(LIN_Master::LIN_V2, 0x05, 8, Data);
+  error = LIN.receiveSlaveResponseBlocking(LIN_Master::LIN_V2, 0x05, 6, Data);
 
   // indicate status via pin
   digitalWrite(PIN_ERROR, error);

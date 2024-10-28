@@ -6,9 +6,6 @@
   \author   Georg Icking-Konert
 */
 
-// assert platform which supports SoftwareSerial. Note: ARDUINO_ARCH_ESP32 works, but requires library ESPSoftwareSerial
-#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_ESP8266) // || defined(ARDUINO_ARCH_ESP32) 
-
 // include files
 #include "Arduino.h"
 #include "LIN_master_SoftwareSerial.h"
@@ -221,8 +218,6 @@ void LIN_Master_SoftwareSerial::end()
   this->pSerial->end();
 
 } // LIN_Master_SoftwareSerial::end()
-
-#endif // ARDUINO_ARCH_AVR || ARDUINO_ARCH_ESP8266 || ARDUINO_ARCH_ESP32
 
 /*-----------------------------------------------------------------------------
     END OF FILE

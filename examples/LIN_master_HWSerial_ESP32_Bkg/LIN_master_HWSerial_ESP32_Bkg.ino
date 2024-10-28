@@ -61,7 +61,7 @@ void loop()
   uint8_t               Id;
   uint8_t               NumData;
   uint8_t               Data[8];
-  LIN_Master::error_t   error;
+  //LIN_Master::error_t   error;
   
 
   ///////////////
