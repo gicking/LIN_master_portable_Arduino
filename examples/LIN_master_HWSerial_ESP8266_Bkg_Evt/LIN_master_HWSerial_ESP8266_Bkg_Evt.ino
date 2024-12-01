@@ -65,11 +65,10 @@ void loop()
   static uint32_t       lastLINFrame = 0;
   static uint8_t        count = 0;
   uint8_t               Tx[4] = {0x01, 0x02, 0x03, 0x04};
-  LIN_Master::frame_t   Type;
+  LIN_Master_Base::frame_t   Type;
   uint8_t               Id;
   uint8_t               NumData;
   uint8_t               Data[8];
-  LIN_Master::error_t   error;
   
 
   ///////////////
@@ -83,7 +82,7 @@ void loop()
   ///////////////
   // check if LIN frame has finished
   ///////////////
-  if (LIN.getState() == LIN_Master::STATE_DONE)
+  if (LIN.getState() == LIN_Master_Base::STATE_DONE)
   {
     // get frame data
     LIN.getFrame(Type, Id, NumData, Data);
@@ -96,7 +95,7 @@ void loop()
       Serial1.print(millis());
       Serial1.print("\t");
       Serial1.print(LIN.nameLIN);
-      if (Type == LIN_Master::MASTER_REQUEST)
+      if (Type == LIN_Master_Base::MASTER_REQUEST)
       {
         Serial1.print(" request background: 0x");
         Serial1.println(LIN.getError(), HEX);
@@ -105,7 +104,7 @@ void loop()
       {
         Serial1.print(" reponse background: 0x");
         Serial1.println(LIN.getError(), HEX);
-        for (uint8_t i=0; (i < NumData) && (LIN.getError() == LIN_Master::NO_ERROR); i++)
+        for (uint8_t i=0; (i < NumData) && (LIN.getError() == LIN_Master_Base::NO_ERROR); i++)
         {
           Serial1.print("\t");        
           Serial1.print((int) i);
@@ -133,7 +132,7 @@ void loop()
     if (count == 0)
     {
       count++;
-      LIN.sendMasterRequest(LIN_Master::LIN_V2, 0x1B, 3, Tx);
+      LIN.sendMasterRequest(LIN_Master_Base::LIN_V2, 0x1B, 3, Tx);
     }
 
 
@@ -141,7 +140,7 @@ void loop()
     else
     {
       count = 0;
-      LIN.receiveSlaveResponse(LIN_Master::LIN_V2, 0x05, 8);
+      LIN.receiveSlaveResponse(LIN_Master_Base::LIN_V2, 0x05, 8);
     }
     
   } // SW scheduler

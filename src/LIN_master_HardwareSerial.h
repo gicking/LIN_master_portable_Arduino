@@ -18,8 +18,7 @@
 -----------------------------------------------------------------------------*/
 
 // include required libraries
-#include <Arduino.h>
-#include "LIN_master.h"
+#include <LIN_master_Base.h>
 
 
 /*-----------------------------------------------------------------------------
@@ -30,25 +29,19 @@
 
   \details LIN master node class via HardwareSerial.
 */
-class LIN_Master_HardwareSerial : public LIN_Master
+class LIN_Master_HardwareSerial : public LIN_Master_Base
 {
-  // PROTECTED VARIABLES
-  protected:
-
-    HardwareSerial        *pSerial;           //!< pointer to used HW serial
-
-
   // PROTECTED METHODS
   protected:
   
     /// @brief Send LIN break
-    LIN_Master::state_t _sendBreak(void);
+    LIN_Master_Base::state_t _sendBreak(void);
 
     /// @brief Send LIN bytes (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID)
-    LIN_Master::state_t _sendFrame(void);
+    LIN_Master_Base::state_t _sendFrame(void);
 
     /// @brief Read and check LIN frame
-    LIN_Master::state_t _receiveFrame(void);
+    LIN_Master_Base::state_t _receiveFrame(void);
 
 
   // PUBLIC METHODS

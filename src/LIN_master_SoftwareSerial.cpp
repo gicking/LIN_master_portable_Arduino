@@ -7,8 +7,7 @@
 */
 
 // include files
-#include "Arduino.h"
-#include "LIN_master_SoftwareSerial.h"
+#include <LIN_master_SoftwareSerial.h>
 
 
 /**
@@ -16,7 +15,7 @@
   \details    Send LIN break (=16bit low). Here blocking!
   \return     current state of LIN state machine
 */
-LIN_Master::state_t LIN_Master_SoftwareSerial::_sendBreak(void)
+LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendBreak(void)
 {
   // print debug message
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
@@ -24,10 +23,10 @@ LIN_Master::state_t LIN_Master_SoftwareSerial::_sendBreak(void)
   #endif
     
   // if state is wrong, exit immediately
-  if (this->state != LIN_Master::STATE_IDLE)
+  if (this->state != LIN_Master_Base::STATE_IDLE)
   {
-    this->error = (LIN_Master::error_t) ((int) this->error | (int) LIN_Master::ERROR_STATE);
-    this->state = LIN_Master::STATE_DONE;
+    this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
+    this->state = LIN_Master_Base::STATE_DONE;
     return this->state;
   }
 
@@ -38,7 +37,7 @@ LIN_Master::state_t LIN_Master_SoftwareSerial::_sendBreak(void)
   delayMicroseconds(100);           // stop bit + 1b delimiter
 
   // progress state
-  this->state = LIN_Master::STATE_BREAK;
+  this->state = LIN_Master_Base::STATE_BREAK;
 
   // return state
   return this->state;
@@ -52,7 +51,7 @@ LIN_Master::state_t LIN_Master_SoftwareSerial::_sendBreak(void)
   \details    Send LIN bytes (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID). Here blocking!
   \return     current state of LIN state machine
 */
-LIN_Master::state_t LIN_Master_SoftwareSerial::_sendFrame(void)
+LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendFrame(void)
 {
   // print debug message
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
@@ -60,29 +59,29 @@ LIN_Master::state_t LIN_Master_SoftwareSerial::_sendFrame(void)
   #endif
     
   // if state is wrong, exit immediately
-  if (this->state != LIN_Master::STATE_BREAK)
+  if (this->state != LIN_Master_Base::STATE_BREAK)
   {
-    this->error = (LIN_Master::error_t) ((int) this->error | (int) LIN_Master::ERROR_STATE);
-    this->state = LIN_Master::STATE_DONE;
+    this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
+    this->state = LIN_Master_Base::STATE_DONE;
     return this->state;
   }
 
   // restore nominal baudrate not required, use dingitalWrite() for BREAK
 
   // disable reception to skip LIN echo (disturbs SoftwareSerial)
-  this->pSerial->stopListening();
+  ((SoftwareSerial*) this->pSerial)->stopListening();
   
   // send rest of frame (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID). Is blocking and receive is disabled!
-  this->pSerial->write(this->bufTx+1, this->lenTx-1);
+  ((SoftwareSerial*) this->pSerial)->write(this->bufTx+1, this->lenTx-1);
 
   // re-enable reception (above write is blocking)
-  this->pSerial->listen();
+  ((SoftwareSerial*) this->pSerial)->listen();
 
   // Emulate LIN echo for sent bytes
   memcpy(this->bufRx, this->bufTx, this->lenTx);
 
   // progress state
-  this->state = LIN_Master::STATE_BODY;
+  this->state = LIN_Master_Base::STATE_BODY;
   
   // return state
   return this->state;
@@ -96,7 +95,7 @@ LIN_Master::state_t LIN_Master_SoftwareSerial::_sendFrame(void)
   \details    Receive and check LIN frame (request frame: check echo; response frame: check header echo & checksum). Here dummy!
   \return     current state of LIN state machine
 */
-LIN_Master::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
+LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
 {
   // print debug message
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
@@ -104,23 +103,23 @@ LIN_Master::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
   #endif
     
   // if state is wrong, exit immediately
-  if (this->state != LIN_Master::STATE_BODY)
+  if (this->state != LIN_Master_Base::STATE_BODY)
   {
-    this->error = (LIN_Master::error_t) ((int) this->error | (int) LIN_Master::ERROR_STATE);
-    this->state = LIN_Master::STATE_DONE;
+    this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
+    this->state = LIN_Master_Base::STATE_DONE;
     return this->state;
   }
 
   // master request frame
-  if (this-> type == LIN_Master::MASTER_REQUEST)
+  if (this-> type == LIN_Master_Base::MASTER_REQUEST)
   {
     // LIN echo already emulated in _sendFrame()
     
     // check frame for errors
-    this->error = (LIN_Master::error_t) ((int) this->error | (int) this->_checkFrame());
+    this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) this->_checkFrame());
 
     // progress state
-    this->state = LIN_Master::STATE_DONE;
+    this->state = LIN_Master_Base::STATE_DONE;
 
   } // master request frame
   
@@ -128,16 +127,16 @@ LIN_Master::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
   else
   {
     // slave response received (-lenTx because header already emulated in _sendFrame())
-    if (this->pSerial->available() >= this->lenRx - this->lenTx)
+    if (((SoftwareSerial*) this->pSerial)->available() >= this->lenRx - this->lenTx)
     {
       // store bytes in Rx
-      this->pSerial->readBytes(this->bufRx+3, this->lenRx - this->lenTx);
+      ((SoftwareSerial*) this->pSerial)->readBytes(this->bufRx+3, this->lenRx - this->lenTx);
 
       // check frame for errors
-      this->error = (LIN_Master::error_t) ((int) this->error | (int) this->_checkFrame());
+      this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) this->_checkFrame());
 
       // progress state
-      this->state = LIN_Master::STATE_DONE;
+      this->state = LIN_Master_Base::STATE_DONE;
 
     } // frame body received
   
@@ -147,8 +146,8 @@ LIN_Master::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
       // check for timeout
       if (micros() - this->timeStart > this->timeMax)
       {
-        this->error = (LIN_Master::error_t) ((int) this->error | (int) LIN_Master::ERROR_TIMEOUT);
-        this->state = LIN_Master::STATE_DONE;
+        this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_TIMEOUT);
+        this->state = LIN_Master_Base::STATE_DONE;
       }
 
     } // not enough bytes received
@@ -170,7 +169,7 @@ LIN_Master::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
   \param[in]  InverseLogic  use inverse logic
   \param[in]  NameLIN       LIN node name 
 */
-LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial(uint8_t PinRx, uint8_t PinTx, bool InverseLogic, const char NameLIN[]) : LIN_Master::LIN_Master(NameLIN)
+LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial(uint8_t PinRx, uint8_t PinTx, bool InverseLogic, const char NameLIN[]) : LIN_Master_Base::LIN_Master_Base(NameLIN)
 {
   // store pins used for SW serial
   this->pinRx = PinRx;
@@ -192,14 +191,14 @@ LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial(uint8_t PinRx, uint8_t PinT
 void LIN_Master_SoftwareSerial::begin(uint16_t Baudrate)
 {
   // call base class method
-  LIN_Master::begin(Baudrate);
+  LIN_Master_Base::begin(Baudrate);
   
   // calculate duration of BREAK
   this->durationBreak = this->timePerByte * 13 / 10;
   
   // open serial interface
-  this->pSerial->begin(this->baudrate);
-  while(!(*(this->pSerial)));
+  ((SoftwareSerial*) this->pSerial)->begin(this->baudrate);
+  while(!(*(((SoftwareSerial*) this->pSerial))));
 
 } // LIN_Master_SoftwareSerial::begin()
 
@@ -212,10 +211,10 @@ void LIN_Master_SoftwareSerial::begin(uint16_t Baudrate)
 void LIN_Master_SoftwareSerial::end()
 {
   // call base class method
-  LIN_Master::end();
+  LIN_Master_Base::end();
     
   // close serial interface
-  this->pSerial->end();
+  ((SoftwareSerial*) this->pSerial)->end();
 
 } // LIN_Master_SoftwareSerial::end()
 

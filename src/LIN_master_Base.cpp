@@ -1,5 +1,5 @@
 /**
-  \file     LIN_master.cpp
+  \file     LIN_master_Base.cpp
   \brief    Base class for LIN master emulation
   \details  This library provides the base class for a master node emulation of a LIN bus.
             For an explanation of the LIN bus and protocol e.g. see https://en.wikipedia.org/wiki/Local_Interconnect_Network
@@ -7,7 +7,7 @@
 */
 
 // include files
-#include "LIN_master.h"
+#include <LIN_master_Base.h>
 
 
 /**************************
@@ -19,7 +19,7 @@
   \details    Calculate protected frame ID as described in LIN2.0 spec "2.3.1.3 Protected identifier field"
   \return     Protected frame ID
 */
-uint8_t LIN_Master::_calculatePID(void)
+uint8_t LIN_Master_Base::_calculatePID(void)
 {
   uint8_t  pid;       // protected frame ID
   uint8_t  tmp;       // temporary variable for calculating parity bits
@@ -37,7 +37,7 @@ uint8_t LIN_Master::_calculatePID(void)
   // return protected ID
   return pid;
 
-} // LIN_Master::_calculatePID()
+} // LIN_Master_Base::_calculatePID()
 
 
 
@@ -48,7 +48,7 @@ uint8_t LIN_Master::_calculatePID(void)
   \param[in]  Data      frame data bytes
   \return     calculated checksum, depending on protocol version
 */
-uint8_t LIN_Master::_calculateChecksum(uint8_t NumData, uint8_t Data[])
+uint8_t LIN_Master_Base::_calculateChecksum(uint8_t NumData, uint8_t Data[])
 {
   uint8_t  pid;       // protected frame ID
   uint16_t chk=0x00;
@@ -74,7 +74,7 @@ uint8_t LIN_Master::_calculateChecksum(uint8_t NumData, uint8_t Data[])
   // return frame checksum
   return (uint8_t) chk;
 
-} // LIN_Master::_calculateChecksum()
+} // LIN_Master_Base::_calculateChecksum()
 
 
 
@@ -83,11 +83,11 @@ uint8_t LIN_Master::_calculateChecksum(uint8_t NumData, uint8_t Data[])
   \details    Check received LIN frame for echo and frame checksum
   \return     error check result
 */
-LIN_Master::error_t LIN_Master::_checkFrame(void)
+LIN_Master_Base::error_t LIN_Master_Base::_checkFrame(void)
 {
   // print debug message
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master::_receiveFrame()");
+    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_Base::_receiveFrame()");
 
     // print data to check
     LIN_MASTER_DEBUG_SERIAL.print('\t');
@@ -108,16 +108,16 @@ LIN_Master::error_t LIN_Master::_checkFrame(void)
   // check echo of sent bytes (frame or header). Exit on mismatch
   for (uint8_t i=0; i<this->lenTx; i++)
     if (this->bufTx[i] != this->bufRx[i])
-      return LIN_Master::ERROR_ECHO;
+      return LIN_Master_Base::ERROR_ECHO;
 
   // check frame checksum
   if (this->bufRx[lenRx-1] != _calculateChecksum(this->lenRx-4, this->bufRx+3))
-    return LIN_Master::ERROR_CHK;
+    return LIN_Master_Base::ERROR_CHK;
 
   // return result of check
-  return LIN_Master::NO_ERROR;
+  return LIN_Master_Base::NO_ERROR;
 
-} // LIN_Master::_checkFrame()
+} // LIN_Master_Base::_checkFrame()
 
 
 
@@ -126,28 +126,28 @@ LIN_Master::error_t LIN_Master::_checkFrame(void)
   \details    Send LIN break (=16bit low). Here dummy!
   \return     current state of LIN state machine
 */
-LIN_Master::state_t LIN_Master::_sendBreak(void)
+LIN_Master_Base::state_t LIN_Master_Base::_sendBreak(void)
 {
   // print debug message
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master::_sendBreak()");
+    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_Base::_sendBreak()");
   #endif
     
   // if bus is not idle, return immediately
-  if (this->state != LIN_Master::STATE_IDLE)
+  if (this->state != LIN_Master_Base::STATE_IDLE)
   {
-    this->error = (LIN_Master::error_t) ((int) this->error | (int) LIN_Master::ERROR_STATE);
-    this->state = LIN_Master::STATE_DONE;
+    this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
+    this->state = LIN_Master_Base::STATE_DONE;
     return this->state;
   }
 
   // progress state
-  this->state = LIN_Master::STATE_BREAK;
+  this->state = LIN_Master_Base::STATE_BREAK;
 
   // return state machine state
   return this->state;
 
-} // LIN_Master::_sendBreak()
+} // LIN_Master_Base::_sendBreak()
 
 
 
@@ -156,20 +156,20 @@ LIN_Master::state_t LIN_Master::_sendBreak(void)
   \details    Send LIN frame body (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID). Here dummy!
   \return     current state of LIN state machine
 */
-LIN_Master::state_t LIN_Master::_sendFrame(void)
+LIN_Master_Base::state_t LIN_Master_Base::_sendFrame(void)
 {
   // print debug message
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master::_sendFrame()");
+    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_Base::_sendFrame()");
   #endif
 
   // progress state
-  this->state = LIN_Master::STATE_BODY;
+  this->state = LIN_Master_Base::STATE_BODY;
 
   // return state
   return this->state;
 
-} // LIN_Master::_sendFrame()
+} // LIN_Master_Base::_sendFrame()
 
 
 
@@ -178,20 +178,20 @@ LIN_Master::state_t LIN_Master::_sendFrame(void)
   \details    Receive and check LIN frame (request frame: check echo; response frame: check header echo & checksum). Here dummy!
   \return     current state of LIN state machine
 */
-LIN_Master::state_t LIN_Master::_receiveFrame(void)
+LIN_Master_Base::state_t LIN_Master_Base::_receiveFrame(void)
 {
   // print debug message
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master::_receiveFrame()");
+    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_Base::_receiveFrame()");
   #endif
 
   // dummy: just progress state
-  this->state = LIN_Master::STATE_DONE;
+  this->state = LIN_Master_Base::STATE_DONE;
 
   // return state
   return this->state;
 
-} // LIN_Master::_receiveFrame()
+} // LIN_Master_Base::_receiveFrame()
 
 
 
@@ -205,16 +205,16 @@ LIN_Master::state_t LIN_Master::_receiveFrame(void)
               For an explanation of the LIN bus and protocol e.g. see https://en.wikipedia.org/wiki/Local_Interconnect_Network
   \param[in]  NameLIN     LIN node name 
 */
-LIN_Master::LIN_Master(const char NameLIN[])
+LIN_Master_Base::LIN_Master_Base(const char NameLIN[])
 {
   // store parameters in class variables
   memcpy(this->nameLIN, NameLIN, LIN_MASTER_BUFLEN_NAME);     // node name e.g. for debug
 
   // initialize master node properties
-  this->error = LIN_Master::NO_ERROR;                         // last LIN error. Is latched
-  this->state = LIN_Master::STATE_OFF;                        // status of LIN state machine
+  this->error = LIN_Master_Base::NO_ERROR;                         // last LIN error. Is latched
+  this->state = LIN_Master_Base::STATE_OFF;                        // status of LIN state machine
 
-} // LIN_Master::LIN_Master()
+} // LIN_Master_Base::LIN_Master_Base()
 
 
 
@@ -223,17 +223,17 @@ LIN_Master::LIN_Master(const char NameLIN[])
   \details    Open serial interface with specified baudrate. Here dummy!
   \param[in]  Baudrate    communication speed [Baud]
 */
-void LIN_Master::begin(uint16_t Baudrate)
+void LIN_Master_Base::begin(uint16_t Baudrate)
 {
   // store parameters in class variables
   this->baudrate   = Baudrate;                                // communication baudrate [Baud]
 
   // initialize master node properties
-  this->error = LIN_Master::NO_ERROR;                         // last LIN error. Is latched
-  this->state = LIN_Master::STATE_IDLE;                       // status of LIN state machine
+  this->error = LIN_Master_Base::NO_ERROR;                         // last LIN error. Is latched
+  this->state = LIN_Master_Base::STATE_IDLE;                       // status of LIN state machine
   this->timePerByte = 10000000L / (uint32_t) this->baudrate;  // time [us] per byte (for performance)
 
-} // LIN_Master::begin()
+} // LIN_Master_Base::begin()
 
 
 
@@ -241,12 +241,12 @@ void LIN_Master::begin(uint16_t Baudrate)
   \brief      Close serial interface
   \details    Close serial interface. Here dummy!
 */
-void LIN_Master::end()
+void LIN_Master_Base::end()
 {
   // initialize master node properties
-  this->state = LIN_Master::STATE_OFF;                        // status of LIN state machine
+  this->state = LIN_Master_Base::STATE_OFF;                        // status of LIN state machine
 
-} // LIN_Master::end()
+} // LIN_Master_Base::end()
 
 
 
@@ -260,10 +260,10 @@ void LIN_Master::end()
   \param[in]  Data      data bytes
   \return     LIN state machine state
 */
-LIN_Master::state_t LIN_Master::sendMasterRequest(LIN_Master::version_t Version, uint8_t Id, uint8_t NumData, uint8_t Data[])
+LIN_Master_Base::state_t LIN_Master_Base::sendMasterRequest(LIN_Master_Base::version_t Version, uint8_t Id, uint8_t NumData, uint8_t Data[])
 {
   // construct Tx frame
-  this->type     = LIN_Master::MASTER_REQUEST;
+  this->type     = LIN_Master_Base::MASTER_REQUEST;
   this->version  = Version;
   this->id       = Id;
   this->lenTx    = NumData + 4;                                     // Frame length
@@ -287,7 +287,7 @@ LIN_Master::state_t LIN_Master::sendMasterRequest(LIN_Master::version_t Version,
   // return state machine state
   return this->state;
 
-} // LIN_Master::sendMasterRequest()
+} // LIN_Master_Base::sendMasterRequest()
 
 
 
@@ -301,7 +301,7 @@ LIN_Master::state_t LIN_Master::sendMasterRequest(LIN_Master::version_t Version,
   \param[in]  Data      data bytes
   \return     LIN error
 */
-LIN_Master::error_t LIN_Master::sendMasterRequestBlocking(LIN_Master::version_t Version, uint8_t Id, uint8_t NumData, uint8_t Data[])
+LIN_Master_Base::error_t LIN_Master_Base::sendMasterRequestBlocking(LIN_Master_Base::version_t Version, uint8_t Id, uint8_t NumData, uint8_t Data[])
 {
   // start master request frame
   this->sendMasterRequest(Version, Id, NumData, Data);
@@ -309,12 +309,12 @@ LIN_Master::error_t LIN_Master::sendMasterRequestBlocking(LIN_Master::version_t 
   // wait until frame is completed
   do
     this->handler();
-  while (this->state != LIN_Master::STATE_DONE);
+  while (this->state != LIN_Master_Base::STATE_DONE);
 
   // return LIN error
   return this->error;
 
-} // LIN_Master::sendMasterRequestBlocking()
+} // LIN_Master_Base::sendMasterRequestBlocking()
 
 
 
@@ -327,10 +327,10 @@ LIN_Master::error_t LIN_Master::sendMasterRequestBlocking(LIN_Master::version_t 
   \param[in]  NumData   number of data bytes (0..8)
   \return     LIN state machine state
 */
-LIN_Master::state_t LIN_Master::receiveSlaveResponse(LIN_Master::version_t Version, uint8_t Id, uint8_t NumData)
+LIN_Master_Base::state_t LIN_Master_Base::receiveSlaveResponse(LIN_Master_Base::version_t Version, uint8_t Id, uint8_t NumData)
 {
   // construct Tx frame
-  this->type     = LIN_Master::SLAVE_RESPONSE;
+  this->type     = LIN_Master_Base::SLAVE_RESPONSE;
   this->version  = Version;
   this->id       = Id;
   this->lenTx    = 3;                                               // Frame header length
@@ -352,7 +352,7 @@ LIN_Master::state_t LIN_Master::receiveSlaveResponse(LIN_Master::version_t Versi
   // return state machine state
   return this->state;
 
-} // LIN_Master::sendMasterRequestBlocking()
+} // LIN_Master_Base::sendMasterRequestBlocking()
 
 
 
@@ -366,7 +366,7 @@ LIN_Master::state_t LIN_Master::receiveSlaveResponse(LIN_Master::version_t Versi
   \param[out] Data      data bytes
   \return     LIN error
 */
-LIN_Master::error_t LIN_Master::receiveSlaveResponseBlocking(LIN_Master::version_t Version, uint8_t Id, uint8_t NumData, uint8_t *Data)
+LIN_Master_Base::error_t LIN_Master_Base::receiveSlaveResponseBlocking(LIN_Master_Base::version_t Version, uint8_t Id, uint8_t NumData, uint8_t *Data)
 {
   // start slave response frame
   this->receiveSlaveResponse(Version, Id, NumData);
@@ -374,7 +374,7 @@ LIN_Master::error_t LIN_Master::receiveSlaveResponseBlocking(LIN_Master::version
   // wait until frame is completed
   do
     this->handler();
-  while (this->state != LIN_Master::STATE_DONE);
+  while (this->state != LIN_Master_Base::STATE_DONE);
 
   // copy received data
   this->getFrame(type, id, NumData, Data);
@@ -382,7 +382,7 @@ LIN_Master::error_t LIN_Master::receiveSlaveResponseBlocking(LIN_Master::version
   // return LIN error
   return this->error;
 
-} // LIN_Master::sendMasterRequestBlocking()
+} // LIN_Master_Base::sendMasterRequestBlocking()
 
 
 
@@ -392,37 +392,37 @@ LIN_Master::error_t LIN_Master::receiveSlaveResponseBlocking(LIN_Master::version
               For an explanation of the LIN bus and protocol e.g. see https://en.wikipedia.org/wiki/Local_Interconnect_Network
   \return     LIN state machine state
 */
-LIN_Master::state_t LIN_Master::handler(void)
+LIN_Master_Base::state_t LIN_Master_Base::handler(void)
 {
   // act according to current state
   switch (this->state)
   {
     // idle or done -> don't do anything
-    case LIN_Master::STATE_IDLE:
-    case LIN_Master::STATE_DONE:
+    case LIN_Master_Base::STATE_IDLE:
+    case LIN_Master_Base::STATE_DONE:
       break;
 
     // when sync break done, send rest of frame
-    case LIN_Master::STATE_BREAK:
+    case LIN_Master_Base::STATE_BREAK:
       this->_sendFrame();
       break;
 
     // when frame done, read and check it
-    case LIN_Master::STATE_BODY:
+    case LIN_Master_Base::STATE_BODY:
       this->_receiveFrame();
       break;
 
     // this should never happen..
     default:
-      this->error = (LIN_Master::error_t) ((int) this->error | (int) LIN_Master::ERROR_MISC);
-      this->state = LIN_Master::STATE_DONE;
+      this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_MISC);
+      this->state = LIN_Master_Base::STATE_DONE;
 
   } // switch (state)
   
   // return state machine state
   return this->state;
 
-} // LIN_Master::handler()
+} // LIN_Master_Base::handler()
 
 /*-----------------------------------------------------------------------------
     END OF FILE

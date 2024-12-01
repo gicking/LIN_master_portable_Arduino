@@ -54,15 +54,15 @@ void loop()
 {
   static uint32_t       tStart;
   uint8_t               Tx[4] = {0x01, 0x02, 0x03, 0x04};
-  LIN_Master::frame_t   Type;
+  LIN_Master_Base::frame_t   Type;
   uint8_t               Id;
   uint8_t               NumData;
   uint8_t               Data[8];
-  LIN_Master::error_t   error;
+  LIN_Master_Base::error_t   error;
 
 
   // send master request frame and get result immediately
-  error = LIN.sendMasterRequestBlocking(LIN_Master::LIN_V2, 0x1A, 4, Tx);
+  error = LIN.sendMasterRequestBlocking(LIN_Master_Base::LIN_V2, 0x1A, 4, Tx);
 
   // indicate status via pin
   digitalWrite(PIN_ERROR, error);
@@ -93,7 +93,7 @@ void loop()
 
 
   // send/receive slave response frame and get result immediately
-  error = LIN.receiveSlaveResponseBlocking(LIN_Master::LIN_V2, 0x05, 8, Data);
+  error = LIN.receiveSlaveResponseBlocking(LIN_Master_Base::LIN_V2, 0x05, 8, Data);
 
   // indicate status via pin
   digitalWrite(PIN_ERROR, error);
@@ -108,7 +108,7 @@ void loop()
     Serial1.print(LIN.nameLIN);
     Serial1.print(" response blocking: 0x");
     Serial1.println(error, HEX);
-    for (uint8_t i=0; (i < NumData) && (LIN.getError() == LIN_Master::NO_ERROR); i++)
+    for (uint8_t i=0; (i < NumData) && (LIN.getError() == LIN_Master_Base::NO_ERROR); i++)
     {
       Serial1.print("\t");        
       Serial1.print((int) i);

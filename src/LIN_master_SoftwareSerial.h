@@ -21,9 +21,8 @@
 -----------------------------------------------------------------------------*/
 
 // include required libraries
-#include <Arduino.h>
+#include <LIN_master_Base.h>
 #include <SoftwareSerial.h>
-#include "LIN_master.h"
 
 
 /*-----------------------------------------------------------------------------
@@ -34,12 +33,11 @@
 
   \details LIN master node class via SoftwareSerial.
 */
-class LIN_Master_SoftwareSerial : public LIN_Master
+class LIN_Master_SoftwareSerial : public LIN_Master_Base
 {
   // PROTECTED VARIABLES
   protected:
 
-    SoftwareSerial        *pSerial;           //!< pointer to used SW serial
     uint8_t               pinRx;              //!< pin used for receive
     uint8_t               pinTx;              //!< pin used for transmit
     bool                  inverseLogic;       //!< use inverse logic
@@ -50,13 +48,13 @@ class LIN_Master_SoftwareSerial : public LIN_Master
   protected:
   
     /// @brief Send LIN break
-    LIN_Master::state_t _sendBreak(void);
+    LIN_Master_Base::state_t _sendBreak(void);
 
     /// @brief Send LIN bytes (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID)
-    LIN_Master::state_t _sendFrame(void);
+    LIN_Master_Base::state_t _sendFrame(void);
 
     /// @brief Read and check LIN frame
-    LIN_Master::state_t _receiveFrame(void);
+    LIN_Master_Base::state_t _receiveFrame(void);
 
 
   // PUBLIC METHODS

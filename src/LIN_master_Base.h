@@ -1,5 +1,5 @@
 /**
-  \file     LIN_master.h
+  \file     LIN_master_Base.h
   \brief    Base class for LIN master emulation
   \details  This library provides the base class for a master node emulation of a LIN bus.
             For an explanation of the LIN bus and protocol e.g. see https://en.wikipedia.org/wiki/Local_Interconnect_Network
@@ -9,18 +9,20 @@
 /*-----------------------------------------------------------------------------
   MODULE DEFINITION FOR MULTIPLE INCLUSION
 -----------------------------------------------------------------------------*/
-#ifndef _LIN_MASTER_H_
-#define _LIN_MASTER_H_
+#ifndef _LIN_MASTER_BASE_H_
+#define _LIN_MASTER_BASE_H_
 
 
 /*-----------------------------------------------------------------------------
   GLOBAL DEFINES
 -----------------------------------------------------------------------------*/
 
-#define LIN_MASTER_BUFLEN_NAME        30           //!< max. length of node name
+#define LIN_MASTER_BUFLEN_NAME  30            //!< max. length of node name
 
-//#define LIN_MASTER_DEBUG_SERIAL   Serial       //!< Serial interface used for debug output
-//#define LIN_MASTER_DEBUG_LEVEL    2            //!< Debug level (0=no output, 1=error msg, 2=sent/received bytes)
+// optional LIN debug output. For AVR must use NeoSerialx to avoid linker conflict
+//#define LIN_MASTER_DEBUG_SERIAL Serial        //!< serial interface used for debug output. Comment out for none
+//#define LIN_MASTER_DEBUG_SERIAL NeoSerial     //!< serial interface used for debug output (required for AVR). Comment out for none
+#define LIN_MASTER_DEBUG_LEVEL  2             //!< debug verbosity 0..3 (1=errors only, 3=verbose)
 
 
 /*-----------------------------------------------------------------------------
@@ -39,7 +41,7 @@
 
   \details LIN master node base class. From this class the actual LIN classes for a Serialx are derived.
 */
-class LIN_Master
+class LIN_Master_Base
 {
   // PUBLIC TYPEDEFS
   public:
@@ -89,15 +91,15 @@ class LIN_Master
     // node properties
     Stream                *pSerial;               //!< pointer to serial I/F
     uint16_t              baudrate;               //!< communication baudrate [Baud]
-    LIN_Master::state_t   state;                  //!< status of LIN state machine
-    LIN_Master::error_t   error;                  //!< error state. Is latched until cleared
+    LIN_Master_Base::state_t   state;             //!< status of LIN state machine
+    LIN_Master_Base::error_t   error;             //!< error state. Is latched until cleared
     uint32_t              timePerByte;            //!< time [us] per byte at specified baudrate
     uint32_t              timeStart;              //!< starting time [us] for frame timeout
     uint32_t              timeMax;                //!< max. frame duration [us]
 
     // frame properties
-    LIN_Master::version_t version;                //!< LIN protocol version
-    LIN_Master::frame_t   type;                   //!< LIN frame type
+    LIN_Master_Base::version_t version;           //!< LIN protocol version
+    LIN_Master_Base::frame_t   type;              //!< LIN frame type
     uint8_t               id;                     //!< LIN frame identifier (protected or unprotected)
     uint8_t               lenTx;                  //!< send buffer length (max. 12)
     uint8_t               bufTx[12];              //!< send buffer incl. BREAK, SYNC, DATA and CHK (max. 12B)
@@ -121,23 +123,23 @@ class LIN_Master
     uint8_t _calculateChecksum(uint8_t NumData, uint8_t Data[]);
 
     /// @brief Check received LIN frame
-    LIN_Master::error_t _checkFrame(void);
+    LIN_Master_Base::error_t _checkFrame(void);
 
     /// @brief Send LIN break
-    virtual LIN_Master::state_t _sendBreak(void);
+    virtual LIN_Master_Base::state_t _sendBreak(void);
 
     /// @brief Send LIN frame body
-    virtual LIN_Master::state_t _sendFrame(void);
+    virtual LIN_Master_Base::state_t _sendFrame(void);
 
     /// @brief Receive LIN frame
-    virtual LIN_Master::state_t _receiveFrame(void);
+    virtual LIN_Master_Base::state_t _receiveFrame(void);
 
 
   // PUBLIC METHODS
   public:
   
     /// @brief LIN master node constructor
-    LIN_Master(const char NameLIN[]);
+    LIN_Master_Base(const char NameLIN[]);
     
     
     /// @brief Open serial interface
@@ -148,21 +150,21 @@ class LIN_Master
     
     
     /// @brief Reset LIN state machine
-    inline void resetStateMachine(void) { this->state = LIN_Master::STATE_IDLE; }
+    inline void resetStateMachine(void) { this->state = LIN_Master_Base::STATE_IDLE; }
     
     /// @brief Getter for LIN state machine state
-    inline LIN_Master::state_t getState(void) { return this->state; }
+    inline LIN_Master_Base::state_t getState(void) { return this->state; }
 
     
     /// @brief Clear error of LIN state machine
-    inline void resetError(void) { this->error = LIN_Master::NO_ERROR; }
+    inline void resetError(void) { this->error = LIN_Master_Base::NO_ERROR; }
     
     /// @brief Getter for LIN state machine error
-    inline LIN_Master::error_t getError(void) { return this->error; }
+    inline LIN_Master_Base::error_t getError(void) { return this->error; }
     
     
     /// @brief Getter for LIN frame
-    inline void getFrame(LIN_Master::frame_t &Type, uint8_t &Id, uint8_t &NumData, uint8_t Data[])
+    inline void getFrame(LIN_Master_Base::frame_t &Type, uint8_t &Id, uint8_t &NumData, uint8_t Data[])
     { 
       noInterrupts();               // for data consistency temporarily disable ISRs
       Type    = this->type;         // frame type 
@@ -174,23 +176,27 @@ class LIN_Master
 
     
     /// @brief Start sending a LIN master request frame in background (if supported)
-    LIN_Master::state_t sendMasterRequest(LIN_Master::version_t Version, uint8_t Id, uint8_t NumData, uint8_t Data[]);
+    LIN_Master_Base::state_t sendMasterRequest(LIN_Master_Base::version_t Version, uint8_t Id, uint8_t NumData, uint8_t Data[]);
     
     /// @brief Send a blocking LIN master request frame (no background operation)
-    LIN_Master::error_t sendMasterRequestBlocking(LIN_Master::version_t Version, uint8_t Id, uint8_t NumData, uint8_t Data[]);
+    LIN_Master_Base::error_t sendMasterRequestBlocking(LIN_Master_Base::version_t Version, uint8_t Id, uint8_t NumData, uint8_t Data[]);
 
     /// @brief Start sending a LIN slave response frame in background (if supported)
-    LIN_Master::state_t receiveSlaveResponse(LIN_Master::version_t Version, uint8_t Id, uint8_t NumData);
+    LIN_Master_Base::state_t receiveSlaveResponse(LIN_Master_Base::version_t Version, uint8_t Id, uint8_t NumData);
     
     /// @brief Send a blocking LIN slave response frame (no background operation)
-    LIN_Master::error_t receiveSlaveResponseBlocking(LIN_Master::version_t Version, uint8_t Id, uint8_t NumData, uint8_t *Data);
+    LIN_Master_Base::error_t receiveSlaveResponseBlocking(LIN_Master_Base::version_t Version, uint8_t Id, uint8_t NumData, uint8_t *Data);
 
     /// @brief Handle LIN background operation (call until STATE_DONE is returned)
-    LIN_Master::state_t handler(void);
+    LIN_Master_Base::state_t handler(void);
 
-}; // class LIN_Master
+}; // class LIN_Master_Base
 
 /*-----------------------------------------------------------------------------
     END OF MODULE DEFINITION FOR MULTIPLE INLUSION
 -----------------------------------------------------------------------------*/
-#endif // _LIN_MASTER_H_
+#endif // _LIN_MASTER_BASE_H_
+
+/*-----------------------------------------------------------------------------
+    END OF FILE
+-----------------------------------------------------------------------------*/

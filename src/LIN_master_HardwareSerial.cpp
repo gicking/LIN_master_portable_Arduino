@@ -7,8 +7,7 @@
 */
 
 // include files
-#include "Arduino.h"
-#include "LIN_master_HardwareSerial.h"
+#include <LIN_master_HardwareSerial.h>
 
 
 /**
@@ -16,7 +15,7 @@
   \details    Send LIN break (=16bit low)
   \return     current state of LIN state machine
 */
-LIN_Master::state_t LIN_Master_HardwareSerial::_sendBreak(void)
+LIN_Master_Base::state_t LIN_Master_HardwareSerial::_sendBreak(void)
 {
   // print debug message
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
@@ -24,27 +23,27 @@ LIN_Master::state_t LIN_Master_HardwareSerial::_sendBreak(void)
   #endif
     
   // if state is wrong, exit immediately
-  if (this->state != LIN_Master::STATE_IDLE)
+  if (this->state != LIN_Master_Base::STATE_IDLE)
   {
-    this->error = (LIN_Master::error_t) ((int) this->error | (int) LIN_Master::ERROR_STATE);
-    this->state = LIN_Master::STATE_DONE;
+    this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
+    this->state = LIN_Master_Base::STATE_DONE;
     return this->state;
   }
 
   // empty buffers, just in case...
-  this->pSerial->flush();
-  while (this->pSerial->available())
-    this->pSerial->read();
+  ((HardwareSerial*) (this->pSerial))->flush();
+  while (((HardwareSerial*) (this->pSerial))->available())
+    ((HardwareSerial*) (this->pSerial))->read();
 
   // set half baudrate for BREAK
-  this->pSerial->begin(this->baudrate >> 1);
-  while(!(*(this->pSerial)));
+  ((HardwareSerial*) (this->pSerial))->begin(this->baudrate >> 1);
+  while(!(*(((HardwareSerial*) (this->pSerial)))));
 
   // send BREAK (>=13 bit low)
-  this->pSerial->write(bufTx[0]);
+  ((HardwareSerial*) (this->pSerial))->write(bufTx[0]);
 
   // progress state
-  this->state = LIN_Master::STATE_BREAK;
+  this->state = LIN_Master_Base::STATE_BREAK;
 
   // return state
   return this->state;
@@ -58,7 +57,7 @@ LIN_Master::state_t LIN_Master_HardwareSerial::_sendBreak(void)
   \details    Send LIN bytes (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID)
   \return     current state of LIN state machine
 */
-LIN_Master::state_t LIN_Master_HardwareSerial::_sendFrame(void)
+LIN_Master_Base::state_t LIN_Master_HardwareSerial::_sendFrame(void)
 {
   // print debug message
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
@@ -66,28 +65,28 @@ LIN_Master::state_t LIN_Master_HardwareSerial::_sendFrame(void)
   #endif
     
   // if state is wrong, exit immediately
-  if (this->state != LIN_Master::STATE_BREAK)
+  if (this->state != LIN_Master_Base::STATE_BREAK)
   {
-    this->error = (LIN_Master::error_t) ((int) this->error | (int) LIN_Master::ERROR_STATE);
-    this->state = LIN_Master::STATE_DONE;
+    this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
+    this->state = LIN_Master_Base::STATE_DONE;
     return this->state;
   }
 
   // byte(s) received (likely BREAK echo)
-  if (this->pSerial->available())
+  if (((HardwareSerial*) (this->pSerial))->available())
   {
     // store echo in Rx
-    this->bufRx[0] = this->pSerial->read();
+    this->bufRx[0] = ((HardwareSerial*) (this->pSerial))->read();
 
     // restore nominal baudrate
-    this->pSerial->begin(this->baudrate);
-    while(!(*(this->pSerial)));
+    ((HardwareSerial*) (this->pSerial))->begin(this->baudrate);
+    while(!(*(((HardwareSerial*) (this->pSerial)))));
 
     // send rest of frame (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID)
-    this->pSerial->write(this->bufTx+1, this->lenTx-1);
+    ((HardwareSerial*) (this->pSerial))->write(this->bufTx+1, this->lenTx-1);
 
     // progress state
-    this->state = LIN_Master::STATE_BODY;
+    this->state = LIN_Master_Base::STATE_BODY;
 
   } // BREAK echo received
   
@@ -97,8 +96,8 @@ LIN_Master::state_t LIN_Master_HardwareSerial::_sendFrame(void)
     // check for timeout
     if (micros() - this->timeStart > this->timeMax)
     {
-      this->error = (LIN_Master::error_t) ((int) this->error | (int) LIN_Master::ERROR_TIMEOUT);
-      this->state = LIN_Master::STATE_DONE;
+      this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_TIMEOUT);
+      this->state = LIN_Master_Base::STATE_DONE;
     }
 
   } // no byte(s) received
@@ -112,10 +111,10 @@ LIN_Master::state_t LIN_Master_HardwareSerial::_sendFrame(void)
 
 /**
   \brief      Receive and check LIN frame
-  \details    Receive and check LIN frame (request frame: check echo; response frame: check header echo & checksum). Here dummy!
+  \details    Receive and check LIN frame (request frame: check echo; response frame: check header echo & checksum)
   \return     current state of LIN state machine
 */
-LIN_Master::state_t LIN_Master_HardwareSerial::_receiveFrame(void)
+LIN_Master_Base::state_t LIN_Master_HardwareSerial::_receiveFrame(void)
 {
   // print debug message
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
@@ -123,24 +122,24 @@ LIN_Master::state_t LIN_Master_HardwareSerial::_receiveFrame(void)
   #endif
     
   // if state is wrong, exit immediately
-  if (this->state != LIN_Master::STATE_BODY)
+  if (this->state != LIN_Master_Base::STATE_BODY)
   {
-    this->error = (LIN_Master::error_t) ((int) this->error | (int) LIN_Master::ERROR_STATE);
-    this->state = LIN_Master::STATE_DONE;
+    this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
+    this->state = LIN_Master_Base::STATE_DONE;
     return this->state;
   }
 
   // frame body received (-1 because BREAK is handled already handled in _sendFrame())
-  if (this->pSerial->available() >= this->lenRx-1)
+  if (((HardwareSerial*) (this->pSerial))->available() >= this->lenRx-1)
   {
     // store bytes in Rx
-    this->pSerial->readBytes(this->bufRx+1, this->lenRx-1);
+    ((HardwareSerial*) (this->pSerial))->readBytes(this->bufRx+1, this->lenRx-1);
 
     // check frame for errors
-    this->error = (LIN_Master::error_t) ((int) this->error | (int) this->_checkFrame());
+    this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) this->_checkFrame());
 
     // progress state
-    this->state = LIN_Master::STATE_DONE;
+    this->state = LIN_Master_Base::STATE_DONE;
 
   } // frame body received
   
@@ -150,8 +149,8 @@ LIN_Master::state_t LIN_Master_HardwareSerial::_receiveFrame(void)
     // check for timeout
     if (micros() - this->timeStart > this->timeMax)
     {
-      this->error = (LIN_Master::error_t) ((int) this->error | (int) LIN_Master::ERROR_TIMEOUT);
-      this->state = LIN_Master::STATE_DONE;
+      this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_TIMEOUT);
+      this->state = LIN_Master_Base::STATE_DONE;
     }
 
   } // not enough bytes received
@@ -168,10 +167,16 @@ LIN_Master::state_t LIN_Master_HardwareSerial::_receiveFrame(void)
   \param[in]  Interface     serial interface for LIN
   \param[in]  NameLIN       LIN node name 
 */
-LIN_Master_HardwareSerial::LIN_Master_HardwareSerial(HardwareSerial &Interface, const char NameLIN[] = "") : LIN_Master::LIN_Master(NameLIN)
+LIN_Master_HardwareSerial::LIN_Master_HardwareSerial(HardwareSerial &Interface, const char NameLIN[] = "") : LIN_Master_Base::LIN_Master_Base(NameLIN)
 {
   // store pointer to used HW serial
-  this->pSerial    = &Interface;
+  this->pSerial = &Interface;
+
+  // optional debug output
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_HardwareSerial()");
+  #endif
   
   // must not open connection here, else (at least) ESP32 and ESP8266 fail
 
@@ -187,11 +192,11 @@ LIN_Master_HardwareSerial::LIN_Master_HardwareSerial(HardwareSerial &Interface, 
 void LIN_Master_HardwareSerial::begin(uint16_t Baudrate)
 {
   // call base class method
-  LIN_Master::begin(Baudrate);
+  LIN_Master_Base::begin(Baudrate);
   
   // open serial interface
-  this->pSerial->begin(this->baudrate);
-  while(!(*(this->pSerial)));
+  ((HardwareSerial*) (this->pSerial))->begin(this->baudrate);
+  while(!(*(((HardwareSerial*) (this->pSerial)))));
 
 } // LIN_Master_HardwareSerial::begin()
 
@@ -204,10 +209,10 @@ void LIN_Master_HardwareSerial::begin(uint16_t Baudrate)
 void LIN_Master_HardwareSerial::end()
 {
   // call base class method
-  LIN_Master::end();
+  LIN_Master_Base::end();
     
   // close serial interface
-  this->pSerial->end();
+  ((HardwareSerial*) (this->pSerial))->end();
 
 } // LIN_Master_HardwareSerial::end()
 

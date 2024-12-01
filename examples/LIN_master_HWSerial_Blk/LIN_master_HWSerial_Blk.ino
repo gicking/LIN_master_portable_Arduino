@@ -28,7 +28,7 @@ Supported (=successfully tested) boards:
 
 
 // setup LIN node
-LIN_Master_HardwareSerial   LIN(Serial3, "LIN_HW");             // parameter: HW-interface, name
+LIN_Master_HardwareSerial   LIN(Serial1, "LIN_HW");             // parameter: HW-interface, name
 
 
 // call once
@@ -43,6 +43,9 @@ void setup()
   // open LIN interface
   LIN.begin(19200);  
 
+  pinMode(17, OUTPUT);
+  digitalWrite(17, HIGH);
+  
   // for user interaction via console
   Serial.begin(115200);
   while(!Serial);
@@ -55,15 +58,15 @@ void loop()
 {
   static uint32_t       tStart;
   uint8_t               Tx[4] = {0x01, 0x02, 0x03, 0x04};
-  LIN_Master::frame_t   Type;
+  LIN_Master_Base::frame_t   Type;
   uint8_t               Id;
   uint8_t               NumData;
   uint8_t               Data[8];
-  LIN_Master::error_t   error;
+  LIN_Master_Base::error_t   error;
 
 
   // send master request frame and get result immediately
-  error = LIN.sendMasterRequestBlocking(LIN_Master::LIN_V2, 0x1A, 4, Tx);
+  error = LIN.sendMasterRequestBlocking(LIN_Master_Base::LIN_V2, 0x1A, 4, Tx);
 
   // indicate status via pin
   digitalWrite(PIN_ERROR, error);
@@ -94,7 +97,7 @@ void loop()
 
 
   // send/receive slave response frame and get result immediately
-  error = LIN.receiveSlaveResponseBlocking(LIN_Master::LIN_V2, 0x05, 6, Data);
+  error = LIN.receiveSlaveResponseBlocking(LIN_Master_Base::LIN_V2, 0x05, 6, Data);
 
   // indicate status via pin
   digitalWrite(PIN_ERROR, error);
@@ -109,7 +112,7 @@ void loop()
     Serial.print(LIN.nameLIN);
     Serial.print(" response blocking: 0x");
     Serial.println(error, HEX);
-    for (uint8_t i=0; (i < NumData) && (LIN.getError() == LIN_Master::NO_ERROR); i++)
+    for (uint8_t i=0; (i < NumData) && (LIN.getError() == LIN_Master_Base::NO_ERROR); i++)
     {
       Serial.print("\t");        
       Serial.print((int) i);

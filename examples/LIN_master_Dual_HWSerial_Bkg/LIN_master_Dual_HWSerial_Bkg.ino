@@ -54,11 +54,10 @@ void loop()
   static uint32_t       lastLINFrame = 0;
   static uint8_t        count = 0;
   uint8_t               Tx[4] = {0x01, 0x02, 0x03, 0x04};
-  LIN_Master::frame_t   Type;
+  LIN_Master_Base::frame_t   Type;
   uint8_t               Id;
   uint8_t               NumData;
   uint8_t               Data[8];
-  LIN_Master::error_t   error;
   
 
   ///////////////
@@ -76,7 +75,7 @@ void loop()
   ///////////////
   // check if LIN1 frame has finished
   ///////////////
-  if (LIN1.getState() == LIN_Master::STATE_DONE)
+  if (LIN1.getState() == LIN_Master_Base::STATE_DONE)
   {
     // get frame data
     LIN1.getFrame(Type, Id, NumData, Data);
@@ -86,7 +85,7 @@ void loop()
       Serial.print(millis());
       Serial.print("\t");
       Serial.print(LIN1.nameLIN);
-      if (Type == LIN_Master::MASTER_REQUEST)
+      if (Type == LIN_Master_Base::MASTER_REQUEST)
       {
         Serial.print(" request background: 0x");
         Serial.println(LIN1.getError(), HEX);
@@ -95,7 +94,7 @@ void loop()
       {
         Serial.print(" reponse background: 0x");
         Serial.println(LIN1.getError(), HEX);
-        for (uint8_t i=0; (i < NumData) && (LIN1.getError() == LIN_Master::NO_ERROR); i++)
+        for (uint8_t i=0; (i < NumData) && (LIN1.getError() == LIN_Master_Base::NO_ERROR); i++)
         {
           Serial.print("\t");
           Serial.print((int) i);
@@ -115,7 +114,7 @@ void loop()
   ///////////////
   // check if LIN2 frame has finished
   ///////////////
-  if (LIN2.getState() == LIN_Master::STATE_DONE)
+  if (LIN2.getState() == LIN_Master_Base::STATE_DONE)
   {
     // get frame data
     LIN2.getFrame(Type, Id, NumData, Data);
@@ -125,7 +124,7 @@ void loop()
       Serial.print(millis());
       Serial.print("\t");
       Serial.print(LIN2.nameLIN);
-      if (Type == LIN_Master::MASTER_REQUEST)
+      if (Type == LIN_Master_Base::MASTER_REQUEST)
       {
         Serial.print(" request background: 0x");
         Serial.println(LIN2.getError(), HEX);
@@ -134,7 +133,7 @@ void loop()
       {
         Serial.print(" reponse background: 0x");
         Serial.println(LIN2.getError(), HEX);
-        for (uint8_t i=0; (i < NumData) && (LIN2.getError() == LIN_Master::NO_ERROR); i++)
+        for (uint8_t i=0; (i < NumData) && (LIN2.getError() == LIN_Master_Base::NO_ERROR); i++)
         {
           Serial.print("\t");        
           Serial.print((int) i);
@@ -162,7 +161,7 @@ void loop()
     if (count == 0)
     {
       count++;
-      LIN1.sendMasterRequest(LIN_Master::LIN_V2, 0x1B, 3, Tx);
+      LIN1.sendMasterRequest(LIN_Master_Base::LIN_V2, 0x1B, 3, Tx);
     }
 
 
@@ -170,14 +169,14 @@ void loop()
     else if (count == 1)
     {
       count++;
-      LIN1.receiveSlaveResponse(LIN_Master::LIN_V2, 0x05, 8);
+      LIN1.receiveSlaveResponse(LIN_Master_Base::LIN_V2, 0x05, 8);
     }
 
     // send LIN2 master request frame (background)
     else if (count == 2)
     {
       count++;
-      LIN2.sendMasterRequest(LIN_Master::LIN_V1, 0x1A, 3, Tx);
+      LIN2.sendMasterRequest(LIN_Master_Base::LIN_V1, 0x1A, 3, Tx);
     }
 
 
@@ -185,7 +184,7 @@ void loop()
     else
     {
       count = 0;
-      LIN2.receiveSlaveResponse(LIN_Master::LIN_V1, 0x06, 8);
+      LIN2.receiveSlaveResponse(LIN_Master_Base::LIN_V1, 0x06, 8);
     }
     
   } // SW scheduler

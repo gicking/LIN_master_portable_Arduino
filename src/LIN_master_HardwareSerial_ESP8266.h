@@ -21,9 +21,7 @@
 -----------------------------------------------------------------------------*/
 
 // include required libraries
-#include <Arduino.h>
-#include "LIN_master.h"
-#include "LIN_master_HardwareSerial.h"
+#include <LIN_master_Base.h>
 
 
 /*-----------------------------------------------------------------------------
@@ -34,7 +32,7 @@
 
   \details LIN master node class via ESP8266 HardwareSerial.
 */
-class LIN_Master_HardwareSerial_ESP8266 : public LIN_Master_HardwareSerial
+class LIN_Master_HardwareSerial_ESP8266 : public LIN_Master_Base
 {
   // PROTECTED VARIABLES
   protected:
@@ -46,10 +44,13 @@ class LIN_Master_HardwareSerial_ESP8266 : public LIN_Master_HardwareSerial
   protected:
   
     /// @brief Send LIN break
-    LIN_Master::state_t _sendBreak(void);
+    LIN_Master_Base::state_t _sendBreak(void);
 
     /// @brief Send LIN bytes (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID)
-    LIN_Master::state_t _sendFrame(void);
+    LIN_Master_Base::state_t _sendFrame(void);
+
+    /// @brief Read and check LIN frame
+    LIN_Master_Base::state_t _receiveFrame(void);
 
 
   // PUBLIC METHODS
@@ -60,6 +61,9 @@ class LIN_Master_HardwareSerial_ESP8266 : public LIN_Master_HardwareSerial
      
     /// @brief Open serial interface
     void begin(uint16_t Baudrate);
+      
+    /// @brief Close serial interface
+    void end(void);
 
 }; // class LIN_master_HardwareSerial_ESP8266
 
@@ -70,3 +74,7 @@ class LIN_Master_HardwareSerial_ESP8266 : public LIN_Master_HardwareSerial
 #endif // _LIN_MASTER_HW_SERIAL_ESP8266_H_
 
 #endif // ARDUINO_ARCH_ESP8266
+
+/*-----------------------------------------------------------------------------
+    END OF FILE
+-----------------------------------------------------------------------------*/
