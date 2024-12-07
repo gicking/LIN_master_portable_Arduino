@@ -1,0 +1,85 @@
+# based on https://github.com/arduino-libraries/ArduinoBLE/blob/master/.github/workflows/compile-examples.yml
+name: Build Lib Examples
+
+on:
+
+  # Trigger workflow on every push and pull request
+  push:
+  pull_request:
+  
+  # Also run every 7 days to catch breakage caused by changes to external resources (libraries, platforms).
+  schedule:
+    # Minute, Hour, Day of Month, Month, Day of Week -> every 7 days at 9.20pm (UTC)
+    - cron: '20 21 */7 * *'
+
+jobs:
+
+  # Build for AVR
+  build-for-avr:
+    runs-on: ubuntu-latest
+    env:
+      SKETCHES_REPORTS_PATH: sketches-reports
+    strategy:
+      fail-fast: false
+      matrix:
+        board:
+          - fqbn: arduino:avr:mega                    # Arduino Mega2560
+            artifact-name-suffix: arduino_avr_mega
+          - fqbn: arduino:avr:uno                     # Arduino Uno
+            artifact-name-suffix: arduino_avr_uno
+    steps:
+      - uses: actions/checkout@v4.2.2                 # check-out this repo
+      - uses: arduino/compile-sketches@v1.1.2         # build Arduino examples
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}   # required for private repos
+          fqbn: ${{ matrix.board.fqbn }}
+          libraries: |
+            - source-path: ./
+          sketch-paths: |
+            - examples/LIN_master_Dual_HWSerial_Bkg
+            - examples/LIN_master_HWSerial_Bkg
+            - examples/LIN_master_HWSerial_Bkg_Evt
+            - examples/LIN_master_HWSerial_Blk
+            - examples/LIN_master_SWSerial_Blk
+          cli-compile-flags: |
+            - --warnings="all"
+      - uses: actions/upload-artifact@v4.4.3          # upload test reports
+        with:
+          if-no-files-found: error
+          path: ${{ env.SKETCHES_REPORTS_PATH }}
+          name: sketches-report-${{ matrix.board.artifact-name-suffix }}
+
+
+  # Build for SAMD
+  build-for-samd:
+    runs-on: ubuntu-latest
+    env:
+      SKETCHES_REPORTS_PATH: sketches-reports
+    strategy:
+      fail-fast: false
+      matrix:
+        board:
+          - fqbn: arduino:sam:arduino_due_x           # Arduino Due (Native USB Port)
+            artifact-name-suffix: arduino_sam_arduino_due_x
+          - fqbn: arduino:sam:arduino_due_x_dbg       # Arduino Due (Programming Port)
+            artifact-name-suffix: arduino_sam_arduino_due_x_dbg
+    steps:
+      - uses: actions/checkout@v4.2.2                 # check-out this repo
+      - uses: arduino/compile-sketches@v1.1.2         # build Arduino examples
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}   # required for private repos
+          fqbn: ${{ matrix.board.fqbn }}
+          libraries: |
+            - source-path: ./
+          sketch-paths: |
+            - examples/LIN_master_Dual_HWSerial_Bkg
+            - examples/LIN_master_HWSerial_Bkg
+            - examples/LIN_master_HWSerial_Bkg_Evt
+            - examples/LIN_master_HWSerial_Blk
+          cli-compile-flags: |
+            - --warnings="all"
+      - uses: actions/upload-artifact@v4.4.3          # upload test reports
+        with:
+          if-no-files-found: error
+          path: ${{ env.SKETCHES_REPORTS_PATH }}
+          name: sketches-report-${{ matrix.board.artifact-name-suffix }}
