@@ -90,6 +90,7 @@ class LIN_Master_Base
 
     // node properties
     Stream                *pSerial;               //!< pointer to serial I/F
+    int8_t                pinTxEN;                //!< optional Tx direction pin, e.g. for LIN via RS485 
     uint16_t              baudrate;               //!< communication baudrate [Baud]
     LIN_Master_Base::state_t   state;             //!< status of LIN state machine
     LIN_Master_Base::error_t   error;             //!< error state. Is latched until cleared
@@ -139,7 +140,7 @@ class LIN_Master_Base
   public:
   
     /// @brief LIN master node constructor
-    LIN_Master_Base(const char NameLIN[] = "Master");
+    LIN_Master_Base(const char NameLIN[] = "Master", const int8_t PinTxEN = INT8_MIN);
     
     
     /// @brief Open serial interface

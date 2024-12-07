@@ -1,7 +1,7 @@
 /**
   \file     LIN_master_HardwareSerial_ESP8266.cpp
   \brief    LIN master emulation library using hardware Serial0 interface of ESP8266
-  \details  This library provides a master node emulation for a LIN bus via hardware Serial0 interface of ESP8266.
+  \details  This library provides a master node emulation for a LIN bus via hardware Serial0 interface of ESP8266, optionally via RS485.
             For an explanation of the LIN bus and protocol e.g. see https://en.wikipedia.org/wiki/Local_Interconnect_Network
   \note     Serial.begin() causes a glitch on the bus. Therefore use Serial.updateBaudRate() instead.
   \note     Serial.flush() is omitted because it causes a 500us delay, see https://github.com/esp8266/Arduino/blob/master/cores/esp8266/HardwareSerial.cpp
@@ -42,6 +42,10 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_sendBreak(void)
  
   // set half baudrate for BREAK
   ((HardwareSerial*) (this->pSerial))->updateBaudRate(this->baudrate >> 1);
+
+  // if defined, set TxEN=active
+  if (this->pinTxEN >= 0)
+    digitalWrite(this->pinTxEN, HIGH);
 
   // send BREAK (>=13 bit low)
   ((HardwareSerial*) (this->pSerial))->write(bufTx[0]);
@@ -132,6 +136,10 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_receiveFrame(void)
     return this->state;
   }
 
+  // optionally disable Tx for slave response frames for e.g. LIN via RS485. Len==2 because BREAK is handled already handled in _sendFrame()
+  if ((this->pinTxEN >= 0) && (this->type == LIN_Master_Base::SLAVE_RESPONSE) && (((HardwareSerial*) (this->pSerial))->available() == 2))
+    digitalWrite(this->pinTxEN, LOW);
+
   // frame body received (-1 because BREAK is handled already handled in _sendFrame())
   if (((HardwareSerial*) (this->pSerial))->available() >= this->lenRx-1)
   {
@@ -170,9 +178,10 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_receiveFrame(void)
   \details    Constructor for LIN node class for using ESP8266 HardwareSerial. Inherit all methods from LIN_Master_HardwareSerial, only different constructor
   \param[in]  SwapPins    use alternate Serial2 Rx/Tx pins (default = false)
   \param[in]  NameLIN     LIN node name (default = "Master")
+  \param[in]  PinTxEN     optional Tx enable pin (high active) e.g. for LIN via RS485 (default = -127/none)
 */
-LIN_Master_HardwareSerial_ESP8266::LIN_Master_HardwareSerial_ESP8266(bool SwapPins, const char NameLIN[]) : 
-  LIN_Master_Base::LIN_Master_Base(NameLIN)
+LIN_Master_HardwareSerial_ESP8266::LIN_Master_HardwareSerial_ESP8266(bool SwapPins, const char NameLIN[], const int8_t PinTxEN) : 
+  LIN_Master_Base::LIN_Master_Base(NameLIN, PinTxEN)
 {
   // store pointer to used HW serial
   this->pSerial    = &Serial;                               // ESP8266 only has 1 UART with send/receive

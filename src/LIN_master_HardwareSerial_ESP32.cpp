@@ -1,7 +1,7 @@
 /**
   \file     LIN_master_HardwareSerial_ESP32.cpp
   \brief    LIN master emulation library using a HardwareSerial interface of ESP32
-  \details  This library provides a master node emulation for a LIN bus via a HardwareSerial interface of ESP32.
+  \details  This library provides a master node emulation for a LIN bus via a HardwareSerial interface of ESP32, optionally via RS485.
             For an explanation of the LIN bus and protocol e.g. see https://en.wikipedia.org/wiki/Local_Interconnect_Network
   \note     Serial.available() has >1ms delay, likely due to 2nd Core implementation, see https://esp32.com/viewtopic.php?p=65158. Use BREAK duration instead
   \author   Georg Icking-Konert
@@ -41,6 +41,10 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_sendBreak(void)
  
   // set half baudrate for BREAK
   ((HardwareSerial*) (this->pSerial))->updateBaudRate(this->baudrate >> 1);
+
+  // if defined, set TxEN=active
+  if (this->pinTxEN >= 0)
+    digitalWrite(this->pinTxEN, HIGH);
 
   // send BREAK (>=13 bit low)
   ((HardwareSerial*) (this->pSerial))->write(bufTx[0]);
@@ -133,6 +137,10 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_receiveFrame(void)
     return this->state;
   }
 
+  // optionally disable Tx for slave response frames for e.g. LIN via RS485. Len==2 because BREAK is handled already handled in _sendFrame()
+  if ((this->pinTxEN >= 0) && (this->type == LIN_Master_Base::SLAVE_RESPONSE) && (((HardwareSerial*) (this->pSerial))->available() == 2))
+    digitalWrite(this->pinTxEN, LOW);
+
   // frame body received. Here, need to read BREAK as well due to delay of Serial.available()
   if (((HardwareSerial*) (this->pSerial))->available() >= this->lenRx)
   {
@@ -173,9 +181,10 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_receiveFrame(void)
   \param[in]  PinRx       GPIO used for reception
   \param[in]  PinTx       GPIO used for transmission
   \param[in]  NameLIN     LIN node name (default = "Master")
+  \param[in]  PinTxEN     optional Tx enable pin (high active) e.g. for LIN via RS485 (default = -127/none)
 */
-LIN_Master_HardwareSerial_ESP32::LIN_Master_HardwareSerial_ESP32(HardwareSerial &Interface, uint8_t PinRx, uint8_t PinTx, const char NameLIN[])
-  : LIN_Master_Base::LIN_Master_Base(NameLIN)
+LIN_Master_HardwareSerial_ESP32::LIN_Master_HardwareSerial_ESP32(HardwareSerial &Interface, uint8_t PinRx, uint8_t PinTx, const char NameLIN[], const int8_t PinTxEN)
+  : LIN_Master_Base::LIN_Master_Base(NameLIN, PinTxEN)
 {
   // store pointer to used HW serial
   this->pSerial    = &Interface;                              // used serial interface

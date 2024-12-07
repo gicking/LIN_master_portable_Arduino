@@ -1,7 +1,7 @@
 /**
   \file     LIN_master_SoftwareSerial.cpp
   \brief    LIN master emulation library for SoftwareSerial
-  \details  This library provides a master node emulation for a LIN bus via SoftwareSerial.
+  \details  This library provides a master node emulation for a LIN bus via SoftwareSerial, optionally via RS485.
             For an explanation of the LIN bus and protocol e.g. see https://en.wikipedia.org/wiki/Local_Interconnect_Network
   \author   Georg Icking-Konert
 */
@@ -32,6 +32,10 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendBreak(void)
     this->state = LIN_Master_Base::STATE_DONE;
     return this->state;
   }
+
+  // if defined, set TxEN=active
+  if (this->pinTxEN >= 0)
+    digitalWrite(this->pinTxEN, HIGH);
 
   // generate BREAK directly via GPIO (less overhead)
   digitalWrite(pinTx, LOW);
@@ -76,6 +80,10 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendFrame(void)
   
   // send rest of frame (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID). Is blocking and receive is disabled!
   ((SoftwareSerial*) this->pSerial)->write(this->bufTx+1, this->lenTx-1);
+
+  // optionally disable Tx for e.g. LIN via RS485
+  if ((this->pinTxEN >= 0) && (this->type == LIN_Master_Base::SLAVE_RESPONSE))
+    digitalWrite(this->pinTxEN, LOW);
 
   // re-enable reception (above write is blocking)
   ((SoftwareSerial*) this->pSerial)->listen();
@@ -171,9 +179,10 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
   \param[in]  PinTx         GPIO used for transmission
   \param[in]  InverseLogic  use inverse logic (default = false)
   \param[in]  NameLIN       LIN node name (default = "Master")
+  \param[in]  PinTxEN       optional Tx enable pin (high active) e.g. for LIN via RS485 (default = -127/none)
 */
-LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial(uint8_t PinRx, uint8_t PinTx, bool InverseLogic, const char NameLIN[]) : 
-  LIN_Master_Base::LIN_Master_Base(NameLIN)
+LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial(uint8_t PinRx, uint8_t PinTx, bool InverseLogic, const char NameLIN[], const int8_t PinTxEN) : 
+  LIN_Master_Base::LIN_Master_Base(NameLIN, PinTxEN)
 {
   // store pins used for SW serial
   this->pinRx = PinRx;

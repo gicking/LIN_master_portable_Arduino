@@ -1,7 +1,7 @@
 /**
   \file     LIN_master_HardwareSerial_ESP32.h
   \brief    LIN master emulation library using a HardwareSerial interface of ESP32
-  \details  This library provides a master node emulation for a LIN bus via a HardwareSerial interface of ESP32.
+  \details  This library provides a master node emulation for a LIN bus via a HardwareSerial interface of ESP32, optionally via RS485.
             For an explanation of the LIN bus and protocol e.g. see https://en.wikipedia.org/wiki/Local_Interconnect_Network
   \author   Georg Icking-Konert
 */
@@ -59,7 +59,7 @@ class LIN_Master_HardwareSerial_ESP32 : public LIN_Master_Base
   public:
 
     /// @brief Class constructor
-    LIN_Master_HardwareSerial_ESP32(HardwareSerial &Interface, uint8_t PinRx, uint8_t PinTx, const char NameLIN[] = "Master");
+    LIN_Master_HardwareSerial_ESP32(HardwareSerial &Interface, uint8_t PinRx, uint8_t PinTx, const char NameLIN[] = "Master", const int8_t PinTxEN = INT8_MIN);
      
     /// @brief Open serial interface
     void begin(uint16_t Baudrate = 19200);

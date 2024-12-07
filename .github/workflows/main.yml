@@ -39,6 +39,8 @@ jobs:
             - examples/LIN_master_HWSerial_Bkg
             - examples/LIN_master_HWSerial_Bkg_Evt
             - examples/LIN_master_Dual_HWSerial_Bkg
+            - examples/LIN_master_RS485_HWSerial_Blk
+            - examples/LIN_master_RS485_SWSerial_Blk
           cli-compile-flags: |
             - --warnings="all"
       - uses: actions/upload-artifact@v4.4.3          # upload test reports
@@ -74,6 +76,7 @@ jobs:
             - examples/LIN_master_HWSerial_Bkg
             - examples/LIN_master_HWSerial_Bkg_Evt
             - examples/LIN_master_Dual_HWSerial_Bkg
+            - examples/LIN_master_RS485_HWSerial_Blk
           cli-compile-flags: |
             - --warnings="all"
       - uses: actions/upload-artifact@v4.4.3          # upload test reports
@@ -140,6 +143,8 @@ jobs:
             - examples/LIN_master_HWSerial_ESP8266_Bkg
             - examples/LIN_master_HWSerial_ESP8266_Bkg_Evt
             - examples/LIN_master_HWSerial_ESP8266_Ticker
+            - examples/LIN_master_RS485_HWSerial_ESP8266_Blk
+            - examples/LIN_master_RS485_SWSerial_Blk
             
       # upload test reports
       - uses: actions/upload-artifact@v4.4.3
@@ -207,6 +212,8 @@ jobs:
             - examples/LIN_master_HWSerial_ESP32_Bkg
             - examples/LIN_master_HWSerial_ESP32_Bkg_Evt
             - examples/LIN_master_HWSerial_ESP32_Ticker
+            - examples/LIN_master_RS485_HWSerial_ESP32_Blk
+            - examples/LIN_master_RS485_SWSerial_Blk
             
       # upload test reports
       - uses: actions/upload-artifact@v4.4.3
@@ -273,6 +280,7 @@ jobs:
             - source-url: https://github.com/plerup/espsoftwareserial.git
           sketch-paths: |
             - examples/LIN_master_SWSerial_Blk
+            - examples/LIN_master_RS485_SWSerial_Blk
             
       # upload test reports
       - uses: actions/upload-artifact@v4.4.3

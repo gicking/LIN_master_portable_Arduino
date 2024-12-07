@@ -203,16 +203,26 @@ LIN_Master_Base::state_t LIN_Master_Base::_receiveFrame(void)
   \brief      LIN master node constructor
   \details    LIN master node constructor. Initialize class variables to default values.
               For an explanation of the LIN bus and protocol e.g. see https://en.wikipedia.org/wiki/Local_Interconnect_Network.
+              Optional direction switching via TxEn pin, e.g. for LIN via RS485  
   \param[in]  NameLIN     LIN node name (default = "Master")
+  \param[in]  PinTxEN     optional Tx enable pin (high active) e.g. for LIN via RS485 (default = -127/none)
 */
-LIN_Master_Base::LIN_Master_Base(const char NameLIN[])
+LIN_Master_Base::LIN_Master_Base(const char NameLIN[], const int8_t PinTxEN)
 {
   // store parameters in class variables
   memcpy(this->nameLIN, NameLIN, LIN_MASTER_BUFLEN_NAME);     // node name e.g. for debug
+  this->pinTxEN = PinTxEN;
 
   // initialize master node properties
   this->error = LIN_Master_Base::NO_ERROR;                         // last LIN error. Is latched
   this->state = LIN_Master_Base::STATE_OFF;                        // status of LIN state machine
+
+  // initialize TxEN pin
+  if (this->pinTxEN >= 0)
+  {
+    digitalWrite(this->pinTxEN, LOW);
+    pinMode(this->pinTxEN, OUTPUT);
+  }
 
 } // LIN_Master_Base::LIN_Master_Base()
 

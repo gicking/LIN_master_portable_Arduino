@@ -1,7 +1,7 @@
 /**
   \file     LIN_master_HardwareSerial.cpp
   \brief    LIN master emulation library using a HardwareSerial interface
-  \details  This library provides a master node emulation for a LIN bus via a HardwareSerial interface.
+  \details  This library provides a master node emulation for a LIN bus via a HardwareSerial interface, optionally via RS485.
             For an explanation of the LIN bus and protocol e.g. see https://en.wikipedia.org/wiki/Local_Interconnect_Network
   \author   Georg Icking-Konert
 */
@@ -38,6 +38,10 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial::_sendBreak(void)
   // set half baudrate for BREAK
   ((HardwareSerial*) (this->pSerial))->begin(this->baudrate >> 1);
   while(!(*(((HardwareSerial*) (this->pSerial)))));
+
+  // if defined, set TxEN=active
+  if (this->pinTxEN >= 0)
+    digitalWrite(this->pinTxEN, HIGH);
 
   // send BREAK (>=13 bit low)
   ((HardwareSerial*) (this->pSerial))->write(bufTx[0]);
@@ -129,6 +133,10 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial::_receiveFrame(void)
     return this->state;
   }
 
+  // optionally disable Tx for slave response frames for e.g. LIN via RS485. Len==2 because BREAK is handled already handled in _sendFrame()
+  if ((this->pinTxEN >= 0) && (this->type == LIN_Master_Base::SLAVE_RESPONSE) && (((HardwareSerial*) (this->pSerial))->available() == 2))
+    digitalWrite(this->pinTxEN, LOW);
+
   // frame body received (-1 because BREAK is handled already handled in _sendFrame())
   if (((HardwareSerial*) (this->pSerial))->available() >= this->lenRx-1)
   {
@@ -166,9 +174,10 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial::_receiveFrame(void)
   \details    Constructor for LIN node class for using HardwareSerial. Store pointer to used serial interface.
   \param[in]  Interface   serial interface for LIN
   \param[in]  NameLIN     LIN node name (default = "Master")
+  \param[in]  PinTxEN     optional Tx enable pin (high active) e.g. for LIN via RS485 (default = -127/none)
 */
-LIN_Master_HardwareSerial::LIN_Master_HardwareSerial(HardwareSerial &Interface, const char NameLIN[]) : 
-  LIN_Master_Base::LIN_Master_Base(NameLIN)
+LIN_Master_HardwareSerial::LIN_Master_HardwareSerial(HardwareSerial &Interface, const char NameLIN[], const int8_t PinTxEN) : 
+  LIN_Master_Base::LIN_Master_Base(NameLIN, PinTxEN)
 {
   // store pointer to used HW serial
   this->pSerial = &Interface;
