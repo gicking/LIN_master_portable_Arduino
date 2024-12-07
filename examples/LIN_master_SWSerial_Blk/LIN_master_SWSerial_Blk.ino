@@ -35,7 +35,7 @@ Supported (=successfully tested) boards:
   #define PIN_TOGGLE    19
   #define PIN_ERROR     18
   #define SERIAL_DEBUG	Serial
-#elif defined(ARDUINO_AVR_TRINKET3)
+#elif defined(ARDUINO_AVR_TRINKET3) || defined(ARDUINO_AVR_TRINKET5)
   #define PIN_LIN_TX    2
   #define PIN_LIN_RX    0
   #define PIN_TOGGLE    1
