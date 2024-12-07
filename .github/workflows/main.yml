@@ -95,6 +95,10 @@ jobs:
           - fqbn: esp8266:esp8266:d1_mini_clone       # ESP8255 Wemos D1 Mini (clone)
             artifact-name-suffix: d1_mini_clone
     steps:
+      - name: Install ESP8266 Core
+        run: |
+          arduino-cli core update-index
+          arduino-cli core install esp8266:esp8266
       - uses: actions/checkout@v4.2.2                 # check-out this repo
       - uses: arduino/compile-sketches@v1.1.2         # build Arduino examples
         with:
@@ -107,6 +111,7 @@ jobs:
             - examples/LIN_master_SWSerial_Blk
             - examples/LIN_master_HWSerial_ESP8266_Bkg
             - examples/LIN_master_HWSerial_ESP8266_Bkg_Evt
+            - examples/LIN_master_HWSerial_ESP8266_Ticker
           cli-compile-flags: |
             - --warnings="all"
       - uses: actions/upload-artifact@v4.4.3          # upload test reports
