@@ -183,19 +183,13 @@ jobs:
           echo "    - https://espressif.github.io/arduino-esp32/package_esp32_index.json" >> ~/.arduino15/arduino-cli.yaml
           cat ~/.arduino15/arduino-cli.yaml
       
-      # Install required boards
+      # Install required boards & libraries
       - name: install ESP32 core
         run: |
           export PATH="$PWD/bin:$PATH"
           arduino-cli core update-index
           arduino-cli core install esp32:esp32
-
-      # Install required libraries
-      - name: install libraries
-        run: |
-          export PATH="$PWD/bin:$PATH"
-          arduino-cli core update-index
-          arduino-cli lib install "https://github.com/plerup/espsoftwareserial.git"
+          arduino-cli lib install "espsoftwareserial"
 
       # check-out this repository
       - uses: actions/checkout@v4.2.2
