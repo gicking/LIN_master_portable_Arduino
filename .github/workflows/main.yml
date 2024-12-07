@@ -25,8 +25,6 @@ jobs:
         board:
           - fqbn: arduino:avr:mega                    # Arduino Mega2560
             artifact-name-suffix: arduino_avr_mega
-          - fqbn: arduino:avr:uno                     # Arduino Uno
-            artifact-name-suffix: arduino_avr_uno
     steps:
       - uses: actions/checkout@v4.2.2                 # check-out this repo
       - uses: arduino/compile-sketches@v1.1.2         # build Arduino examples
@@ -36,11 +34,11 @@ jobs:
           libraries: |
             - source-path: ./
           sketch-paths: |
-            - examples/LIN_master_Dual_HWSerial_Bkg
-            - examples/LIN_master_HWSerial_Bkg
-            - examples/LIN_master_HWSerial_Bkg_Evt
             - examples/LIN_master_HWSerial_Blk
             - examples/LIN_master_SWSerial_Blk
+            - examples/LIN_master_HWSerial_Bkg
+            - examples/LIN_master_HWSerial_Bkg_Evt
+            - examples/LIN_master_Dual_HWSerial_Bkg
           cli-compile-flags: |
             - --warnings="all"
       - uses: actions/upload-artifact@v4.4.3          # upload test reports
@@ -72,10 +70,43 @@ jobs:
           libraries: |
             - source-path: ./
           sketch-paths: |
-            - examples/LIN_master_Dual_HWSerial_Bkg
+            - examples/LIN_master_HWSerial_Blk
             - examples/LIN_master_HWSerial_Bkg
             - examples/LIN_master_HWSerial_Bkg_Evt
-            - examples/LIN_master_HWSerial_Blk
+            - examples/LIN_master_Dual_HWSerial_Bkg
+          cli-compile-flags: |
+            - --warnings="all"
+      - uses: actions/upload-artifact@v4.4.3          # upload test reports
+        with:
+          if-no-files-found: error
+          path: ${{ env.SKETCHES_REPORTS_PATH }}
+          name: sketches-report-${{ matrix.board.artifact-name-suffix }}
+
+
+  # Build for ESP8266
+  build-for-esp8266:
+    runs-on: ubuntu-latest
+    env:
+      SKETCHES_REPORTS_PATH: sketches-reports
+    strategy:
+      fail-fast: false
+      matrix:
+        board:
+          - fqbn: esp8266:esp8266:d1_mini_clone       # ESP8255 Wemos D1 Mini (clone)
+            artifact-name-suffix: d1_mini_clone
+    steps:
+      - uses: actions/checkout@v4.2.2                 # check-out this repo
+      - uses: arduino/compile-sketches@v1.1.2         # build Arduino examples
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}   # required for private repos
+          fqbn: ${{ matrix.board.fqbn }}
+          libraries: |
+            - source-path: ./
+          sketch-paths: |
+            - examples/LIN_master_HWSerial_ESP8266_Blk
+            - examples/LIN_master_SWSerial_Blk
+            - examples/LIN_master_HWSerial_ESP8266_Bkg
+            - examples/LIN_master_HWSerial_ESP8266_Bkg_Evt
           cli-compile-flags: |
             - --warnings="all"
       - uses: actions/upload-artifact@v4.4.3          # upload test reports
