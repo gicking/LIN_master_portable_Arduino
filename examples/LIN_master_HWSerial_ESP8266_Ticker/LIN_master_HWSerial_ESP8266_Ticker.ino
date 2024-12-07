@@ -26,7 +26,7 @@ Supported (=successfully tested) boards:
 #define LIN_PAUSE     200
 
 // serial I/F for debug output (comment for no output). Use Tx-only UART1 on pin D4 via UART<->USB adapter
-//#define SERIAL_DEBUG  Serial1
+#define SERIAL_DEBUG  Serial1
 
 
 // setup LIN node. Swap Serial pins to use Tx=D8 & Rx=D7 

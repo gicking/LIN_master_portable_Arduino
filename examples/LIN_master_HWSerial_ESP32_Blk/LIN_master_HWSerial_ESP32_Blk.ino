@@ -29,7 +29,7 @@ Supported (=successfully tested) boards:
 #define LIN_PAUSE     200
 
 // serial I/F for debug output (comment for no output)
-//#define SERIAL_DEBUG  Serial
+#define SERIAL_DEBUG  Serial
 
 
 // setup LIN node

@@ -35,8 +35,31 @@ jobs:
           echo "PATH=$PATH"
           which arduino-cli
           arduino-cli version
-      - uses: actions/checkout@v4.2.2                 # check-out this repo
-      - uses: arduino/compile-sketches@v1.1.2         # build Arduino examples
+
+      # Create Board Manager file
+      - name: Create arduino-cli.yaml
+        run: |
+          mkdir -p ~/.arduino15
+          echo "directory: ~/.arduino15" > ~/.arduino15/arduino-cli.yaml
+          echo "board_manager:" >> ~/.arduino15/arduino-cli.yaml
+          echo "  additional_urls:" >> ~/.arduino15/arduino-cli.yaml
+          echo "    - https://adafruit.github.io/arduino-board-index/package_adafruit_index.json" >> ~/.arduino15/arduino-cli.yaml
+          echo "    - https://arduino.esp8266.com/stable/package_esp8266com_index.json" >> ~/.arduino15/arduino-cli.yaml
+          echo "    - https://espressif.github.io/arduino-esp32/package_esp32_index.json" >> ~/.arduino15/arduino-cli.yaml
+          cat ~/.arduino15/arduino-cli.yaml
+      
+      # Install required boards
+      - name: Install ESP8266 Core
+        run: |
+          export PATH="$PWD/bin:$PATH"
+          arduino-cli core update-index
+          arduino-cli core install esp8266:esp8266
+
+      # check-out this repository
+      - uses: actions/checkout@v4.2.2
+
+      # build Arduino examples
+      - uses: arduino/compile-sketches@v1.1.2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}   # required for private repos
           fqbn: ${{ matrix.board.fqbn }}
@@ -50,7 +73,9 @@ jobs:
             - examples/LIN_master_HWSerial_ESP8266_Ticker
           cli-compile-flags: |
             - --warnings="all"
-      - uses: actions/upload-artifact@v4.4.3          # upload test reports
+      
+      # upload test reports
+      - uses: actions/upload-artifact@v4.4.3
         with:
           if-no-files-found: error
           path: ${{ env.SKETCHES_REPORTS_PATH }}
