@@ -73,7 +73,8 @@ jobs:
             - examples/LIN_master_HWSerial_ESP8266_Ticker
           cli-compile-flags: |
             - --warnings="all"
-      
+            - --build-property "compiler.cpp.extra_flags=-DDEBUG=1 -Wall"
+            
       # upload test reports
       - uses: actions/upload-artifact@v4.4.3
         with:
