@@ -26,15 +26,16 @@ jobs:
           - fqbn: esp8266:esp8266:d1_mini_clone       # ESP8255 Wemos D1 Mini (clone)
             artifact-name-suffix: d1_mini_clone
     steps:
-      - uses: actions/checkout@v4.2.2                 # check-out this repo
-      - name: Install Arduino ESP8266
+
+      # Install Arduino CLI
+      - name: Install Arduino CLI
         run: |
           curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
-          echo "Adding Arduino CLI to PATH"
           export PATH="$PWD/bin:$PATH"
           echo "PATH=$PATH"
-          arduino-cli core update-index
-          arduino-cli core install esp8266:esp8266
+          which arduino-cli
+          arduino-cli version
+      - uses: actions/checkout@v4.2.2                 # check-out this repo
       - uses: arduino/compile-sketches@v1.1.2         # build Arduino examples
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}   # required for private repos
