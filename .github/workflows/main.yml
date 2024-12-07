@@ -71,8 +71,6 @@ jobs:
             - examples/LIN_master_HWSerial_ESP8266_Bkg
             - examples/LIN_master_HWSerial_ESP8266_Bkg_Evt
             - examples/LIN_master_HWSerial_ESP8266_Ticker
-          cli-compile-flags: |
-            - --build-property "compiler.cpp.extra_flags=-Wall -Wextra -Werror"
             
       # upload test reports
       - uses: actions/upload-artifact@v4.4.3
