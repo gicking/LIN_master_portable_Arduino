@@ -27,6 +27,11 @@ jobs:
             artifact-name-suffix: d1_mini_clone
     steps:
       - uses: actions/checkout@v4.2.2                 # check-out this repo
+      - name: Install Arduino CLI
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
+          export PATH="$HOME/bin:$PATH"
+          arduino-cli version
       - name: Install ESP8266 Core
         run: |
           arduino-cli core update-index
