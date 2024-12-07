@@ -30,7 +30,10 @@ jobs:
       - name: Install Arduino CLI
         run: |
           curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
-          export PATH="$HOME/bin:$PATH"
+          echo "Adding Arduino CLI to PATH"
+          export PATH="$PWD/bin:$PATH"
+          echo "PATH=$PATH"
+          which arduino-cli
           arduino-cli version
       - name: Install ESP8266 Core
         run: |
