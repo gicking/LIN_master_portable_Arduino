@@ -190,7 +190,80 @@ jobs:
           arduino-cli core update-index
           arduino-cli core install esp32:esp32
 
+      # Install required libraries
+      - name: install libraries
+        run: |
+          export PATH="$PWD/bin:$PATH"
+          arduino-cli core update-index
+          arduino-cli lib install "https://github.com/plerup/espsoftwareserial.git"
+
       # check-out this repository
+      - uses: actions/checkout@v4.2.2
+
+      # build Arduino examples
+      - uses: arduino/compile-sketches@v1.1.2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}   # required for private repos
+          fqbn: ${{ matrix.board.fqbn }}
+          libraries: |
+            - source-path: ./
+          sketch-paths: |
+            - examples/LIN_master_HWSerial_ESP32_Blk
+            - examples/LIN_master_SWSerial_Blk
+            - examples/LIN_master_HWSerial_ESP32_Bkg
+            - examples/LIN_master_HWSerial_ESP32_Bkg_Evt
+            - examples/LIN_master_HWSerial_ESP32_Ticker
+            
+      # upload test reports
+      - uses: actions/upload-artifact@v4.4.3
+        with:
+          if-no-files-found: error
+          path: ${{ env.SKETCHES_REPORTS_PATH }}
+          name: sketches-report-${{ matrix.board.artifact-name-suffix }}
+
+
+  # Build for Trinket
+  build-for-trinket:
+    runs-on: ubuntu-latest
+    env:
+      SKETCHES_REPORTS_PATH: sketches-reports
+    strategy:
+      fail-fast: false
+      matrix:
+        board:
+          - fqbn: adafruit:avr:trinket3           # Adafruit Trinket (ATtiny85 @ 8MHz)
+            artifact-name-suffix: trinket3
+    steps:
+
+      # Install Arduino CLI
+      - name: install Arduino CLI
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
+          export PATH="$PWD/bin:$PATH"
+          echo "PATH=$PATH"
+          which arduino-cli
+          arduino-cli version
+
+      # Create Board Manager file
+      - name: create arduino-cli.yaml
+        run: |
+          mkdir -p ~/.arduino15
+          echo "directory: ~/.arduino15" > ~/.arduino15/arduino-cli.yaml
+          echo "board_manager:" >> ~/.arduino15/arduino-cli.yaml
+          echo "  additional_urls:" >> ~/.arduino15/arduino-cli.yaml
+          echo "    - https://adafruit.github.io/arduino-board-index/package_adafruit_index.json" >> ~/.arduino15/arduino-cli.yaml
+          echo "    - https://arduino.esp8266.com/stable/package_esp8266com_index.json" >> ~/.arduino15/arduino-cli.yaml
+          echo "    - https://espressif.github.io/arduino-esp32/package_esp32_index.json" >> ~/.arduino15/arduino-cli.yaml
+          cat ~/.arduino15/arduino-cli.yaml
+      
+      # Install required boards
+      - name: install Trinket core
+        run: |
+          export PATH="$PWD/bin:$PATH"
+          arduino-cli core update-index
+          arduino-cli core install adafruit:avr
+
+          # check-out this repository
       - uses: actions/checkout@v4.2.2
 
       # build Arduino examples
@@ -202,11 +275,7 @@ jobs:
             - source-path: ./
             - source-url: https://github.com/plerup/espsoftwareserial.git
           sketch-paths: |
-            - examples/LIN_master_HWSerial_ESP32_Blk
             - examples/LIN_master_SWSerial_Blk
-            - examples/LIN_master_HWSerial_ESP32_Bkg
-            - examples/LIN_master_HWSerial_ESP32_Bkg_Evt
-            - examples/LIN_master_HWSerial_ESP32_Ticker
             
       # upload test reports
       - uses: actions/upload-artifact@v4.4.3
