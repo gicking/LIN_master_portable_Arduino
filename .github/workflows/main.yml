@@ -28,7 +28,7 @@ jobs:
     steps:
 
       # Install Arduino CLI
-      - name: Install Arduino CLI
+      - name: install Arduino CLI
         run: |
           curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
           export PATH="$PWD/bin:$PATH"
@@ -37,7 +37,7 @@ jobs:
           arduino-cli version
 
       # Create Board Manager file
-      - name: Create arduino-cli.yaml
+      - name: create arduino-cli.yaml
         run: |
           mkdir -p ~/.arduino15
           echo "directory: ~/.arduino15" > ~/.arduino15/arduino-cli.yaml
@@ -49,7 +49,7 @@ jobs:
           cat ~/.arduino15/arduino-cli.yaml
       
       # Install required boards
-      - name: Install ESP8266 Core
+      - name: install ESP8266 core
         run: |
           export PATH="$PWD/bin:$PATH"
           arduino-cli core update-index
@@ -73,7 +73,6 @@ jobs:
             - examples/LIN_master_HWSerial_ESP8266_Ticker
           cli-compile-flags: |
             - --warnings="all"
-            - --build-property "compiler.cpp.extra_flags=-DDEBUG=1 -Wall"
             
       # upload test reports
       - uses: actions/upload-artifact@v4.4.3
