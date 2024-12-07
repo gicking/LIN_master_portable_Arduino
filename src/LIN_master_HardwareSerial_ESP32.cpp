@@ -115,7 +115,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_sendFrame(void)
 
 /**
   \brief      Receive and check LIN frame
-  \details    Receive and check LIN frame (request frame: check echo; response frame: check header echo & checksum). Here dummy!
+  \details    Receive and check LIN frame (request frame: check echo; response frame: check header echo & checksum)
   \return     current state of LIN state machine
 */
 LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_receiveFrame(void)
@@ -169,13 +169,12 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_receiveFrame(void)
 /**
   \brief      Constructor for LIN node class using ESP32 HardwareSerial
   \details    Constructor for LIN node class for using ESP32 HardwareSerial. Store pointer to used serial interface w/ pins.
-  \param[in]  Interface     serial interface for LIN
-  \param[in]  PinRx         GPIO used for reception
-  \param[in]  PinTx         GPIO used for transmission
-  \param[in]  Baudrate    communication speed [Baud]
-  \param[in]  NameLIN     LIN node name 
+  \param[in]  Interface   serial interface for LIN
+  \param[in]  PinRx       GPIO used for reception
+  \param[in]  PinTx       GPIO used for transmission
+  \param[in]  NameLIN     LIN node name (default = "Master")
 */
-LIN_Master_HardwareSerial_ESP32::LIN_Master_HardwareSerial_ESP32(HardwareSerial &Interface, uint8_t PinRx, uint8_t PinTx, const char NameLIN[] = "")
+LIN_Master_HardwareSerial_ESP32::LIN_Master_HardwareSerial_ESP32(HardwareSerial &Interface, uint8_t PinRx, uint8_t PinTx, const char NameLIN[])
   : LIN_Master_Base::LIN_Master_Base(NameLIN)
 {
   // store pointer to used HW serial
@@ -197,8 +196,8 @@ LIN_Master_HardwareSerial_ESP32::LIN_Master_HardwareSerial_ESP32(HardwareSerial 
 
 /**
   \brief      Open serial interface
-  \details    Open serial interface with specified baudrate. Here dummy!
-  \param[in]  Baudrate    communication speed [Baud]
+  \details    Open serial interface with specified baudrate
+  \param[in]  Baudrate    communication speed [Baud] (default = 19200)
 */
 void LIN_Master_HardwareSerial_ESP32::begin(uint16_t Baudrate)
 {
@@ -216,7 +215,7 @@ void LIN_Master_HardwareSerial_ESP32::begin(uint16_t Baudrate)
 
 /**
   \brief      Close serial interface
-  \details    Close serial interface. Here dummy!
+  \details    Close serial interface
 */
 void LIN_Master_HardwareSerial_ESP32::end()
 {

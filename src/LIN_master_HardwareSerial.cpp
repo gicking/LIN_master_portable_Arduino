@@ -164,10 +164,11 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial::_receiveFrame(void)
 /**
   \brief      Constructor for LIN node class using HardwareSerial
   \details    Constructor for LIN node class for using HardwareSerial. Store pointer to used serial interface.
-  \param[in]  Interface     serial interface for LIN
-  \param[in]  NameLIN       LIN node name 
+  \param[in]  Interface   serial interface for LIN
+  \param[in]  NameLIN     LIN node name (default = "Master")
 */
-LIN_Master_HardwareSerial::LIN_Master_HardwareSerial(HardwareSerial &Interface, const char NameLIN[] = "") : LIN_Master_Base::LIN_Master_Base(NameLIN)
+LIN_Master_HardwareSerial::LIN_Master_HardwareSerial(HardwareSerial &Interface, const char NameLIN[]) : 
+  LIN_Master_Base::LIN_Master_Base(NameLIN)
 {
   // store pointer to used HW serial
   this->pSerial = &Interface;
@@ -186,8 +187,8 @@ LIN_Master_HardwareSerial::LIN_Master_HardwareSerial(HardwareSerial &Interface, 
 
 /**
   \brief      Open serial interface
-  \details    Open serial interface with specified baudrate. Here dummy!
-  \param[in]  Baudrate    communication speed [Baud]
+  \details    Open serial interface with specified baudrate
+  \param[in]  Baudrate    communication speed [Baud] (default = 19200)
 */
 void LIN_Master_HardwareSerial::begin(uint16_t Baudrate)
 {
@@ -204,7 +205,7 @@ void LIN_Master_HardwareSerial::begin(uint16_t Baudrate)
 
 /**
   \brief      Close serial interface
-  \details    Close serial interface. Here dummy!
+  \details    Close serial interface
 */
 void LIN_Master_HardwareSerial::end()
 {

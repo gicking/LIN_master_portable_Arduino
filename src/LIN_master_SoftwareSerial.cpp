@@ -6,6 +6,9 @@
   \author   Georg Icking-Konert
 */
 
+// assert platform which supports SoftwareSerial. Note: ARDUINO_ARCH_ESP32 requires library ESPSoftwareSerial
+#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32) 
+
 // include files
 #include <LIN_master_SoftwareSerial.h>
 
@@ -66,7 +69,7 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendFrame(void)
     return this->state;
   }
 
-  // restore nominal baudrate not required, use dingitalWrite() for BREAK
+  // restore nominal baudrate not required, use digitalWrite() for BREAK
 
   // disable reception to skip LIN echo (disturbs SoftwareSerial)
   ((SoftwareSerial*) this->pSerial)->stopListening();
@@ -92,7 +95,7 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendFrame(void)
 
 /**
   \brief      Receive and check LIN frame
-  \details    Receive and check LIN frame (request frame: check echo; response frame: check header echo & checksum). Here dummy!
+  \details    Receive and check LIN frame (request frame: check echo; response frame: check header echo & checksum)
   \return     current state of LIN state machine
 */
 LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
@@ -166,10 +169,11 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
   \details    Constructor for LIN node class for using SoftwareSerial. Store pointers to SW serial instance.
   \param[in]  PinRx         GPIO used for reception
   \param[in]  PinTx         GPIO used for transmission
-  \param[in]  InverseLogic  use inverse logic
-  \param[in]  NameLIN       LIN node name 
+  \param[in]  InverseLogic  use inverse logic (default = false)
+  \param[in]  NameLIN       LIN node name (default = "Master")
 */
-LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial(uint8_t PinRx, uint8_t PinTx, bool InverseLogic, const char NameLIN[]) : LIN_Master_Base::LIN_Master_Base(NameLIN)
+LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial(uint8_t PinRx, uint8_t PinTx, bool InverseLogic, const char NameLIN[]) : 
+  LIN_Master_Base::LIN_Master_Base(NameLIN)
 {
   // store pins used for SW serial
   this->pinRx = PinRx;
@@ -185,8 +189,8 @@ LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial(uint8_t PinRx, uint8_t PinT
 
 /**
   \brief      Open serial interface
-  \details    Open serial interface with specified baudrate. Here dummy!
-  \param[in]  Baudrate    communication speed [Baud]
+  \details    Open serial interface with specified baudrate
+  \param[in]  Baudrate    communication speed [Baud] (default = 19200)
 */
 void LIN_Master_SoftwareSerial::begin(uint16_t Baudrate)
 {
@@ -206,7 +210,7 @@ void LIN_Master_SoftwareSerial::begin(uint16_t Baudrate)
 
 /**
   \brief      Close serial interface
-  \details    Close serial interface. Here dummy!
+  \details    Close serial interface
 */
 void LIN_Master_SoftwareSerial::end()
 {
@@ -217,6 +221,9 @@ void LIN_Master_SoftwareSerial::end()
   ((SoftwareSerial*) this->pSerial)->end();
 
 } // LIN_Master_SoftwareSerial::end()
+
+
+#endif // ARDUINO_ARCH_AVR || ARDUINO_ARCH_ESP8266 || ARDUINO_ARCH_ESP32
 
 /*-----------------------------------------------------------------------------
     END OF FILE

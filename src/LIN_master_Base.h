@@ -139,11 +139,11 @@ class LIN_Master_Base
   public:
   
     /// @brief LIN master node constructor
-    LIN_Master_Base(const char NameLIN[]);
+    LIN_Master_Base(const char NameLIN[] = "Master");
     
     
     /// @brief Open serial interface
-    virtual void begin(uint16_t Baudrate);
+    virtual void begin(uint16_t Baudrate = 19200);
     
     /// @brief Close serial interface
     virtual void end(void);

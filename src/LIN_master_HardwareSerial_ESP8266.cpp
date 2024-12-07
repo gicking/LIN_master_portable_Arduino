@@ -168,14 +168,15 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_receiveFrame(void)
 /**
   \brief      Constructor for LIN node class using ESP8266 HardwareSerial
   \details    Constructor for LIN node class for using ESP8266 HardwareSerial. Inherit all methods from LIN_Master_HardwareSerial, only different constructor
-  \param[in]  SwapPins    use alternate Serial2 Rx/Tx pins 
-  \param[in]  NameLIN     LIN node name 
+  \param[in]  SwapPins    use alternate Serial2 Rx/Tx pins (default = false)
+  \param[in]  NameLIN     LIN node name (default = "Master")
 */
-LIN_Master_HardwareSerial_ESP8266::LIN_Master_HardwareSerial_ESP8266(bool SwapPins, const char NameLIN[]) : LIN_Master_Base::LIN_Master_Base(NameLIN)
+LIN_Master_HardwareSerial_ESP8266::LIN_Master_HardwareSerial_ESP8266(bool SwapPins, const char NameLIN[]) : 
+  LIN_Master_Base::LIN_Master_Base(NameLIN)
 {
   // store pointer to used HW serial
-  this->pSerial    = &Serial;                               // ESP3266 only has 1 UART with send/receive
-  this->swapPins   = SwapPins;                              // use alternate pins Rx/Tx for Serial0 
+  this->pSerial    = &Serial;                               // ESP8266 only has 1 UART with send/receive
+  this->swapPins   = SwapPins;                              // use alternate pins Rx=D7 / Tx=D8 for Serial0
 
   // optional debug output
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
@@ -191,7 +192,7 @@ LIN_Master_HardwareSerial_ESP8266::LIN_Master_HardwareSerial_ESP8266(bool SwapPi
 
 /**
   \brief      Open serial interface
-  \details    Open serial interface with specified baudrate. Here dummy!
+  \details    Open serial interface with specified baudrate
   \param[in]  Baudrate    communication speed [Baud]
 */
 void LIN_Master_HardwareSerial_ESP8266::begin(uint16_t Baudrate)
@@ -213,7 +214,7 @@ void LIN_Master_HardwareSerial_ESP8266::begin(uint16_t Baudrate)
 
 /**
   \brief      Close serial interface
-  \details    Close serial interface. Here dummy!
+  \details    Close serial interface
 */
 void LIN_Master_HardwareSerial_ESP8266::end()
 {

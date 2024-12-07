@@ -202,8 +202,8 @@ LIN_Master_Base::state_t LIN_Master_Base::_receiveFrame(void)
 /**
   \brief      LIN master node constructor
   \details    LIN master node constructor. Initialize class variables to default values.
-              For an explanation of the LIN bus and protocol e.g. see https://en.wikipedia.org/wiki/Local_Interconnect_Network
-  \param[in]  NameLIN     LIN node name 
+              For an explanation of the LIN bus and protocol e.g. see https://en.wikipedia.org/wiki/Local_Interconnect_Network.
+  \param[in]  NameLIN     LIN node name (default = "Master")
 */
 LIN_Master_Base::LIN_Master_Base(const char NameLIN[])
 {
@@ -221,7 +221,7 @@ LIN_Master_Base::LIN_Master_Base(const char NameLIN[])
 /**
   \brief      Open serial interface
   \details    Open serial interface with specified baudrate. Here dummy!
-  \param[in]  Baudrate    communication speed [Baud]
+  \param[in]  Baudrate    communication speed [Baud] (default = 19200)
 */
 void LIN_Master_Base::begin(uint16_t Baudrate)
 {

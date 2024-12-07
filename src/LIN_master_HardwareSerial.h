@@ -48,10 +48,10 @@ class LIN_Master_HardwareSerial : public LIN_Master_Base
   public:
 
     /// @brief Class constructor
-    LIN_Master_HardwareSerial(HardwareSerial &Interface, const char NameLIN[]);
+    LIN_Master_HardwareSerial(HardwareSerial &Interface, const char NameLIN[] = "Master");
      
     /// @brief Open serial interface
-    void begin(uint16_t Baudrate);
+    void begin(uint16_t Baudrate = 19200);
     
     /// @brief Close serial interface
     void end(void);

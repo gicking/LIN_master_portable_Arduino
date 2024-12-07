@@ -57,10 +57,10 @@ class LIN_Master_HardwareSerial_ESP8266 : public LIN_Master_Base
   public:
 
     /// @brief Class constructor
-    LIN_Master_HardwareSerial_ESP8266(bool SwapPins, const char NameLIN[]);
+    LIN_Master_HardwareSerial_ESP8266(bool SwapPins = false, const char NameLIN[] = "Master");
      
     /// @brief Open serial interface
-    void begin(uint16_t Baudrate);
+    void begin(uint16_t Baudrate = 19200);
       
     /// @brief Close serial interface
     void end(void);
