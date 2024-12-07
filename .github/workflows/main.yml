@@ -200,6 +200,7 @@ jobs:
           fqbn: ${{ matrix.board.fqbn }}
           libraries: |
             - source-path: ./
+            - source-url: https://github.com/plerup/espsoftwareserial.git
           sketch-paths: |
             - examples/LIN_master_HWSerial_ESP32_Blk
             - examples/LIN_master_SWSerial_Blk
