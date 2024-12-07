@@ -7,10 +7,11 @@ on:
   push:
   pull_request:
   
-  # Also run every 7 days to catch breakage caused by changes to external resources (libraries, platforms).
+  # Also run periodically to catch breakage caused by changes to external resources (libraries, platforms).
   schedule:
-    # Minute, Hour, Day of Month, Month, Day of Week -> every 7 days at 9.20pm (UTC)
-    - cron: '20 21 */7 * *'
+    # Minute, Hour, Day of Month, Month, Day of Week (UTC timezone)
+    #- cron: '20 21 */7 * *'
+    - cron: '0 1 2 * *'
 
 jobs:
 
