@@ -255,6 +255,7 @@ jobs:
         run: |
           export PATH="$PWD/bin:$PATH"
           arduino-cli core update-index
+          arduino-cli core install arduino:avr
           arduino-cli core install adafruit:avr
           # arduino-cli board listall | grep --ignore-case "trink"
           arduino-cli core list
