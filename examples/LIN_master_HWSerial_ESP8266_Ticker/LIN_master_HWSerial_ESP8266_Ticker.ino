@@ -2,7 +2,9 @@
 
 Example code for LIN master node with background operation using HardwareSerial
 
-This code runs a LIN master node in "background" operation using HardwareSerial interface. Handler is called by Serial.event()
+This code runs a LIN master node in "background" operation using HardwareSerial interface
+
+Note: after starting a frame, LIN.handler() must be called every <=500us at least until state has changed from STATE_BREAK to STATE_BODY
 
 Supported (=successfully tested) boards:
  - ESP8266 D1 mini        https://www.wemos.cc/en/latest/d1/d1_mini.html
@@ -10,6 +12,7 @@ Supported (=successfully tested) boards:
 **********************/
 
 // include files
+#include <Ticker.h>
 #include "LIN_master_HardwareSerial_ESP8266.h"
 
 
@@ -23,64 +26,58 @@ Supported (=successfully tested) boards:
 #define LIN_PAUSE     200
 
 // serial I/F for debug output (comment for no output). Use Tx-only UART1 on pin D4 via UART<->USB adapter
-#define SERIAL_DEBUG  Serial1
+//#define SERIAL_DEBUG  Serial1
 
 
 // setup LIN node. Swap Serial pins to use Tx=D8 & Rx=D7 
 LIN_Master_HardwareSerial_ESP8266   LIN(true, "Master");
 
+// task scheduler for background
+Ticker taskHandler;
+Ticker taskScheduler;
+Ticker taskPrint;
 
-// call when byte was received via Serial. This routine is run between each time loop() runs, 
-// so using delay inside loop delays response. Multiple bytes of data may be available.
-void serialEvent()
+
+// send & receive frames
+void LIN_scheduler()
 {
-  // call LIN background handler
+  static uint8_t  count = 0;
+  uint8_t         Tx[4] = {0x01, 0x02, 0x03, 0x04};
+
+  // send master request frame (background)
+  if (count == 0)
+  {
+    count++;
+    LIN.sendMasterRequest(LIN_Master_Base::LIN_V2, 0x1A, 4, Tx);
+  }
+
+
+  // send slave response frame (background)
+  else
+  {
+    count = 0;
+    LIN.receiveSlaveResponse(LIN_Master_Base::LIN_V2, 0x05, 6);
+  }
+
+} // LIN_scheduler()
+
+
+// call LIN background handler
+void LIN_handler()
+{
   LIN.handler();
+}
 
-} // serialEvent()
 
-
-// call once
-void setup()
+// print result of LIN frame
+void LIN_print()
 {
-  // for debug output
-  #if defined(SERIAL_DEBUG)
-    SERIAL_DEBUG.begin(115200);
-    while(!SERIAL_DEBUG);
-  #endif // SERIAL_DEBUG
-
-  // indicate background operation
-  pinMode(PIN_TOGGLE, OUTPUT);
-
-  // indicate LIN status via pin
-  pinMode(PIN_ERROR, OUTPUT);
-
-  // open LIN interface
-  LIN.begin(19200);
-
-} // setup()
-
-
-// call repeatedly
-void loop()
-{
-  static uint32_t           lastLINFrame = 0;
-  static uint8_t            count = 0;
-  uint8_t                   Tx[4] = {0x01, 0x02, 0x03, 0x04};
   LIN_Master_Base::frame_t  Type;
   LIN_Master_Base::error_t  error;
   uint8_t                   Id;
   uint8_t                   NumData;
   uint8_t                   Data[8];
   
-
-  ///////////////
-  // as fast as possible
-  ///////////////
-  
-  // toggle pin to show background operation
-  digitalWrite(PIN_TOGGLE, !digitalRead(PIN_TOGGLE));
-
 
   ///////////////
   // check if LIN frame has finished
@@ -146,31 +143,58 @@ void loop()
     LIN.resetStateMachine();
     LIN.resetError();
 
-  } // if LIN frame finished
+  } // state == DONE
 
-
-  ///////////////
-  // SW scheduler for sending/receiving LIN frames
-  ///////////////
-  if (millis() - lastLINFrame > LIN_PAUSE)
+  // if LIN frame is ongoing -> re-try again in a few ms
+  else
   {
-    lastLINFrame = millis();
+    // print error
+    #if defined(SERIAL_DEBUG)
+      SERIAL_DEBUG.print(LIN.nameLIN);
+      SERIAL_DEBUG.println(", frame ongoing");
+    #endif
 
-    // send master request frame (background)
-    if (count == 0)
-    {
-      count++;
-      LIN.sendMasterRequest(LIN_Master_Base::LIN_V2, 0x1A, 4, Tx);
-    }
+    // try again in a few ms  
+    taskPrint.detach();
+    delay(10);
+    taskPrint.attach_ms(LIN_PAUSE, LIN_print);
+
+  } // state != DONE
+
+} // LIN_print()
 
 
-    // send slave response frame (background)
-    else
-    {
-      count = 0;
-      LIN.receiveSlaveResponse(LIN_Master_Base::LIN_V2, 0x05, 6);
-    }
-    
-  } // SW scheduler
+// call once
+void setup()
+{
+  // for debug output
+  #if defined(SERIAL_DEBUG)
+    SERIAL_DEBUG.begin(115200);
+    while(!SERIAL_DEBUG);
+  #endif // SERIAL_DEBUG
+
+  // indicate background operation
+  pinMode(PIN_TOGGLE, OUTPUT);
+
+  // indicate LIN status via pin
+  pinMode(PIN_ERROR, OUTPUT);
+
+  // open LIN interface
+  LIN.begin(19200);
+
+  // add LIN background tasks
+  taskHandler.attach_ms(1, LIN_handler);                // LIN background handler
+  taskScheduler.attach_ms(LIN_PAUSE, LIN_scheduler);    // start frames
+  delay(20);
+  taskPrint.attach_ms(LIN_PAUSE, LIN_print);            // print result of LIN frame (start task with delay!)
+
+} // setup()
+
+
+// call repeatedly
+void loop()
+{
+  // toggle pin to show background operation
+  digitalWrite(PIN_TOGGLE, !digitalRead(PIN_TOGGLE));
 
 } // loop()

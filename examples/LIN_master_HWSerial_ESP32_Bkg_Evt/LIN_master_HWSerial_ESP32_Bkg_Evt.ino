@@ -5,39 +5,45 @@ Example code for LIN master node with background operation using HardwareSerial
 This code runs a LIN master node in "background" operation using HardwareSerial interface. Handler is called by Serial.event()
 
 Supported (=successfully tested) boards:
- - ESP8266 D1 mini        https://www.wemos.cc/en/latest/d1/d1_mini.html
+ - ESP32 Wroom-32UE       https://www.etechnophiles.com/esp32-dev-board-pinout-specifications-datasheet-and-schematic/
 
 **********************/
 
 // include files
-#include "LIN_master_HardwareSerial_ESP8266.h"
+#include "LIN_master_HardwareSerial_ESP32.h"
 
+
+// LIN transmit pin
+#define PIN_LIN_TX    17
+
+// LIN receive pin
+#define PIN_LIN_RX    16
 
 // pin to demonstrate background operation
-#define PIN_TOGGLE    D1
+#define PIN_TOGGLE    19
 
 // indicate LIN return status
-#define PIN_ERROR     D2
+#define PIN_ERROR     18
 
 // pause between LIN frames
 #define LIN_PAUSE     200
 
-// serial I/F for debug output (comment for no output). Use Tx-only UART1 on pin D4 via UART<->USB adapter
-#define SERIAL_DEBUG  Serial1
+// serial I/F for debug output (comment for no output)
+#define SERIAL_DEBUG  Serial
 
 
-// setup LIN node. Swap Serial pins to use Tx=D8 & Rx=D7 
-LIN_Master_HardwareSerial_ESP8266   LIN(true, "Master");
+// setup LIN node
+LIN_Master_HardwareSerial_ESP32   LIN(Serial2, PIN_LIN_RX, PIN_LIN_TX, "Master");
 
 
 // call when byte was received via Serial. This routine is run between each time loop() runs, 
 // so using delay inside loop delays response. Multiple bytes of data may be available.
-void serialEvent()
+void serialEvent2()
 {
   // call LIN background handler
   LIN.handler();
 
-} // serialEvent()
+} // serialEvent2()
 
 
 // call once

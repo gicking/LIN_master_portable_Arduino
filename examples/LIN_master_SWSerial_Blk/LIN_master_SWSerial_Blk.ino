@@ -16,59 +16,60 @@ Supported (=successfully tested) boards:
 #include "LIN_master_SoftwareSerial.h"
 
 
-// board pin definitions
+// board pin definitions. Note: for supported Rx pins see https://docs.arduino.cc/learn/built-in-libraries/software-serial/
 #if defined(ARDUINO_AVR_MEGA2560)
+  #define PIN_LIN_TX    18        // transmit pin for LIN
+  #define PIN_LIN_RX    10        // receive pin for LIN
   #define PIN_TOGGLE    30        // pin to demonstrate background operation
   #define PIN_ERROR     32        // indicate LIN return status
-  #define PIN_LIN_RX    10        // receive pin for LIN
-  #define PIN_LIN_TX    14        // transmit pin for LIN
+  #define SERIAL_DEBUG	Serial
 #elif defined(ARDUINO_ESP8266_WEMOS_D1MINI)
+  #define PIN_LIN_TX    D8
+  #define PIN_LIN_RX    D7
   #define PIN_TOGGLE    D1
   #define PIN_ERROR     D2
-  #define PIN_LIN_RX    D7
-  #define PIN_LIN_TX    D8
+  #define SERIAL_DEBUG	Serial1
 #elif defined(ARDUINO_ESP32_WROOM_DA)
-  #define PIN_TOGGLE    19        // pin to demonstrate background operation
-  #define PIN_ERROR     23        // indicate LIN return status
-  #define PIN_LIN_RX    16        // receive pin for LIN
-  #define PIN_LIN_TX    17        // transmit pin for LIN
+  #define PIN_LIN_TX    17
+  #define PIN_LIN_RX    16
+  #define PIN_TOGGLE    19
+  #define PIN_ERROR     18
+  #define SERIAL_DEBUG	Serial
 #elif defined(ARDUINO_AVR_TRINKET3)
+  #define PIN_LIN_TX    2
+  #define PIN_LIN_RX    0
   #define PIN_TOGGLE    1
   #define PIN_ERROR     3
-  #define PIN_LIN_RX    0
-  #define PIN_LIN_TX    2
+  // Trinket has no HW-Serial!
 #else
   #error adapt parameters to board   
 #endif
 
 // pause between LIN frames
-#define LIN_PAUSE       100
-
-// skip serial output (for time measurements)
-//#define SKIP_CONSOLE
+#define LIN_PAUSE       200
 
 
-// setup LIN node. Note: not all pins support Rx!
-LIN_Master_SoftwareSerial   LIN(PIN_LIN_RX, PIN_LIN_TX, false, "LIN_SW");       // parameter: Rx, Tx, inverseLogic, name
+// setup LIN node
+LIN_Master_SoftwareSerial   LIN(PIN_LIN_RX, PIN_LIN_TX, false, "Master");
 
 
 // call once
 void setup()
 {
+  // for debug output
+  #if defined(SERIAL_DEBUG)
+    SERIAL_DEBUG.begin(115200);
+    while(!SERIAL_DEBUG);
+  #endif // SERIAL_DEBUG
+
   // indicate background operation
   pinMode(PIN_TOGGLE, OUTPUT);
 
   // indicate LIN status via pin
   pinMode(PIN_ERROR, OUTPUT);
 
-  // open LIN connection
+  // open LIN interface
   LIN.begin(19200);
-
-  // for user interaction via console (Trinket has no Serial)
-  #if !defined(ARDUINO_AVR_TRINKET3)
-    Serial.begin(115200);
-    while(!Serial);
-  #endif
 
 } // setup()
 
@@ -83,7 +84,7 @@ void loop()
   uint8_t               NumData;
   uint8_t               Data[8];
   LIN_Master_Base::error_t   error;
-  
+
 
   // send master request frame and get result immediately
   error = LIN.sendMasterRequestBlocking(LIN_Master_Base::LIN_V2, 0x1A, 4, Tx);
@@ -94,17 +95,28 @@ void loop()
   // get frame data
   LIN.getFrame(Type, Id, NumData, Data);
 
-  // get frame data
-  LIN.getFrame(Type, Id, NumData, Data);
-
-  // print result (Trinket has no Serial)
-  #if !defined(ARDUINO_AVR_TRINKET3) && !defined(SKIP_CONSOLE)
-    Serial.print(millis());
-    Serial.print("\t");
-    Serial.print(LIN.nameLIN);
-    Serial.print(" request blocking: 0x");
-    Serial.println(error, HEX);
-  #endif
+  // print result
+  #if defined(SERIAL_DEBUG)
+    SERIAL_DEBUG.print(LIN.nameLIN);
+    SERIAL_DEBUG.print(", request, ID=0x");
+    SERIAL_DEBUG.print(Id, HEX);
+    if (error != LIN_Master_Base::NO_ERROR)
+    { 
+      SERIAL_DEBUG.print(", err=0x");
+      SERIAL_DEBUG.println(error, HEX);
+    }
+    else
+    {
+      SERIAL_DEBUG.print(", data=");        
+      for (uint8_t i=0; (i < NumData); i++)
+      {
+        SERIAL_DEBUG.print("0x");
+        SERIAL_DEBUG.print((int) Data[i], HEX);
+        SERIAL_DEBUG.print(" ");
+      }
+      SERIAL_DEBUG.println();
+    }
+  #endif // SERIAL_DEBUG
 
   // reset state machine & error
   LIN.resetStateMachine();
@@ -120,7 +132,7 @@ void loop()
 
 
   // send/receive slave response frame and get result immediately
-  error = LIN.receiveSlaveResponseBlocking(LIN_Master_Base::LIN_V2, 0x05, 8, Data);
+  error = LIN.receiveSlaveResponseBlocking(LIN_Master_Base::LIN_V2, 0x05, 6, Data);
 
   // indicate status via pin
   digitalWrite(PIN_ERROR, error);
@@ -128,21 +140,28 @@ void loop()
   // get frame data
   LIN.getFrame(Type, Id, NumData, Data);
 
-  // print result (Trinket has no Serial)
-  #if !defined(ARDUINO_AVR_TRINKET3) && !defined(SKIP_CONSOLE)
-    Serial.print(millis());
-    Serial.print("\t");
-    Serial.print(LIN.nameLIN);
-    Serial.print(" response blocking: 0x");
-    Serial.println(error, HEX);
-    for (uint8_t i=0; (i < NumData) && (LIN.getError() == LIN_Master_Base::NO_ERROR); i++)
-    {
-      Serial.print("\t");        
-      Serial.print((int) i);
-      Serial.print("\t0x");
-      Serial.println((int) Data[i], HEX);
+  // print result
+  #if defined(SERIAL_DEBUG)
+    SERIAL_DEBUG.print(LIN.nameLIN);
+    SERIAL_DEBUG.print(", response, ID=0x");
+    SERIAL_DEBUG.print(Id, HEX);
+    if (error != LIN_Master_Base::NO_ERROR)
+    { 
+      SERIAL_DEBUG.print(", err=0x");
+      SERIAL_DEBUG.println(error, HEX);
     }
-  #endif
+    else
+    {
+      SERIAL_DEBUG.print(", data=");        
+      for (uint8_t i=0; (i < NumData); i++)
+      {
+        SERIAL_DEBUG.print("0x");
+        SERIAL_DEBUG.print((int) Data[i], HEX);
+        SERIAL_DEBUG.print(" ");
+      }
+      SERIAL_DEBUG.println();
+    }
+  #endif // SERIAL_DEBUG
 
   // reset state machine & error
   LIN.resetStateMachine();

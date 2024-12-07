@@ -21,19 +21,19 @@ Supported (=successfully tested) boards:
 #define PIN_ERROR     32
 
 // pause between LIN frames
-#define LIN_PAUSE     100
+#define LIN_PAUSE     200
 
-// skip serial output (for time measurements)
-//#define SKIP_CONSOLE
+// serial I/F for debug output (comment for no output)
+//#define SERIAL_DEBUG  Serial
 
 
 // setup LIN node
-LIN_Master_HardwareSerial   LIN(Serial3, "LIN_HW");             // parameter: HW-interface, name
+LIN_Master_HardwareSerial   LIN(Serial1, "Master");
 
 
 // call when byte was received via Serial1. This routine is run between each time loop() runs, 
 // so using delay inside loop delays response. Multiple bytes of data may be available.
-void serialEvent3()
+void serialEvent1()
 {
   // call LIN background handler
   LIN.handler();
@@ -44,18 +44,20 @@ void serialEvent3()
 // call once
 void setup()
 {
+  // for debug output
+  #if defined(SERIAL_DEBUG)
+    SERIAL_DEBUG.begin(115200);
+    while(!SERIAL_DEBUG);
+  #endif // SERIAL_DEBUG
+
   // indicate background operation
   pinMode(PIN_TOGGLE, OUTPUT);
 
   // indicate LIN status via pin
   pinMode(PIN_ERROR, OUTPUT);
 
-  // open LIN connection
+  // open LIN interface
   LIN.begin(19200);
-  
-  // for user interaction via console
-  Serial.begin(115200);
-  while(!Serial);
 
 } // setup()
 
@@ -63,13 +65,14 @@ void setup()
 // call repeatedly
 void loop()
 {
-  static uint32_t       lastLINFrame = 0;
-  static uint8_t        count = 0;
-  uint8_t               Tx[4] = {0x01, 0x02, 0x03, 0x04};
-  LIN_Master_Base::frame_t   Type;
-  uint8_t               Id;
-  uint8_t               NumData;
-  uint8_t               Data[8];
+  static uint32_t           lastLINFrame = 0;
+  static uint8_t            count = 0;
+  uint8_t                   Tx[4] = {0x01, 0x02, 0x03, 0x04};
+  LIN_Master_Base::frame_t  Type;
+  LIN_Master_Base::error_t  error;  
+  uint8_t                   Id;
+  uint8_t                   NumData;
+  uint8_t                   Data[8];
   
 
   ///////////////
@@ -85,35 +88,60 @@ void loop()
   ///////////////
   if (LIN.getState() == LIN_Master_Base::STATE_DONE)
   {
-    // get frame data
+    // get frame data & error status
     LIN.getFrame(Type, Id, NumData, Data);
+    error = LIN.getError();
 
     // indicate status via pin
-    digitalWrite(PIN_ERROR, LIN.getError());
+    digitalWrite(PIN_ERROR, error);
 
     // print result
-    #if !defined(SKIP_CONSOLE)
-      Serial.print(millis());
-      Serial.print("\t");
-      Serial.print(LIN.nameLIN);
+    #if defined(SERIAL_DEBUG)
       if (Type == LIN_Master_Base::MASTER_REQUEST)
       {
-        Serial.print(" request background: 0x");
-        Serial.println(LIN.getError(), HEX);
+        SERIAL_DEBUG.print(LIN.nameLIN);
+        SERIAL_DEBUG.print(", request, ID=0x");
+        SERIAL_DEBUG.print(Id, HEX);
+        if (error != LIN_Master_Base::NO_ERROR)
+        { 
+          SERIAL_DEBUG.print(", err=0x");
+          SERIAL_DEBUG.println(error, HEX);
+        }
+        else
+        {
+          SERIAL_DEBUG.print(", data=");        
+          for (uint8_t i=0; (i < NumData); i++)
+          {
+            SERIAL_DEBUG.print("0x");
+            SERIAL_DEBUG.print((int) Data[i], HEX);
+            SERIAL_DEBUG.print(" ");
+          }
+          SERIAL_DEBUG.println();
+        }
       }
       else
       {
-        Serial.print(" reponse background: 0x");
-        Serial.println(LIN.getError(), HEX);
-        for (uint8_t i=0; (i < NumData) && (LIN.getError() == LIN_Master_Base::NO_ERROR); i++)
+        SERIAL_DEBUG.print(LIN.nameLIN);
+        SERIAL_DEBUG.print(", response, ID=0x");
+        SERIAL_DEBUG.print(Id, HEX);
+        if (error != LIN_Master_Base::NO_ERROR)
+        { 
+          SERIAL_DEBUG.print(", err=0x");
+          SERIAL_DEBUG.println(error, HEX);
+        }
+        else
         {
-          Serial.print("\t");        
-          Serial.print((int) i);
-          Serial.print("\t0x");
-          Serial.println((int) Data[i], HEX);
+          SERIAL_DEBUG.print(", data=");        
+          for (uint8_t i=0; (i < NumData); i++)
+          {
+            SERIAL_DEBUG.print("0x");
+            SERIAL_DEBUG.print((int) Data[i], HEX);
+            SERIAL_DEBUG.print(" ");
+          }
+          SERIAL_DEBUG.println();
         }
       }
-    #endif // SKIP_CONSOLE
+    #endif // SERIAL_DEBUG
 
     // reset state machine & error
     LIN.resetStateMachine();
@@ -133,7 +161,7 @@ void loop()
     if (count == 0)
     {
       count++;
-      LIN.sendMasterRequest(LIN_Master_Base::LIN_V2, 0x1B, 3, Tx);
+      LIN.sendMasterRequest(LIN_Master_Base::LIN_V2, 0x1A, 4, Tx);
     }
 
 
@@ -141,7 +169,7 @@ void loop()
     else
     {
       count = 0;
-      LIN.receiveSlaveResponse(LIN_Master_Base::LIN_V2, 0x05, 8);
+      LIN.receiveSlaveResponse(LIN_Master_Base::LIN_V2, 0x05, 6);
     }
     
   } // SW scheduler

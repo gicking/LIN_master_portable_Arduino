@@ -13,26 +13,38 @@ Supported (=successfully tested) boards:
 #include "LIN_master_HardwareSerial_ESP32.h"
 
 
-// board pin definitions (GPIOn is referred to as n)
-#define PIN_TOGGLE    19        // pin to demonstrate background operation
-#define PIN_ERROR     23        // indicate LIN return status
-#define PIN_LIN_RX    16        // receive pin for LIN
-#define PIN_LIN_TX    17        // transmit pin for LIN
+// LIN transmit pin
+#define PIN_LIN_TX    17
+
+// LIN receive pin
+#define PIN_LIN_RX    16
+
+// pin to demonstrate background operation
+#define PIN_TOGGLE    19
+
+// indicate LIN return status
+#define PIN_ERROR     18
 
 // pause between LIN frames
-#define LIN_PAUSE     100
+#define LIN_PAUSE     200
 
-// skip serial output (for time measurements)
-//#define SKIP_CONSOLE
+// serial I/F for debug output (comment for no output)
+//#define SERIAL_DEBUG  Serial
 
 
 // setup LIN node
-LIN_Master_HardwareSerial_ESP32   LIN(Serial2, PIN_LIN_RX, PIN_LIN_TX, "LIN_HW");    // parameter: interface, Rx, Tx, name
+LIN_Master_HardwareSerial_ESP32   LIN(Serial2, PIN_LIN_RX, PIN_LIN_TX, "Master");
 
 
 // call once
 void setup()
 {
+  // for debug output
+  #if defined(SERIAL_DEBUG)
+    SERIAL_DEBUG.begin(115200);
+    while(!SERIAL_DEBUG);
+  #endif // SERIAL_DEBUG
+
   // indicate background operation
   pinMode(PIN_TOGGLE, OUTPUT);
 
@@ -40,11 +52,7 @@ void setup()
   pinMode(PIN_ERROR, OUTPUT);
 
   // open LIN interface
-  LIN.begin(19200);  
-  
-  // for output (only) to console
-  Serial.begin(115200);
-  while(!Serial);
+  LIN.begin(19200);
 
 } // setup()
 
@@ -52,13 +60,13 @@ void setup()
 // call repeatedly
 void loop()
 {
-  static uint32_t       tStart;
-  uint8_t               Tx[4] = {0x01, 0x02, 0x03, 0x04};
-  LIN_Master_Base::frame_t   Type;
-  uint8_t               Id;
-  uint8_t               NumData;
-  uint8_t               Data[8];
-  LIN_Master_Base::error_t   error;
+  static uint32_t           tStart;
+  uint8_t                   Tx[4] = {0x01, 0x02, 0x03, 0x04};
+  LIN_Master_Base::frame_t  Type;
+  LIN_Master_Base::error_t  error;
+  uint8_t                   Id;
+  uint8_t                   NumData;
+  uint8_t                   Data[8];
 
 
   // send master request frame and get result immediately
@@ -71,13 +79,27 @@ void loop()
   LIN.getFrame(Type, Id, NumData, Data);
 
   // print result
-  #if !defined(SKIP_CONSOLE)
-    Serial.print(millis());
-    Serial.print("\t");
-    Serial.print(LIN.nameLIN);
-    Serial.print(" request blocking: 0x");
-    Serial.println(error, HEX);
-  #endif // SKIP_CONSOLE
+  #if defined(SERIAL_DEBUG)
+    SERIAL_DEBUG.print(LIN.nameLIN);
+    SERIAL_DEBUG.print(", request, ID=0x");
+    SERIAL_DEBUG.print(Id, HEX);
+    if (error != LIN_Master_Base::NO_ERROR)
+    { 
+      SERIAL_DEBUG.print(", err=0x");
+      SERIAL_DEBUG.println(error, HEX);
+    }
+    else
+    {
+      SERIAL_DEBUG.print(", data=");        
+      for (uint8_t i=0; (i < NumData); i++)
+      {
+        SERIAL_DEBUG.print("0x");
+        SERIAL_DEBUG.print((int) Data[i], HEX);
+        SERIAL_DEBUG.print(" ");
+      }
+      SERIAL_DEBUG.println();
+    }
+  #endif // SERIAL_DEBUG
 
   // reset state machine & error
   LIN.resetStateMachine();
@@ -90,10 +112,10 @@ void loop()
   {
     digitalWrite(PIN_TOGGLE, !digitalRead(PIN_TOGGLE));
   }
-  
+
 
   // send/receive slave response frame and get result immediately
-  error = LIN.receiveSlaveResponseBlocking(LIN_Master_Base::LIN_V2, 0x05, 8, Data);
+  error = LIN.receiveSlaveResponseBlocking(LIN_Master_Base::LIN_V2, 0x05, 6, Data);
 
   // indicate status via pin
   digitalWrite(PIN_ERROR, error);
@@ -102,21 +124,28 @@ void loop()
   LIN.getFrame(Type, Id, NumData, Data);
 
   // print result
-  #if !defined(SKIP_CONSOLE)
-    Serial.print(millis());
-    Serial.print("\t");
-    Serial.print(LIN.nameLIN);
-    Serial.print(" response blocking: 0x");
-    Serial.println(error, HEX);
-    for (uint8_t i=0; (i < NumData) && (LIN.getError() == LIN_Master_Base::NO_ERROR); i++)
-    {
-      Serial.print("\t");        
-      Serial.print((int) i);
-      Serial.print("\t0x");
-      Serial.println((int) Data[i], HEX);
+  #if defined(SERIAL_DEBUG)
+    SERIAL_DEBUG.print(LIN.nameLIN);
+    SERIAL_DEBUG.print(", response, ID=0x");
+    SERIAL_DEBUG.print(Id, HEX);
+    if (error != LIN_Master_Base::NO_ERROR)
+    { 
+      SERIAL_DEBUG.print(", err=0x");
+      SERIAL_DEBUG.println(error, HEX);
     }
-  #endif // SKIP_CONSOLE
-
+    else
+    {
+      SERIAL_DEBUG.print(", data=");        
+      for (uint8_t i=0; (i < NumData); i++)
+      {
+        SERIAL_DEBUG.print("0x");
+        SERIAL_DEBUG.print((int) Data[i], HEX);
+        SERIAL_DEBUG.print(" ");
+      }
+      SERIAL_DEBUG.println();
+    }
+  #endif // SERIAL_DEBUG
+  
   // reset state machine & error
   LIN.resetStateMachine();
   LIN.resetError();
