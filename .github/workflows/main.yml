@@ -225,8 +225,8 @@ jobs:
       fail-fast: false
       matrix:
         board:
-          - fqbn: adafruit:avr:trinket3           # Adafruit Trinket (ATtiny85 @ 8MHz)
-            artifact-name-suffix: trinket3
+          - fqbn: adafruit:avr:trinket5           # Adafruit Trinket (ATtiny85 @ 16MHz)
+            artifact-name-suffix: trinket5
     steps:
 
       # Install Arduino CLI
