@@ -33,9 +33,8 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendBreak(void)
     return this->state;
   }
 
-  // if defined, set TxEN=active
-  if (this->pinTxEN >= 0)
-    digitalWrite(this->pinTxEN, HIGH);
+  // optionally enable transmitter
+  enableTransmitter();
 
   // generate BREAK directly via GPIO (less overhead)
   digitalWrite(pinTx, LOW);
@@ -81,9 +80,9 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendFrame(void)
   // send rest of frame (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID). Is blocking and receive is disabled!
   ((SoftwareSerial*) this->pSerial)->write(this->bufTx+1, this->lenTx-1);
 
-  // optionally disable Tx for e.g. LIN via RS485
-  if ((this->pinTxEN >= 0) && (this->type == LIN_Master_Base::SLAVE_RESPONSE))
-    digitalWrite(this->pinTxEN, LOW);
+  // optionally disable transmitter for slave response frames
+  if (this->type == LIN_Master_Base::SLAVE_RESPONSE)
+    disableTransmitter();
 
   // re-enable reception (above write is blocking)
   ((SoftwareSerial*) this->pSerial)->listen();
@@ -129,6 +128,9 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
     // check frame for errors
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) this->_checkFrame());
 
+    // optionally disable transmitter after frame is completed
+    disableTransmitter();
+    
     // progress state
     this->state = LIN_Master_Base::STATE_DONE;
 
@@ -158,6 +160,7 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
       if (micros() - this->timeStart > this->timeMax)
       {
         this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_TIMEOUT);
+        disableTransmitter();
         this->state = LIN_Master_Base::STATE_DONE;
       }
 

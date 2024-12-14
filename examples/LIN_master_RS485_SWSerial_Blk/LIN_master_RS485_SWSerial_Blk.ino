@@ -5,11 +5,11 @@ Physical interface is RS485 (e.g. MAX485) with Tx direction switching. Permanent
 
 This code runs a LIN master node in blocking operation using SoftwareSerial interface
 
-Supported (=successfully tested) boards + MAX485:
- - xxx Arduino Mega 2560      https://store.arduino.cc/products/arduino-mega-2560-rev3
- - xxx Adafruit Trinket       https://www.adafruit.com/product/1501
- - xxx ESP8266 D1 mini        https://www.wemos.cc/en/latest/d1/d1_mini.html
- - xxx ESP32 Wroom-32UE       https://www.etechnophiles.com/esp32-dev-board-pinout-specifications-datasheet-and-schematic/
+Supported (=successfully tested) boards + MAX485 (requires 5V board!):
+ - Arduino Mega 2560      https://store.arduino.cc/products/arduino-mega-2560-rev3
+ - Adafruit Trinket       https://www.adafruit.com/product/1501
+ - ESP8266 D1 mini        https://www.wemos.cc/en/latest/d1/d1_mini.html
+ - ESP32 Wroom-32UE       https://www.etechnophiles.com/esp32-dev-board-pinout-specifications-datasheet-and-schematic/
 
 **********************/
 
@@ -24,18 +24,18 @@ Supported (=successfully tested) boards + MAX485:
   #define PIN_TXEN      17        // pin to switch RS485 Tx direction (=DE)
   #define PIN_TOGGLE    30        // pin to demonstrate background operation
   #define PIN_ERROR     32        // indicate LIN return status
-  #define SERIAL_DEBUG	Serial
+  #define SERIAL_DEBUG	Serial    // serial I/F for debug output (comment for no output)
 #elif defined(ARDUINO_ESP8266_WEMOS_D1MINI)
   #define PIN_LIN_TX    D8
   #define PIN_LIN_RX    D7
   #define PIN_TXEN      D3
   #define PIN_TOGGLE    D1
   #define PIN_ERROR     D2
-  #define SERIAL_DEBUG	Serial1
+  #define SERIAL_DEBUG	Serial1   // Use Tx-only UART1 on pin D4 via UART<->USB adapter
 #elif defined(ARDUINO_ESP32_WROOM_DA)
   #define PIN_LIN_TX    17
   #define PIN_LIN_RX    16
-  #define PIN_TXEN      15
+  #define PIN_TXEN      21
   #define PIN_TOGGLE    19
   #define PIN_ERROR     18
   #define SERIAL_DEBUG	Serial

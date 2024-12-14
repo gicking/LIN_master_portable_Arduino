@@ -61,7 +61,7 @@ class LIN_Master_HardwareSerial_ESP8266 : public LIN_Master_Base
      
     /// @brief Open serial interface
     void begin(uint16_t Baudrate = 19200);
-      
+    
     /// @brief Close serial interface
     void end(void);
 

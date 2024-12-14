@@ -163,6 +163,12 @@ class LIN_Master_Base
     /// @brief Getter for LIN state machine error
     inline LIN_Master_Base::error_t getError(void) { return this->error; }
     
+    /// @brief Enable RS485 transmitter (DE=high)
+    inline void enableTransmitter(void) { if (this->pinTxEN >= 0) digitalWrite(this->pinTxEN, HIGH); }
+    
+    /// @brief Disable RS485 transmitter (DE=low)
+    inline void disableTransmitter(void) { if (this->pinTxEN >= 0) digitalWrite(this->pinTxEN, LOW); }
+    
     
     /// @brief Getter for LIN frame
     inline void getFrame(LIN_Master_Base::frame_t &Type, uint8_t &Id, uint8_t &NumData, uint8_t Data[])

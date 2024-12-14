@@ -38,13 +38,12 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_sendBreak(void)
   ((HardwareSerial*) (this->pSerial))->flush();
   while (((HardwareSerial*) (this->pSerial))->available())
     ((HardwareSerial*) (this->pSerial))->read();
- 
+
   // set half baudrate for BREAK
   ((HardwareSerial*) (this->pSerial))->updateBaudRate(this->baudrate >> 1);
 
-  // if defined, set TxEN=active
-  if (this->pinTxEN >= 0)
-    digitalWrite(this->pinTxEN, HIGH);
+  // optionally enable transmitter
+  enableTransmitter();
 
   // send BREAK (>=13 bit low)
   ((HardwareSerial*) (this->pSerial))->write(bufTx[0]);
@@ -96,20 +95,8 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_sendFrame(void)
     // progress state
     this->state = LIN_Master_Base::STATE_BODY;
 
-  } // BREAK echo received
-  
-  // no byte(s) received
-  else
-  {
-    // check for timeout
-    if (micros() - this->timeStart > this->timeMax)
-    {
-      this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_TIMEOUT);
-      this->state = LIN_Master_Base::STATE_DONE;
-    }
-
-  } // no byte(s) received
-  
+  } // BREAK duration expired
+    
   // return state
   return this->state;
 
@@ -137,9 +124,9 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_receiveFrame(void)
     return this->state;
   }
 
-  // optionally disable Tx for slave response frames for e.g. LIN via RS485. Len==2 because BREAK is handled already handled in _sendFrame()
-  if ((this->pinTxEN >= 0) && (this->type == LIN_Master_Base::SLAVE_RESPONSE) && (((HardwareSerial*) (this->pSerial))->available() == 2))
-    digitalWrite(this->pinTxEN, LOW);
+  // optionally disable transmitter for slave response frames. Here, need to read BREAK as well due to delay of Serial.available()
+  if ((this->type == LIN_Master_Base::SLAVE_RESPONSE) && (((HardwareSerial*) (this->pSerial))->available() == 3))
+    disableTransmitter();
 
   // frame body received. Here, need to read BREAK as well due to delay of Serial.available()
   if (((HardwareSerial*) (this->pSerial))->available() >= this->lenRx)
@@ -149,6 +136,9 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_receiveFrame(void)
 
     // check frame for errors
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) this->_checkFrame());
+
+    // optionally disable transmitter after frame is completed
+    disableTransmitter();
 
     // progress state
     this->state = LIN_Master_Base::STATE_DONE;
@@ -162,6 +152,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_receiveFrame(void)
     if (micros() - this->timeStart > this->timeMax)
     {
       this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_TIMEOUT);
+      disableTransmitter();
       this->state = LIN_Master_Base::STATE_DONE;
     }
 
@@ -183,8 +174,8 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_receiveFrame(void)
   \param[in]  NameLIN     LIN node name (default = "Master")
   \param[in]  PinTxEN     optional Tx enable pin (high active) e.g. for LIN via RS485 (default = -127/none)
 */
-LIN_Master_HardwareSerial_ESP32::LIN_Master_HardwareSerial_ESP32(HardwareSerial &Interface, uint8_t PinRx, uint8_t PinTx, const char NameLIN[], const int8_t PinTxEN)
-  : LIN_Master_Base::LIN_Master_Base(NameLIN, PinTxEN)
+LIN_Master_HardwareSerial_ESP32::LIN_Master_HardwareSerial_ESP32(HardwareSerial &Interface, uint8_t PinRx, uint8_t PinTx, const char NameLIN[], const int8_t PinTxEN) :
+  LIN_Master_Base::LIN_Master_Base(NameLIN, PinTxEN)
 {
   // store pointer to used HW serial
   this->pSerial    = &Interface;                              // used serial interface
@@ -211,7 +202,7 @@ LIN_Master_HardwareSerial_ESP32::LIN_Master_HardwareSerial_ESP32(HardwareSerial 
 void LIN_Master_HardwareSerial_ESP32::begin(uint16_t Baudrate)
 {
   // call base class method
-  LIN_Master_Base::begin(Baudrate);  
+  LIN_Master_Base::begin(Baudrate);
 
   // open serial interface incl. used pins
   ((HardwareSerial*) (this->pSerial))->end();

@@ -186,6 +186,7 @@ LIN_Master_Base::state_t LIN_Master_Base::_receiveFrame(void)
   #endif
 
   // dummy: just progress state
+  disableTransmitter();
   this->state = LIN_Master_Base::STATE_DONE;
 
   // return state
@@ -217,7 +218,7 @@ LIN_Master_Base::LIN_Master_Base(const char NameLIN[], const int8_t PinTxEN)
   this->error = LIN_Master_Base::NO_ERROR;                         // last LIN error. Is latched
   this->state = LIN_Master_Base::STATE_OFF;                        // status of LIN state machine
 
-  // initialize TxEN pin
+  // initialize TxEN pin low (=transmitter off)
   if (this->pinTxEN >= 0)
   {
     digitalWrite(this->pinTxEN, LOW);
@@ -425,6 +426,7 @@ LIN_Master_Base::state_t LIN_Master_Base::handler(void)
     // this should never happen..
     default:
       this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_MISC);
+      disableTransmitter();
       this->state = LIN_Master_Base::STATE_DONE;
 
   } // switch (state)

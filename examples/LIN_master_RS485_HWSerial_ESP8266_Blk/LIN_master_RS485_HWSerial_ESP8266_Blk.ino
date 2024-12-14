@@ -5,8 +5,8 @@ Physical interface is RS485 (e.g. MAX485) with Tx direction switching. Permanent
 
 This code runs a LIN master node in blocking operation using HardwareSerial interface
 
-Supported (=successfully tested) boards + MAX485:
- - xxx ESP8266 D1 mini        https://www.wemos.cc/en/latest/d1/d1_mini.html
+Supported (=successfully tested) boards:
+ - ESP8266 D1 mini        https://www.wemos.cc/en/latest/d1/d1_mini.html
 
 **********************/
 

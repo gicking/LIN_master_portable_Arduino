@@ -39,13 +39,12 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_sendBreak(void)
   //((HardwareSerial*) (this->pSerial))->flush();   // skip, as this causes a ~500us delay, see https://github.com/esp8266/Arduino/blob/master/cores/esp8266/HardwareSerial.cpp
   while (((HardwareSerial*) (this->pSerial))->available())
     ((HardwareSerial*) (this->pSerial))->read();
- 
+
   // set half baudrate for BREAK
   ((HardwareSerial*) (this->pSerial))->updateBaudRate(this->baudrate >> 1);
 
-  // if defined, set TxEN=active
-  if (this->pinTxEN >= 0)
-    digitalWrite(this->pinTxEN, HIGH);
+  // optionally enable transmitter
+  enableTransmitter();
 
   // send BREAK (>=13 bit low)
   ((HardwareSerial*) (this->pSerial))->write(bufTx[0]);
@@ -104,6 +103,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_sendFrame(void)
     if (micros() - this->timeStart > this->timeMax)
     {
       this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_TIMEOUT);
+      disableTransmitter();
       this->state = LIN_Master_Base::STATE_DONE;
     }
 
@@ -136,9 +136,9 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_receiveFrame(void)
     return this->state;
   }
 
-  // optionally disable Tx for slave response frames for e.g. LIN via RS485. Len==2 because BREAK is handled already handled in _sendFrame()
-  if ((this->pinTxEN >= 0) && (this->type == LIN_Master_Base::SLAVE_RESPONSE) && (((HardwareSerial*) (this->pSerial))->available() == 2))
-    digitalWrite(this->pinTxEN, LOW);
+  // optionally disable transmitter for slave response frames. Len==2 because BREAK is handled already handled in _sendFrame()
+  if ((this->type == LIN_Master_Base::SLAVE_RESPONSE) && (((HardwareSerial*) (this->pSerial))->available() == 2))
+    disableTransmitter();
 
   // frame body received (-1 because BREAK is handled already handled in _sendFrame())
   if (((HardwareSerial*) (this->pSerial))->available() >= this->lenRx-1)
@@ -148,6 +148,9 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_receiveFrame(void)
 
     // check frame for errors
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) this->_checkFrame());
+
+    // optionally disable transmitter after frame is completed
+    disableTransmitter();
 
     // progress state
     this->state = LIN_Master_Base::STATE_DONE;
@@ -161,6 +164,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_receiveFrame(void)
     if (micros() - this->timeStart > this->timeMax)
     {
       this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_TIMEOUT);
+      disableTransmitter();
       this->state = LIN_Master_Base::STATE_DONE;
     }
 
@@ -175,7 +179,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_receiveFrame(void)
 
 /**
   \brief      Constructor for LIN node class using ESP8266 HardwareSerial
-  \details    Constructor for LIN node class for using ESP8266 HardwareSerial. Inherit all methods from LIN_Master_HardwareSerial, only different constructor
+  \details    Constructor for LIN node class for using ESP8266 HardwareSerial.
   \param[in]  SwapPins    use alternate Serial2 Rx/Tx pins (default = false)
   \param[in]  NameLIN     LIN node name (default = "Master")
   \param[in]  PinTxEN     optional Tx enable pin (high active) e.g. for LIN via RS485 (default = -127/none)
@@ -202,15 +206,15 @@ LIN_Master_HardwareSerial_ESP8266::LIN_Master_HardwareSerial_ESP8266(bool SwapPi
 /**
   \brief      Open serial interface
   \details    Open serial interface with specified baudrate
-  \param[in]  Baudrate    communication speed [Baud]
+  \param[in]  Baudrate    communication speed [Baud] (default = 19200)
 */
 void LIN_Master_HardwareSerial_ESP8266::begin(uint16_t Baudrate)
 {
   // call base class method
-  LIN_Master_Base::begin(Baudrate);  
+  LIN_Master_Base::begin(Baudrate);
 
   // open serial interface
-  ((HardwareSerial*) (this->pSerial))->begin(baudrate, SERIAL_8N1);
+  ((HardwareSerial*) (this->pSerial))->begin(this->baudrate, SERIAL_8N1);
   while(!(*(((HardwareSerial*) (this->pSerial)))));
 
   // route Serial0 to alternate pins

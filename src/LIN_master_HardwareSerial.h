@@ -63,3 +63,7 @@ class LIN_Master_HardwareSerial : public LIN_Master_Base
     END OF MODULE DEFINITION FOR MULTIPLE INLUSION
 -----------------------------------------------------------------------------*/
 #endif // _LIN_MASTER_HW_SERIAL_H_
+
+/*-----------------------------------------------------------------------------
+    END OF FILE
+-----------------------------------------------------------------------------*/

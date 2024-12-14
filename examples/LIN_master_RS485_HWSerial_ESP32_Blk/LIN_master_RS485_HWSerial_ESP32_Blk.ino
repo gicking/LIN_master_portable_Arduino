@@ -5,8 +5,8 @@ Physical interface is RS485 (e.g. MAX485) with Tx direction switching. Permanent
 
 This code runs a LIN master node in blocking operation using HardwareSerial interface
 
-Supported (=successfully tested) boards + MAX485:
- - xxx ESP32 Wroom-32UE       https://www.etechnophiles.com/esp32-dev-board-pinout-specifications-datasheet-and-schematic/
+Supported (=successfully tested) boards:
+ - ESP32 Wroom-32UE       https://www.etechnophiles.com/esp32-dev-board-pinout-specifications-datasheet-and-schematic/
 
 **********************/
 
@@ -21,7 +21,7 @@ Supported (=successfully tested) boards + MAX485:
 #define PIN_LIN_RX    16
 
 // pin to switch RS485 Tx direction (=DE)
-#define PIN_TXEN      15
+#define PIN_TXEN      21
 
 // pin to demonstrate background operation
 #define PIN_TOGGLE    19

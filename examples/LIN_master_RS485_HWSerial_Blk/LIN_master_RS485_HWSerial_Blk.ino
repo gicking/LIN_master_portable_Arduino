@@ -6,8 +6,8 @@ Physical interface is RS485 (e.g. MAX485) with Tx direction switching. Permanent
 This code runs a LIN master node in blocking operation using HardwareSerial interface
 
 Supported (=successfully tested) boards + MAX485:
- - xxx Arduino Mega 2560      https://store.arduino.cc/products/arduino-mega-2560-rev3
- - xxx Arduino Due            https://store.arduino.cc/products/arduino-due
+ - Arduino Mega 2560      https://store.arduino.cc/products/arduino-mega-2560-rev3
+ - Arduino Due            https://store.arduino.cc/products/arduino-due
 
 **********************/
 
@@ -43,7 +43,7 @@ void setup()
     SERIAL_DEBUG.begin(115200);
     while(!SERIAL_DEBUG);
   #endif // SERIAL_DEBUG
-  
+
   // indicate background operation
   pinMode(PIN_TOGGLE, OUTPUT);
 
@@ -62,7 +62,7 @@ void loop()
   static uint32_t           tStart;
   uint8_t                   Tx[4] = {0x01, 0x02, 0x03, 0x04};
   LIN_Master_Base::frame_t  Type;
-  LIN_Master_Base::error_t  error;  
+  LIN_Master_Base::error_t  error;
   uint8_t                   Id;
   uint8_t                   NumData;
   uint8_t                   Data[8];
