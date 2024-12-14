@@ -22,7 +22,7 @@ The class structure is very flexible and aims at supporting different Serial int
   
 **Test Matrix:**
 
-![Test Matrix](./extras/Board_Tests.png)
+![Test Matrix](./extras/Board_Tests.png?)
 
 
 **Notes:**
