@@ -35,8 +35,8 @@
 */
 class LIN_Master_SoftwareSerial : public LIN_Master_Base
 {
-  // PROTECTED VARIABLES
-  protected:
+  // PRIVATE VARIABLES
+  private:
 
     uint8_t               pinRx;              //!< pin used for receive
     uint8_t               pinTx;              //!< pin used for transmit
@@ -78,3 +78,7 @@ class LIN_Master_SoftwareSerial : public LIN_Master_Base
 #endif // _LIN_MASTER_SW_SERIAL_H_
 
 #endif // ARDUINO_ARCH_AVR || ARDUINO_ARCH_ESP8266 || ARDUINO_ARCH_ESP32
+
+/*-----------------------------------------------------------------------------
+    END OF FILE
+-----------------------------------------------------------------------------*/
