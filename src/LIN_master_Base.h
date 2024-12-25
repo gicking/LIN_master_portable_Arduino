@@ -49,39 +49,39 @@ class LIN_Master_Base
     /// LIN protocol version 
     typedef enum
     {
-        LIN_V1 = 1,                               //!< LIN protocol version 1.x
-        LIN_V2 = 2                                //!< LIN protocol version 2.x
+      LIN_V1 = 1,                           //!< LIN protocol version 1.x
+      LIN_V2 = 2                            //!< LIN protocol version 2.x
     } version_t;
 
 
     /// LIN frame type
     typedef enum
     {
-        MASTER_REQUEST = 1,                       //!< LIN master request frame
-        SLAVE_RESPONSE = 2                        //!< LIN slave response frame
+      MASTER_REQUEST = 1,                   //!< LIN master request frame
+      SLAVE_RESPONSE = 2                    //!< LIN slave response frame
     } frame_t;
 
 
     /// state of LIN master state machine
     typedef enum
     {
-        STATE_OFF     = 0,                        //!< LIN interface closed
-        STATE_IDLE    = 1,                        //!< no LIN transmission ongoing
-        STATE_BREAK   = 2,                        //!< sync break is being transmitted
-        STATE_BODY    = 3,                        //!< rest of frame is being sent/received
-        STATE_DONE    = 4,                        //!< frame completed
+      STATE_OFF     = 0,                    //!< LIN interface closed
+      STATE_IDLE    = 1,                    //!< no LIN transmission ongoing
+      STATE_BREAK   = 2,                    //!< sync break is being transmitted
+      STATE_BODY    = 3,                    //!< rest of frame is being sent/received
+      STATE_DONE    = 4,                    //!< frame completed
     } state_t;
 
 
     /// LIN error codes. Use bitmasks, as error is latched
     typedef enum
     {
-        NO_ERROR      = 0x00,                     //!< no error
-        ERROR_STATE   = 0x01,                     //!< error in LIN state machine
-        ERROR_ECHO    = 0x02,                     //!< error reading LIN echo
-        ERROR_TIMEOUT = 0x04,                     //!< frame timeout error
-        ERROR_CHK     = 0x08,                     //!< LIN checksum error
-        ERROR_MISC    = 0x80                      //!< misc error, should not occur
+      NO_ERROR      = 0x00,                 //!< no error
+      ERROR_STATE   = 0x01,                 //!< error in LIN state machine
+      ERROR_ECHO    = 0x02,                 //!< error reading LIN echo
+      ERROR_TIMEOUT = 0x04,                 //!< frame timeout error
+      ERROR_CHK     = 0x08,                 //!< LIN checksum error
+      ERROR_MISC    = 0x80                  //!< misc error, should not occur
     } error_t;
 
 
@@ -89,29 +89,29 @@ class LIN_Master_Base
   protected:
 
     // node properties
-    Stream                *pSerial;               //!< pointer to serial I/F
-    int8_t                pinTxEN;                //!< optional Tx direction pin, e.g. for LIN via RS485 
-    uint16_t              baudrate;               //!< communication baudrate [Baud]
-    LIN_Master_Base::state_t   state;             //!< status of LIN state machine
-    LIN_Master_Base::error_t   error;             //!< error state. Is latched until cleared
-    uint32_t              timePerByte;            //!< time [us] per byte at specified baudrate
-    uint32_t              timeStart;              //!< starting time [us] for frame timeout
-    uint32_t              timeMax;                //!< max. frame duration [us]
+    Stream                *pSerial;         //!< pointer to serial I/F
+    int8_t                pinTxEN;          //!< optional Tx direction pin, e.g. for LIN via RS485 
+    uint16_t              baudrate;         //!< communication baudrate [Baud]
+    LIN_Master_Base::state_t  state;        //!< status of LIN state machine
+    LIN_Master_Base::error_t  error;        //!< error state. Is latched until cleared
+    uint32_t              timePerByte;      //!< time [us] per byte at specified baudrate
+    uint32_t              timeStart;        //!< starting time [us] for frame timeout
+    uint32_t              timeMax;          //!< max. frame duration [us]
 
     // frame properties
-    LIN_Master_Base::version_t version;           //!< LIN protocol version
-    LIN_Master_Base::frame_t   type;              //!< LIN frame type
-    uint8_t               id;                     //!< LIN frame identifier (protected or unprotected)
-    uint8_t               lenTx;                  //!< send buffer length (max. 12)
-    uint8_t               bufTx[12];              //!< send buffer incl. BREAK, SYNC, DATA and CHK (max. 12B)
-    uint8_t               lenRx;                  //!< receive buffer length (max. 12)
-    uint8_t               bufRx[12];              //!< receive buffer incl. BREAK, SYNC, DATA and CHK (max. 12B)
+    LIN_Master_Base::version_t  version;    //!< LIN protocol version
+    LIN_Master_Base::frame_t    type;       //!< LIN frame type
+    uint8_t               id;               //!< LIN frame identifier (protected or unprotected)
+    uint8_t               lenTx;            //!< send buffer length (max. 12)
+    uint8_t               bufTx[12];        //!< send buffer incl. BREAK, SYNC, DATA and CHK (max. 12B)
+    uint8_t               lenRx;            //!< receive buffer length (max. 12)
+    uint8_t               bufRx[12];        //!< receive buffer incl. BREAK, SYNC, DATA and CHK (max. 12B)
 
 
   // PUBLIC VARIABLES
   public:
 
-    char                  nameLIN[LIN_MASTER_BUFLEN_NAME];    //!< LIN node name, e.g. for debug
+    char                  nameLIN[LIN_MASTER_BUFLEN_NAME];  //!< LIN node name, e.g. for debug
 
 
   // PROTECTED METHODS
@@ -173,26 +173,30 @@ class LIN_Master_Base
     /// @brief Getter for LIN frame
     inline void getFrame(LIN_Master_Base::frame_t &Type, uint8_t &Id, uint8_t &NumData, uint8_t Data[])
     { 
-      noInterrupts();               // for data consistency temporarily disable ISRs
-      Type    = this->type;         // frame type 
-      Id      = this->id;           // frame ID
-      NumData = this->lenRx - 4;    // number of data bytes (excl. BREAK, SYNC, ID, CHK)
-      memcpy(Data, this->bufRx+3, NumData);
-      interrupts();                 // re-enable ISRs
+      noInterrupts();                         // for data consistency temporarily disable ISRs
+      Type    = this->type;                   // frame type 
+      Id      = this->id;                     // frame ID
+      NumData = this->lenRx - 4;              // number of data bytes (excl. BREAK, SYNC, ID, CHK)
+      memcpy(Data, this->bufRx+3, NumData);   // copy data bytes
+      interrupts();                           // re-enable ISRs
     }
 
     
     /// @brief Start sending a LIN master request frame in background (if supported)
-    LIN_Master_Base::state_t sendMasterRequest(LIN_Master_Base::version_t Version, uint8_t Id, uint8_t NumData, uint8_t Data[]);
+    LIN_Master_Base::state_t sendMasterRequest(LIN_Master_Base::version_t Version = LIN_Master_Base::LIN_V2, 
+      uint8_t Id = 0x00, uint8_t NumData = 0, uint8_t Data[] = NULL);
     
     /// @brief Send a blocking LIN master request frame (no background operation)
-    LIN_Master_Base::error_t sendMasterRequestBlocking(LIN_Master_Base::version_t Version, uint8_t Id, uint8_t NumData, uint8_t Data[]);
+    LIN_Master_Base::error_t sendMasterRequestBlocking(LIN_Master_Base::version_t Version = LIN_Master_Base::LIN_V2, 
+      uint8_t Id = 0x00, uint8_t NumData = 0, uint8_t Data[] = NULL);
 
     /// @brief Start sending a LIN slave response frame in background (if supported)
-    LIN_Master_Base::state_t receiveSlaveResponse(LIN_Master_Base::version_t Version, uint8_t Id, uint8_t NumData);
+    LIN_Master_Base::state_t receiveSlaveResponse(LIN_Master_Base::version_t Version = LIN_Master_Base::LIN_V2, 
+      uint8_t Id = 0x00, uint8_t NumData = 0);
     
     /// @brief Send a blocking LIN slave response frame (no background operation)
-    LIN_Master_Base::error_t receiveSlaveResponseBlocking(LIN_Master_Base::version_t Version, uint8_t Id, uint8_t NumData, uint8_t *Data);
+    LIN_Master_Base::error_t receiveSlaveResponseBlocking(LIN_Master_Base::version_t Version = LIN_Master_Base::LIN_V2,
+      uint8_t Id = 0x00, uint8_t NumData = 0, uint8_t *Data = NULL);
 
     /// @brief Handle LIN background operation (call until STATE_DONE is returned)
     LIN_Master_Base::state_t handler(void);
