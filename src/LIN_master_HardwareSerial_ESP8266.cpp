@@ -178,8 +178,8 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_receiveFrame(void)
 
 
 /**
-  \brief      Constructor for LIN node class using ESP8266 HardwareSerial
-  \details    Constructor for LIN node class for using ESP8266 HardwareSerial.
+  \brief      Constructor for LIN node class using ESP8266 HardwareSerial 0
+  \details    Constructor for LIN node class for using ESP8266 HardwareSerial 0.
   \param[in]  SwapPins    use alternate Serial2 Rx/Tx pins (default = false)
   \param[in]  NameLIN     LIN node name (default = "Master")
   \param[in]  PinTxEN     optional Tx enable pin (high active) e.g. for LIN via RS485 (default = -127/none)
@@ -205,7 +205,7 @@ LIN_Master_HardwareSerial_ESP8266::LIN_Master_HardwareSerial_ESP8266(bool SwapPi
 
 /**
   \brief      Open serial interface
-  \details    Open serial interface with specified baudrate
+  \details    Open serial interface with specified baudrate. Optionally use Serial2 pins 
   \param[in]  Baudrate    communication speed [Baud] (default = 19200)
 */
 void LIN_Master_HardwareSerial_ESP8266::begin(uint16_t Baudrate)
@@ -217,7 +217,7 @@ void LIN_Master_HardwareSerial_ESP8266::begin(uint16_t Baudrate)
   ((HardwareSerial*) (this->pSerial))->begin(this->baudrate, SERIAL_8N1);
   while(!(*(((HardwareSerial*) (this->pSerial)))));
 
-  // route Serial0 to alternate pins
+  // optionally route Serial0 to alternate pins
   if (this->swapPins == true)
     ((HardwareSerial*) (this->pSerial))->swap();
 

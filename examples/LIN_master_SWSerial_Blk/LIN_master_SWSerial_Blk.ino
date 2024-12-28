@@ -130,7 +130,7 @@ void loop()
     digitalWrite(PIN_TOGGLE, !digitalRead(PIN_TOGGLE));
   }
 
-
+  
   // send/receive slave response frame and get result immediately
   error = LIN.receiveSlaveResponseBlocking(LIN_Master_Base::LIN_V2, 0x05, 6, Data);
 

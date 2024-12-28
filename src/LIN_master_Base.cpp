@@ -265,7 +265,7 @@ void LIN_Master_Base::end()
   \brief      Start sending a LIN master request frame in background (if supported)
   \details    Start sending a LIN master request frame in background (if supported). Background handling is handling by handler().
               For an explanation of the LIN bus and protocol e.g. see https://en.wikipedia.org/wiki/Local_Interconnect_Network
-  \param[in]  Version   LIN protocol version
+  \param[in]  Version   LIN protocol version (default = v2)
   \param[in]  Id        frame idendifier (protected or unprotected)
   \param[in]  NumData   number of data bytes (0..8)
   \param[in]  Data      data bytes

@@ -17,6 +17,7 @@
   GLOBAL DEFINES
 -----------------------------------------------------------------------------*/
 
+// misc parameters
 #define LIN_MASTER_BUFLEN_NAME  30            //!< max. length of node name
 
 // optional LIN debug output. For AVR must use NeoSerialx to avoid linker conflict
@@ -62,18 +63,18 @@ class LIN_Master_Base
     } frame_t;
 
 
-    /// state of LIN master state machine
+    /// state of LIN master state machine. Use bitmasks for fast checking multiple states
     typedef enum
     {
-      STATE_OFF     = 0,                    //!< LIN interface closed
-      STATE_IDLE    = 1,                    //!< no LIN transmission ongoing
-      STATE_BREAK   = 2,                    //!< sync break is being transmitted
-      STATE_BODY    = 3,                    //!< rest of frame is being sent/received
-      STATE_DONE    = 4,                    //!< frame completed
+      STATE_OFF     = 0x01,                 //!< LIN interface closed
+      STATE_IDLE    = 0x02,                 //!< no LIN transmission ongoing
+      STATE_BREAK   = 0x04,                 //!< sync break is being transmitted
+      STATE_BODY    = 0x08,                 //!< rest of frame is being sent/received
+      STATE_DONE    = 0x10                  //!< frame completed
     } state_t;
 
 
-    /// LIN error codes. Use bitmasks, as error is latched
+    /// LIN error codes. Use bitmasks, as error is latched. Use same as LIN_slave_portable
     typedef enum
     {
       NO_ERROR      = 0x00,                 //!< no error
@@ -163,6 +164,7 @@ class LIN_Master_Base
     /// @brief Getter for LIN state machine error
     inline LIN_Master_Base::error_t getError(void) { return this->error; }
     
+
     /// @brief Enable RS485 transmitter (DE=high)
     inline void enableTransmitter(void) { if (this->pinTxEN >= 0) digitalWrite(this->pinTxEN, HIGH); }
     

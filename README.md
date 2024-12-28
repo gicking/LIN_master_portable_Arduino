@@ -27,7 +27,7 @@ The class structure is very flexible and aims at supporting different Serial int
 
 **Notes:**
   - The sender state machine relies on reading back its 1-wire echo. If no LIN or K-Line transceiver is used, connect Rx&Tx (only on same device!)
-  - for background operation, the `handler()` method must be called at least every 500us, especially after initiating a frame
+  - for background operation, the `handler()` method must be called at least every 500us, especially after initiating a frame. Optionally it can be called from within [serialEvent()](https://reference.arduino.cc/reference/de/language/functions/communication/serial/serialevent/)
 
 Have fun!, Georg
 
