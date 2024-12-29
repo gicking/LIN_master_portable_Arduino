@@ -38,6 +38,7 @@ class LIN_Master_SoftwareSerial : public LIN_Master_Base
   // PRIVATE VARIABLES
   private:
 
+    SoftwareSerial        SWSerial;           //!< SW serial interface used for LIN (no pointer!)
     uint8_t               pinRx;              //!< pin used for receive
     uint8_t               pinTx;              //!< pin used for transmit
     bool                  inverseLogic;       //!< use inverse logic
@@ -62,7 +63,8 @@ class LIN_Master_SoftwareSerial : public LIN_Master_Base
   
     /// @brief Class constructor
     LIN_Master_SoftwareSerial(uint8_t PinRx, uint8_t PinTx, bool InverseLogic = false, const char NameLIN[] = "Master", const int8_t PinTxEN = INT8_MIN);
-     
+    
+    
     /// @brief Open serial interface
     void begin(uint16_t Baudrate = 19200);
     

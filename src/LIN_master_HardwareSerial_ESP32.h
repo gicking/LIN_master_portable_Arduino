@@ -37,6 +37,7 @@ class LIN_Master_HardwareSerial_ESP32 : public LIN_Master_Base
   // PROTECTED VARIABLES
   protected:
 
+    HardwareSerial        *pSerial;           //!< serial interface used for LIN
     uint8_t               pinRx;              //!< pin used for receive
     uint8_t               pinTx;              //!< pin used for transmit
     uint32_t              timeStartBreak;     //!< micros() when BREAK was sent

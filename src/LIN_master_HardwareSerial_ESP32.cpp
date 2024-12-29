@@ -35,18 +35,18 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_sendBreak(void)
   }
 
   // empty buffers, just in case...
-  ((HardwareSerial*) (this->pSerial))->flush();
-  while (((HardwareSerial*) (this->pSerial))->available())
-    ((HardwareSerial*) (this->pSerial))->read();
+  this->pSerial->flush();
+  while (this->pSerial->available())
+    this->pSerial->read();
 
   // set half baudrate for BREAK
-  ((HardwareSerial*) (this->pSerial))->updateBaudRate(this->baudrate >> 1);
+  this->pSerial->updateBaudRate(this->baudrate >> 1);
 
   // optionally enable transmitter
   enableTransmitter();
 
   // send BREAK (>=13 bit low)
-  ((HardwareSerial*) (this->pSerial))->write(bufTx[0]);
+  this->pSerial->write(bufTx[0]);
 
   // store starting time
   this->timeStartBreak = micros();
@@ -87,10 +87,10 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_sendFrame(void)
     // skip reading Rx now (is not yet in buffer)
 
     // restore nominal baudrate. Apparently this is ok for BREAK
-    ((HardwareSerial*) (this->pSerial))->updateBaudRate(this->baudrate);
+    this->pSerial->updateBaudRate(this->baudrate);
 
     // send rest of frame (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID)
-    ((HardwareSerial*) (this->pSerial))->write(this->bufTx+1, this->lenTx-1);
+    this->pSerial->write(this->bufTx+1, this->lenTx-1);
 
     // progress state
     this->state = LIN_Master_Base::STATE_BODY;
@@ -125,14 +125,14 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_receiveFrame(void)
   }
 
   // optionally disable transmitter for slave response frames. Here, need to read BREAK as well due to delay of Serial.available()
-  if ((this->type == LIN_Master_Base::SLAVE_RESPONSE) && (((HardwareSerial*) (this->pSerial))->available() == 3))
+  if ((this->type == LIN_Master_Base::SLAVE_RESPONSE) && (this->pSerial->available() == 3))
     disableTransmitter();
 
   // frame body received. Here, need to read BREAK as well due to delay of Serial.available()
-  if (((HardwareSerial*) (this->pSerial))->available() >= this->lenRx)
+  if (this->pSerial->available() >= this->lenRx)
   {
     // store bytes in Rx
-    ((HardwareSerial*) (this->pSerial))->readBytes(this->bufRx, this->lenRx);
+    this->pSerial->readBytes(this->bufRx, this->lenRx);
 
     // check frame for errors
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) this->_checkFrame());
@@ -205,9 +205,9 @@ void LIN_Master_HardwareSerial_ESP32::begin(uint16_t Baudrate)
   LIN_Master_Base::begin(Baudrate);
 
   // open serial interface incl. used pins
-  ((HardwareSerial*) (this->pSerial))->end();
-  ((HardwareSerial*) (this->pSerial))->begin(baudrate, SERIAL_8N1, pinRx, pinTx);
-  while(!(*(((HardwareSerial*) (this->pSerial)))));
+  this->pSerial->end();
+  this->pSerial->begin(baudrate, SERIAL_8N1, pinRx, pinTx);
+  while(!(*(this->pSerial)));
 
 } // LIN_Master_HardwareSerial_ESP32::begin()
 
@@ -223,7 +223,7 @@ void LIN_Master_HardwareSerial_ESP32::end()
   LIN_Master_Base::end();
     
   // close serial interface
-  ((HardwareSerial*) (this->pSerial))->end();
+  this->pSerial->end();
 
 } // LIN_Master_HardwareSerial_ESP32::end()
 

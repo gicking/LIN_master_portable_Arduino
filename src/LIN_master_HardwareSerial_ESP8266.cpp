@@ -36,18 +36,18 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_sendBreak(void)
   }
 
   // empty buffers, just in case...
-  //((HardwareSerial*) (this->pSerial))->flush();   // skip, as this causes a ~500us delay, see https://github.com/esp8266/Arduino/blob/master/cores/esp8266/HardwareSerial.cpp
-  while (((HardwareSerial*) (this->pSerial))->available())
-    ((HardwareSerial*) (this->pSerial))->read();
+  //this->pSerial->flush();   // skip, as this causes a ~500us delay, see https://github.com/esp8266/Arduino/blob/master/cores/esp8266/HardwareSerial.cpp
+  while (this->pSerial->available())
+    this->pSerial->read();
 
   // set half baudrate for BREAK
-  ((HardwareSerial*) (this->pSerial))->updateBaudRate(this->baudrate >> 1);
+  this->pSerial->updateBaudRate(this->baudrate >> 1);
 
   // optionally enable transmitter
   enableTransmitter();
 
   // send BREAK (>=13 bit low)
-  ((HardwareSerial*) (this->pSerial))->write(bufTx[0]);
+  this->pSerial->write(bufTx[0]);
 
   // progress state
   this->state = LIN_Master_Base::STATE_BREAK;
@@ -80,16 +80,16 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_sendFrame(void)
   }
 
   // byte(s) received (likely BREAK echo)
-  if (((HardwareSerial*) (this->pSerial))->available())
+  if (this->pSerial->available())
   {
     // store echo in Rx
-    this->bufRx[0] = ((HardwareSerial*) (this->pSerial))->read();
+    this->bufRx[0] = this->pSerial->read();
 
     // restore nominal baudrate
-    ((HardwareSerial*) (this->pSerial))->updateBaudRate(this->baudrate);
+    this->pSerial->updateBaudRate(this->baudrate);
 
     // send rest of frame (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID)
-    ((HardwareSerial*) (this->pSerial))->write(this->bufTx+1, this->lenTx-1);
+    this->pSerial->write(this->bufTx+1, this->lenTx-1);
 
     // progress state
     this->state = LIN_Master_Base::STATE_BODY;
@@ -137,14 +137,14 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_receiveFrame(void)
   }
 
   // optionally disable transmitter for slave response frames. Len==2 because BREAK is handled already handled in _sendFrame()
-  if ((this->type == LIN_Master_Base::SLAVE_RESPONSE) && (((HardwareSerial*) (this->pSerial))->available() == 2))
+  if ((this->type == LIN_Master_Base::SLAVE_RESPONSE) && (this->pSerial->available() == 2))
     disableTransmitter();
 
   // frame body received (-1 because BREAK is handled already handled in _sendFrame())
-  if (((HardwareSerial*) (this->pSerial))->available() >= this->lenRx-1)
+  if (this->pSerial->available() >= this->lenRx-1)
   {
     // store bytes in Rx
-    ((HardwareSerial*) (this->pSerial))->readBytes(this->bufRx+1, this->lenRx-1);
+    this->pSerial->readBytes(this->bufRx+1, this->lenRx-1);
 
     // check frame for errors
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) this->_checkFrame());
@@ -214,12 +214,12 @@ void LIN_Master_HardwareSerial_ESP8266::begin(uint16_t Baudrate)
   LIN_Master_Base::begin(Baudrate);
 
   // open serial interface
-  ((HardwareSerial*) (this->pSerial))->begin(this->baudrate, SERIAL_8N1);
-  while(!(*(((HardwareSerial*) (this->pSerial)))));
+  this->pSerial->begin(this->baudrate, SERIAL_8N1);
+  while(!(*(this->pSerial)));
 
   // optionally route Serial0 to alternate pins
   if (this->swapPins == true)
-    ((HardwareSerial*) (this->pSerial))->swap();
+    this->pSerial->swap();
 
 } // LIN_Master_HardwareSerial_ESP8266::begin()
 
@@ -235,7 +235,7 @@ void LIN_Master_HardwareSerial_ESP8266::end()
   LIN_Master_Base::end();
     
   // close serial interface
-  ((HardwareSerial*) (this->pSerial))->end();
+  this->pSerial->end();
 
 } // LIN_Master_HardwareSerial_ESP8266::end()
 

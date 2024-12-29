@@ -31,6 +31,12 @@
 */
 class LIN_Master_HardwareSerial : public LIN_Master_Base
 {
+  // PROTECTED VARIABLES
+  protected:
+
+    HardwareSerial        *pSerial;           //!< serial interface used for LIN
+
+
   // PROTECTED METHODS
   protected:
   

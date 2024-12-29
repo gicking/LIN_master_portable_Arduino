@@ -75,17 +75,17 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendFrame(void)
   // restore nominal baudrate not required, use digitalWrite() for BREAK
 
   // disable reception to skip LIN echo (disturbs SoftwareSerial)
-  ((SoftwareSerial*) this->pSerial)->stopListening();
+  this->SWSerial.stopListening();
   
   // send rest of frame (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID). Is blocking and receive is disabled!
-  ((SoftwareSerial*) this->pSerial)->write(this->bufTx+1, this->lenTx-1);
+  this->SWSerial.write(this->bufTx+1, this->lenTx-1);
 
   // optionally disable transmitter for slave response frames
   if (this->type == LIN_Master_Base::SLAVE_RESPONSE)
     disableTransmitter();
 
   // re-enable reception (above write is blocking)
-  ((SoftwareSerial*) this->pSerial)->listen();
+  this->SWSerial.listen();
 
   // Emulate LIN echo for sent bytes
   memcpy(this->bufRx, this->bufTx, this->lenTx);
@@ -140,10 +140,10 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
   else
   {
     // slave response received (-lenTx because header already emulated in _sendFrame())
-    if (((SoftwareSerial*) this->pSerial)->available() >= this->lenRx - this->lenTx)
+    if (this->SWSerial.available() >= this->lenRx - this->lenTx)
     {
       // store bytes in Rx
-      ((SoftwareSerial*) this->pSerial)->readBytes(this->bufRx+3, this->lenRx - this->lenTx);
+      this->SWSerial.readBytes(this->bufRx+3, this->lenRx - this->lenTx);
 
       // check frame for errors
       this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) this->_checkFrame());
@@ -177,7 +177,7 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
 
 /**
   \brief      Constructor for LIN node class using SoftwareSerial
-  \details    Constructor for LIN node class for using SoftwareSerial. Store pointers to SW serial instance.
+  \details    Constructor for LIN node class for using SoftwareSerial. Initialize SW serial instance.
   \param[in]  PinRx         GPIO used for reception
   \param[in]  PinTx         GPIO used for transmission
   \param[in]  InverseLogic  use inverse logic (default = false)
@@ -185,16 +185,13 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
   \param[in]  PinTxEN       optional Tx enable pin (high active) e.g. for LIN via RS485 (default = -127/none)
 */
 LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial(uint8_t PinRx, uint8_t PinTx, bool InverseLogic, const char NameLIN[], const int8_t PinTxEN) : 
-  LIN_Master_Base::LIN_Master_Base(NameLIN, PinTxEN)
+  LIN_Master_Base::LIN_Master_Base(NameLIN, PinTxEN), SWSerial(PinRx, PinTx, InverseLogic)
 {
   // store pins used for SW serial
   this->pinRx = PinRx;
   this->pinTx = PinTx;
   this->inverseLogic = InverseLogic;
 
-  // create new SW serial
-  pSerial = new SoftwareSerial(this->pinRx, this->pinTx, this->inverseLogic);
-  
 } // LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial()
 
 
@@ -213,8 +210,7 @@ void LIN_Master_SoftwareSerial::begin(uint16_t Baudrate)
   this->durationBreak = this->timePerByte * 13 / 10;
   
   // open serial interface
-  ((SoftwareSerial*) this->pSerial)->begin(this->baudrate);
-  while(!(*(((SoftwareSerial*) this->pSerial))));
+  this->SWSerial.begin(this->baudrate);
 
 } // LIN_Master_SoftwareSerial::begin()
 
@@ -230,7 +226,7 @@ void LIN_Master_SoftwareSerial::end()
   LIN_Master_Base::end();
     
   // close serial interface
-  ((SoftwareSerial*) this->pSerial)->end();
+  this->SWSerial.end();
 
 } // LIN_Master_SoftwareSerial::end()
 

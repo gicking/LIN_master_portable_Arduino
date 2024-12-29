@@ -37,6 +37,7 @@ class LIN_Master_HardwareSerial_ESP8266 : public LIN_Master_Base
   // PROTECTED VARIABLES
   protected:
 
+    HardwareSerial        *pSerial;           //!< serial interface used for LIN
     bool                  swapPins;           //!< use alternate pins for Serial0
 
 
