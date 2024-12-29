@@ -32,7 +32,7 @@ The class structure is very flexible and aims at supporting different Serial int
 
 **Library Reference**
 
-See [library reference](./extras/documentation/html/index.html)  
+See [library reference](https://gicking.github.io/LIN_master_portable_Arduino//extras/documentation/html/index.html)
 
 
 Have fun!, Georg
