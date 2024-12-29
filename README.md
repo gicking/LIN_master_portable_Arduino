@@ -1,4 +1,6 @@
-![Test Matrix](./extras/documentation/Logo.jpg?)
+<p align="center">
+  <img width="460" height="300" src="./extras/documentation/Logo.jpg">
+</p>
 
 Portable LIN Master Node Emulation
 ==================================
