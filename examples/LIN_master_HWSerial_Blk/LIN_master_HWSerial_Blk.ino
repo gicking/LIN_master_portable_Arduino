@@ -39,7 +39,7 @@ void setup()
     SERIAL_DEBUG.begin(115200);
     while(!SERIAL_DEBUG);
   #endif // SERIAL_DEBUG
-  
+
   // indicate background operation
   pinMode(PIN_TOGGLE, OUTPUT);
 
@@ -58,7 +58,7 @@ void loop()
   static uint32_t           tStart;
   uint8_t                   Tx[4] = {0x01, 0x02, 0x03, 0x04};
   LIN_Master_Base::frame_t  Type;
-  LIN_Master_Base::error_t  error;  
+  LIN_Master_Base::error_t  error;
   uint8_t                   Id;
   uint8_t                   NumData;
   uint8_t                   Data[8];
