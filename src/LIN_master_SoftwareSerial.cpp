@@ -193,9 +193,34 @@ LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial(uint8_t PinRx, uint8_t PinT
   this->inverseLogic = InverseLogic;
 
   // create new SW serial
-  pSerial = new SoftwareSerial(this->pinRx, this->pinTx, this->inverseLogic);
+  this->pSerial = new SoftwareSerial(this->pinRx, this->pinTx, this->inverseLogic);
   
 } // LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial()
+
+
+
+/**
+  \brief      Destructor for LIN node class using generic SoftwareSerial
+  \details    Destructor for LIN node class for using generic SoftwareSerial. Delete SoftwareSerial instance
+*/
+LIN_Master_SoftwareSerial::~LIN_Master_SoftwareSerial()
+{  
+  // call LIN_Slave_SoftwareSerial destructor via delete fails due to lack of virtual destructor in base class Stream.
+  // Started an issue, see https://github.com/arduino/ArduinoCore-avr/issues/585
+  if (this->pSerial != nullptr)
+  {
+    ((SoftwareSerial*) this->pSerial)->~SoftwareSerial();
+    operator delete(this->pSerial);
+    this->pSerial = nullptr;
+  }
+  
+  // optional debug output
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.println(": ~LIN_Master_SoftwareSerial()");
+  #endif
+
+} // LIN_Master_SoftwareSerial::~LIN_Master_SoftwareSerial()
 
 
 

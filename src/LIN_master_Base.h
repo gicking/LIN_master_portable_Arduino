@@ -142,7 +142,9 @@ class LIN_Master_Base
   
     /// @brief LIN master node constructor
     LIN_Master_Base(const char NameLIN[] = "Master", const int8_t PinTxEN = INT8_MIN);
-    
+        
+    /// @brief LIN master node destructor
+    virtual ~LIN_Master_Base();
     
     /// @brief Open serial interface
     virtual void begin(uint16_t Baudrate = 19200);
