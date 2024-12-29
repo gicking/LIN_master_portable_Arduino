@@ -11,6 +11,8 @@ Optionally LIN protocoll via RS485 is supported (see respective examples). In th
 
 The class structure is very flexible and aims at supporting different Serial interfaces and architectures. It can easily be ported to other boards - in which case a pull request is highly appreciated... 
 
+For a similar Arduino libary for LIN slave emulation see https://github.com/gicking/LIN_slave_portable_Arduino
+
 **Supported functionality**
   - blocking and non-blocking operation
   - multiple, simultaneous LIN nodes
