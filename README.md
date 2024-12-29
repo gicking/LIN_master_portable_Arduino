@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="460" height="300" src="./extras/documentation/Logo.jpg">
+  <img width="200" height="200" src="./extras/documentation/Logo_large.jpg">
 </p>
 
 Portable LIN Master Node Emulation
