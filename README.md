@@ -5,7 +5,7 @@
 Portable LIN Master Node Emulation
 ==================================
 
-This Arduino library implements a Local Interconnect Master node emulation. For an explanation of the LIN bus and protocol e.g. see https://en.wikipedia.org/wiki/Local_Interconnect_Network.
+This Arduino library implements a Local Interconnect Network master node emulation. For an explanation of the LIN bus and protocol e.g. see https://en.wikipedia.org/wiki/Local_Interconnect_Network.
 
 Optionally LIN protocoll via RS485 is supported (see respective examples). In this case Rx-enable (=RE) must be statically enabled to receive LIN echo, and Tx-enable (=DE) is controlled by the Arduino. 
 
@@ -69,3 +69,4 @@ Revision History
 **v1.0 (2022-12-10)**
   - initial release
   - supersedes less portable [LIN master library](https://github.com/gicking/LIN_master_Arduino)
+
