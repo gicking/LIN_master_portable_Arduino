@@ -230,25 +230,6 @@ LIN_Master_Base::LIN_Master_Base(const char NameLIN[], const int8_t PinTxEN)
 
 
 /**
-  \brief      LIN master node destructor
-  \details    LIN master node destructor. Here dummy.
-*/
-LIN_Master_Base::~LIN_Master_Base()
-{  
-  // dummy
-
-  // optional debug output
-  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
-    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_Base::~LIN_Master_Base()");
-    LIN_MASTER_DEBUG_SERIAL.flush();
-  #endif
-
-} // LIN_Master_Base::~LIN_Master_Base()
-
-
-
-/**
   \brief      Open serial interface
   \details    Open serial interface with specified baudrate. Here dummy!
   \param[in]  Baudrate    communication speed [Baud] (default = 19200)
