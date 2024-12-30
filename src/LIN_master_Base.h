@@ -48,7 +48,7 @@ class LIN_Master_Base
   public:
 
     /// LIN protocol version 
-    typedef enum
+    typedef enum : uint8_t
     {
       LIN_V1                = 1,                //!< LIN protocol version 1.x
       LIN_V2                = 2                 //!< LIN protocol version 2.x
@@ -56,7 +56,7 @@ class LIN_Master_Base
 
 
     /// LIN frame type
-    typedef enum
+    typedef enum : uint8_t
     {
       MASTER_REQUEST        = 0x01,             //!< LIN master request frame
       SLAVE_RESPONSE        = 0x02              //!< LIN slave response frame
@@ -64,7 +64,7 @@ class LIN_Master_Base
 
 
     /// state of LIN master state machine. Use bitmasks for fast checking multiple states
-    typedef enum
+    typedef enum : uint8_t
     {
       STATE_OFF             = 0x01,             //!< LIN interface closed
       STATE_IDLE            = 0x02,             //!< no LIN transmission ongoing
@@ -75,7 +75,7 @@ class LIN_Master_Base
 
 
     /// LIN error codes. Use bitmasks, as error is latched. Use same as LIN_slave_portable
-    typedef enum
+    typedef enum : uint8_t
     {
       NO_ERROR              = 0x00,             //!< no error
       ERROR_STATE           = 0x01,             //!< error in LIN state machine
