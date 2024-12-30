@@ -125,45 +125,48 @@ Inheritance diagram for LIN_Master_Base:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:a0e14e35f8eafa336902cb1412cbd2e91" id="r_a0e14e35f8eafa336902cb1412cbd2e91"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0e14e35f8eafa336902cb1412cbd2e91">version_t</a> { <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0e14e35f8eafa336902cb1412cbd2e91a7b76dd938b748292cd8dcd04aaac50b6">LIN_V1</a> = 1
-, <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0e14e35f8eafa336902cb1412cbd2e91a122354ea96e26896b603b3048689a75e">LIN_V2</a> = 2
+<tr class="memitem:a401f498c7238602354ab063f487d5402" id="r_a401f498c7238602354ab063f487d5402"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a401f498c7238602354ab063f487d5402">version_t</a> : uint8_t { <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a401f498c7238602354ab063f487d5402a7b76dd938b748292cd8dcd04aaac50b6">LIN_V1</a> = 1
+, <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a401f498c7238602354ab063f487d5402a122354ea96e26896b603b3048689a75e">LIN_V2</a> = 2
  }</td></tr>
-<tr class="memdesc:a0e14e35f8eafa336902cb1412cbd2e91"><td class="mdescLeft">&#160;</td><td class="mdescRight">LIN protocol version.  <a href="../../d8/d3d/classLIN__Master__Base.html#a0e14e35f8eafa336902cb1412cbd2e91">More...</a><br /></td></tr>
-<tr class="separator:a0e14e35f8eafa336902cb1412cbd2e91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4224310b1a6a87cc1204395c3088b70f" id="r_a4224310b1a6a87cc1204395c3088b70f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a4224310b1a6a87cc1204395c3088b70f">frame_t</a> { <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a4224310b1a6a87cc1204395c3088b70fa8251525c2e23f210c040968ec94f8b33">MASTER_REQUEST</a> = 1
-, <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a4224310b1a6a87cc1204395c3088b70fad0e17a676a6b6dde15950b5ff658291a">SLAVE_RESPONSE</a> = 2
+<tr class="memdesc:a401f498c7238602354ab063f487d5402"><td class="mdescLeft">&#160;</td><td class="mdescRight">LIN protocol version.  <a href="../../d8/d3d/classLIN__Master__Base.html#a401f498c7238602354ab063f487d5402">More...</a><br /></td></tr>
+<tr class="separator:a401f498c7238602354ab063f487d5402"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0db700d612a65867ab78498922816b3e" id="r_a0db700d612a65867ab78498922816b3e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0db700d612a65867ab78498922816b3e">frame_t</a> : uint8_t { <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0db700d612a65867ab78498922816b3ea8251525c2e23f210c040968ec94f8b33">MASTER_REQUEST</a> = 0x01
+, <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0db700d612a65867ab78498922816b3ead0e17a676a6b6dde15950b5ff658291a">SLAVE_RESPONSE</a> = 0x02
  }</td></tr>
-<tr class="memdesc:a4224310b1a6a87cc1204395c3088b70f"><td class="mdescLeft">&#160;</td><td class="mdescRight">LIN frame type.  <a href="../../d8/d3d/classLIN__Master__Base.html#a4224310b1a6a87cc1204395c3088b70f">More...</a><br /></td></tr>
-<tr class="separator:a4224310b1a6a87cc1204395c3088b70f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60989ae17866899d7f50ff6255818e1f" id="r_a60989ae17866899d7f50ff6255818e1f"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a60989ae17866899d7f50ff6255818e1f">state_t</a> { <br />
-&#160;&#160;<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a60989ae17866899d7f50ff6255818e1fa2ca755f9cd35ff5589ce4bef269c44b3">STATE_OFF</a> = 0x01
-, <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a60989ae17866899d7f50ff6255818e1fa5711cc44a5d2779b1f838f93a3ff0ba8">STATE_IDLE</a> = 0x02
-, <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a60989ae17866899d7f50ff6255818e1fa4f14178dcc9bcdf8144f34656c1e69a6">STATE_BREAK</a> = 0x04
-, <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a60989ae17866899d7f50ff6255818e1fa08ec7459c22126587ae36e09884b8805">STATE_BODY</a> = 0x08
+<tr class="memdesc:a0db700d612a65867ab78498922816b3e"><td class="mdescLeft">&#160;</td><td class="mdescRight">LIN frame type.  <a href="../../d8/d3d/classLIN__Master__Base.html#a0db700d612a65867ab78498922816b3e">More...</a><br /></td></tr>
+<tr class="separator:a0db700d612a65867ab78498922816b3e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aadf3f01fd628820cc103b3a5b1fcdcf7" id="r_aadf3f01fd628820cc103b3a5b1fcdcf7"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7">state_t</a> : uint8_t { <br />
+&#160;&#160;<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7a2ca755f9cd35ff5589ce4bef269c44b3">STATE_OFF</a> = 0x01
+, <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7a5711cc44a5d2779b1f838f93a3ff0ba8">STATE_IDLE</a> = 0x02
+, <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7a4f14178dcc9bcdf8144f34656c1e69a6">STATE_BREAK</a> = 0x04
+, <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7a08ec7459c22126587ae36e09884b8805">STATE_BODY</a> = 0x08
 , <br />
-&#160;&#160;<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a60989ae17866899d7f50ff6255818e1fab880004a8e64ac15545797fd129a9be2">STATE_DONE</a> = 0x10
+&#160;&#160;<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7ab880004a8e64ac15545797fd129a9be2">STATE_DONE</a> = 0x10
 <br />
  }</td></tr>
-<tr class="memdesc:a60989ae17866899d7f50ff6255818e1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">state of LIN master state machine. Use bitmasks for fast checking multiple states  <a href="../../d8/d3d/classLIN__Master__Base.html#a60989ae17866899d7f50ff6255818e1f">More...</a><br /></td></tr>
-<tr class="separator:a60989ae17866899d7f50ff6255818e1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ba2cf55b9114289597e098693a2a968" id="r_a7ba2cf55b9114289597e098693a2a968"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a7ba2cf55b9114289597e098693a2a968">error_t</a> { <br />
-&#160;&#160;<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a7ba2cf55b9114289597e098693a2a968ac3060f1da4e7e941b6f91d5b096d6e04">NO_ERROR</a> = 0x00
-, <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a7ba2cf55b9114289597e098693a2a968a2a046d29b51d83f906899f0ce79fac4c">ERROR_STATE</a> = 0x01
-, <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a7ba2cf55b9114289597e098693a2a968a714c11d42d40cc3c581fa271d66eed7c">ERROR_ECHO</a> = 0x02
-, <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a7ba2cf55b9114289597e098693a2a968a714b85000e7c932a324fd553573ca128">ERROR_TIMEOUT</a> = 0x04
+<tr class="memdesc:aadf3f01fd628820cc103b3a5b1fcdcf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">state of LIN master state machine. Use bitmasks for fast checking multiple states  <a href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7">More...</a><br /></td></tr>
+<tr class="separator:aadf3f01fd628820cc103b3a5b1fcdcf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9ad5b96675e1995b42effacca2d01348" id="r_a9ad5b96675e1995b42effacca2d01348"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348">error_t</a> : uint8_t { <br />
+&#160;&#160;<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348ac3060f1da4e7e941b6f91d5b096d6e04">NO_ERROR</a> = 0x00
+, <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348a2a046d29b51d83f906899f0ce79fac4c">ERROR_STATE</a> = 0x01
+, <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348a714c11d42d40cc3c581fa271d66eed7c">ERROR_ECHO</a> = 0x02
+, <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348a714b85000e7c932a324fd553573ca128">ERROR_TIMEOUT</a> = 0x04
 , <br />
-&#160;&#160;<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a7ba2cf55b9114289597e098693a2a968a3d6dc2d40f16786986d17be11b80589e">ERROR_CHK</a> = 0x08
-, <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a7ba2cf55b9114289597e098693a2a968aee211d64fab9226da94c2a59844bdc5a">ERROR_MISC</a> = 0x80
+&#160;&#160;<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348a3d6dc2d40f16786986d17be11b80589e">ERROR_CHK</a> = 0x08
+, <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348aee211d64fab9226da94c2a59844bdc5a">ERROR_MISC</a> = 0x80
 <br />
  }</td></tr>
-<tr class="memdesc:a7ba2cf55b9114289597e098693a2a968"><td class="mdescLeft">&#160;</td><td class="mdescRight">LIN error codes. Use bitmasks, as error is latched. Use same as LIN_slave_portable.  <a href="../../d8/d3d/classLIN__Master__Base.html#a7ba2cf55b9114289597e098693a2a968">More...</a><br /></td></tr>
-<tr class="separator:a7ba2cf55b9114289597e098693a2a968"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memdesc:a9ad5b96675e1995b42effacca2d01348"><td class="mdescLeft">&#160;</td><td class="mdescRight">LIN error codes. Use bitmasks, as error is latched. Use same as LIN_slave_portable.  <a href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348">More...</a><br /></td></tr>
+<tr class="separator:a9ad5b96675e1995b42effacca2d01348"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:add9871843ee0f1db94c88b51ef07aad0" id="r_add9871843ee0f1db94c88b51ef07aad0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#add9871843ee0f1db94c88b51ef07aad0">LIN_Master_Base</a> (const char NameLIN[]=&quot;Master&quot;, const int8_t PinTxEN=INT8_MIN)</td></tr>
 <tr class="memdesc:add9871843ee0f1db94c88b51ef07aad0"><td class="mdescLeft">&#160;</td><td class="mdescRight">LIN master node constructor.  <br /></td></tr>
 <tr class="separator:add9871843ee0f1db94c88b51ef07aad0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2624afcebabef9e7c61e8e011e2f8338" id="r_a2624afcebabef9e7c61e8e011e2f8338"><td class="memItemLeft" align="right" valign="top">virtual&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a2624afcebabef9e7c61e8e011e2f8338">~LIN_Master_Base</a> (void)</td></tr>
+<tr class="memdesc:a2624afcebabef9e7c61e8e011e2f8338"><td class="mdescLeft">&#160;</td><td class="mdescRight">LIN master node destructor, here dummy. Any class with virtual functions should have virtual destructor.  <br /></td></tr>
+<tr class="separator:a2624afcebabef9e7c61e8e011e2f8338"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0846986eb4b3110fa2f3c53bdb76a455" id="r_a0846986eb4b3110fa2f3c53bdb76a455"><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0846986eb4b3110fa2f3c53bdb76a455">begin</a> (uint16_t Baudrate=19200)</td></tr>
 <tr class="memdesc:a0846986eb4b3110fa2f3c53bdb76a455"><td class="mdescLeft">&#160;</td><td class="mdescRight">Open serial interface.  <br /></td></tr>
 <tr class="separator:a0846986eb4b3110fa2f3c53bdb76a455"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -173,37 +176,31 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0715ddd4e14ee2f718e9aad5b031914a" id="r_a0715ddd4e14ee2f718e9aad5b031914a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0715ddd4e14ee2f718e9aad5b031914a">resetStateMachine</a> (void)</td></tr>
 <tr class="memdesc:a0715ddd4e14ee2f718e9aad5b031914a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reset LIN state machine.  <br /></td></tr>
 <tr class="separator:a0715ddd4e14ee2f718e9aad5b031914a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4cee1574443345fed1ebcebcbf95a614" id="r_a4cee1574443345fed1ebcebcbf95a614"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a60989ae17866899d7f50ff6255818e1f">LIN_Master_Base::state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a4cee1574443345fed1ebcebcbf95a614">getState</a> (void)</td></tr>
+<tr class="memitem:a4cee1574443345fed1ebcebcbf95a614" id="r_a4cee1574443345fed1ebcebcbf95a614"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7">LIN_Master_Base::state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a4cee1574443345fed1ebcebcbf95a614">getState</a> (void)</td></tr>
 <tr class="memdesc:a4cee1574443345fed1ebcebcbf95a614"><td class="mdescLeft">&#160;</td><td class="mdescRight">Getter for LIN state machine state.  <br /></td></tr>
 <tr class="separator:a4cee1574443345fed1ebcebcbf95a614"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a95f62a4bf534ccb1e64c7c6c79ed7dc2" id="r_a95f62a4bf534ccb1e64c7c6c79ed7dc2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a95f62a4bf534ccb1e64c7c6c79ed7dc2">resetError</a> (void)</td></tr>
 <tr class="memdesc:a95f62a4bf534ccb1e64c7c6c79ed7dc2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear error of LIN state machine.  <br /></td></tr>
 <tr class="separator:a95f62a4bf534ccb1e64c7c6c79ed7dc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a748d46d0f3e0cae51631c547c84b1db1" id="r_a748d46d0f3e0cae51631c547c84b1db1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a7ba2cf55b9114289597e098693a2a968">LIN_Master_Base::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a748d46d0f3e0cae51631c547c84b1db1">getError</a> (void)</td></tr>
+<tr class="memitem:a748d46d0f3e0cae51631c547c84b1db1" id="r_a748d46d0f3e0cae51631c547c84b1db1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348">LIN_Master_Base::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a748d46d0f3e0cae51631c547c84b1db1">getError</a> (void)</td></tr>
 <tr class="memdesc:a748d46d0f3e0cae51631c547c84b1db1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Getter for LIN state machine error.  <br /></td></tr>
 <tr class="separator:a748d46d0f3e0cae51631c547c84b1db1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a60a907cd17177bd2593b2221a4f29e2b" id="r_a60a907cd17177bd2593b2221a4f29e2b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a60a907cd17177bd2593b2221a4f29e2b">enableTransmitter</a> (void)</td></tr>
-<tr class="memdesc:a60a907cd17177bd2593b2221a4f29e2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable RS485 transmitter (DE=high)  <br /></td></tr>
-<tr class="separator:a60a907cd17177bd2593b2221a4f29e2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66b765f866c690fbd8aee533680bea8d" id="r_a66b765f866c690fbd8aee533680bea8d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a66b765f866c690fbd8aee533680bea8d">disableTransmitter</a> (void)</td></tr>
-<tr class="memdesc:a66b765f866c690fbd8aee533680bea8d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable RS485 transmitter (DE=low)  <br /></td></tr>
-<tr class="separator:a66b765f866c690fbd8aee533680bea8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20ccbc5a4878d2d71756be5edba7ff22" id="r_a20ccbc5a4878d2d71756be5edba7ff22"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a20ccbc5a4878d2d71756be5edba7ff22">getFrame</a> (<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a4224310b1a6a87cc1204395c3088b70f">LIN_Master_Base::frame_t</a> &amp;Type, uint8_t &amp;Id, uint8_t &amp;NumData, uint8_t Data[])</td></tr>
+<tr class="memitem:a20ccbc5a4878d2d71756be5edba7ff22" id="r_a20ccbc5a4878d2d71756be5edba7ff22"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a20ccbc5a4878d2d71756be5edba7ff22">getFrame</a> (<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0db700d612a65867ab78498922816b3e">LIN_Master_Base::frame_t</a> &amp;Type, uint8_t &amp;Id, uint8_t &amp;NumData, uint8_t Data[])</td></tr>
 <tr class="memdesc:a20ccbc5a4878d2d71756be5edba7ff22"><td class="mdescLeft">&#160;</td><td class="mdescRight">Getter for LIN frame.  <br /></td></tr>
 <tr class="separator:a20ccbc5a4878d2d71756be5edba7ff22"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aacae2326ba91258653b54eab59afc2d2" id="r_aacae2326ba91258653b54eab59afc2d2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a60989ae17866899d7f50ff6255818e1f">LIN_Master_Base::state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aacae2326ba91258653b54eab59afc2d2">sendMasterRequest</a> (<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0e14e35f8eafa336902cb1412cbd2e91">LIN_Master_Base::version_t</a> Version=<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0e14e35f8eafa336902cb1412cbd2e91a122354ea96e26896b603b3048689a75e">LIN_Master_Base::LIN_V2</a>, uint8_t Id=0x00, uint8_t NumData=0, uint8_t Data[]=NULL)</td></tr>
+<tr class="memitem:aacae2326ba91258653b54eab59afc2d2" id="r_aacae2326ba91258653b54eab59afc2d2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7">LIN_Master_Base::state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aacae2326ba91258653b54eab59afc2d2">sendMasterRequest</a> (<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a401f498c7238602354ab063f487d5402">LIN_Master_Base::version_t</a> Version=<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a401f498c7238602354ab063f487d5402a122354ea96e26896b603b3048689a75e">LIN_Master_Base::LIN_V2</a>, uint8_t Id=0x00, uint8_t NumData=0, uint8_t Data[]=NULL)</td></tr>
 <tr class="memdesc:aacae2326ba91258653b54eab59afc2d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start sending a LIN master request frame in background (if supported)  <br /></td></tr>
 <tr class="separator:aacae2326ba91258653b54eab59afc2d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0556395411273f313463fb725e891df" id="r_af0556395411273f313463fb725e891df"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a7ba2cf55b9114289597e098693a2a968">LIN_Master_Base::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#af0556395411273f313463fb725e891df">sendMasterRequestBlocking</a> (<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0e14e35f8eafa336902cb1412cbd2e91">LIN_Master_Base::version_t</a> Version=<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0e14e35f8eafa336902cb1412cbd2e91a122354ea96e26896b603b3048689a75e">LIN_Master_Base::LIN_V2</a>, uint8_t Id=0x00, uint8_t NumData=0, uint8_t Data[]=NULL)</td></tr>
+<tr class="memitem:af0556395411273f313463fb725e891df" id="r_af0556395411273f313463fb725e891df"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348">LIN_Master_Base::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#af0556395411273f313463fb725e891df">sendMasterRequestBlocking</a> (<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a401f498c7238602354ab063f487d5402">LIN_Master_Base::version_t</a> Version=<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a401f498c7238602354ab063f487d5402a122354ea96e26896b603b3048689a75e">LIN_Master_Base::LIN_V2</a>, uint8_t Id=0x00, uint8_t NumData=0, uint8_t Data[]=NULL)</td></tr>
 <tr class="memdesc:af0556395411273f313463fb725e891df"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a blocking LIN master request frame (no background operation)  <br /></td></tr>
 <tr class="separator:af0556395411273f313463fb725e891df"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a357cc9e1f4cb8d87855c3a9b4fb4f487" id="r_a357cc9e1f4cb8d87855c3a9b4fb4f487"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a60989ae17866899d7f50ff6255818e1f">LIN_Master_Base::state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a357cc9e1f4cb8d87855c3a9b4fb4f487">receiveSlaveResponse</a> (<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0e14e35f8eafa336902cb1412cbd2e91">LIN_Master_Base::version_t</a> Version=<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0e14e35f8eafa336902cb1412cbd2e91a122354ea96e26896b603b3048689a75e">LIN_Master_Base::LIN_V2</a>, uint8_t Id=0x00, uint8_t NumData=0)</td></tr>
+<tr class="memitem:a357cc9e1f4cb8d87855c3a9b4fb4f487" id="r_a357cc9e1f4cb8d87855c3a9b4fb4f487"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7">LIN_Master_Base::state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a357cc9e1f4cb8d87855c3a9b4fb4f487">receiveSlaveResponse</a> (<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a401f498c7238602354ab063f487d5402">LIN_Master_Base::version_t</a> Version=<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a401f498c7238602354ab063f487d5402a122354ea96e26896b603b3048689a75e">LIN_Master_Base::LIN_V2</a>, uint8_t Id=0x00, uint8_t NumData=0)</td></tr>
 <tr class="memdesc:a357cc9e1f4cb8d87855c3a9b4fb4f487"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start sending a LIN slave response frame in background (if supported)  <br /></td></tr>
 <tr class="separator:a357cc9e1f4cb8d87855c3a9b4fb4f487"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a546b2df5bde37851a7019a14ea6f7212" id="r_a546b2df5bde37851a7019a14ea6f7212"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a7ba2cf55b9114289597e098693a2a968">LIN_Master_Base::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a546b2df5bde37851a7019a14ea6f7212">receiveSlaveResponseBlocking</a> (<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0e14e35f8eafa336902cb1412cbd2e91">LIN_Master_Base::version_t</a> Version=<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0e14e35f8eafa336902cb1412cbd2e91a122354ea96e26896b603b3048689a75e">LIN_Master_Base::LIN_V2</a>, uint8_t Id=0x00, uint8_t NumData=0, uint8_t *Data=NULL)</td></tr>
+<tr class="memitem:a546b2df5bde37851a7019a14ea6f7212" id="r_a546b2df5bde37851a7019a14ea6f7212"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348">LIN_Master_Base::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a546b2df5bde37851a7019a14ea6f7212">receiveSlaveResponseBlocking</a> (<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a401f498c7238602354ab063f487d5402">LIN_Master_Base::version_t</a> Version=<a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a401f498c7238602354ab063f487d5402a122354ea96e26896b603b3048689a75e">LIN_Master_Base::LIN_V2</a>, uint8_t Id=0x00, uint8_t NumData=0, uint8_t *Data=NULL)</td></tr>
 <tr class="memdesc:a546b2df5bde37851a7019a14ea6f7212"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send a blocking LIN slave response frame (no background operation)  <br /></td></tr>
 <tr class="separator:a546b2df5bde37851a7019a14ea6f7212"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65b575f355f393af775a48af96c64757" id="r_a65b575f355f393af775a48af96c64757"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a60989ae17866899d7f50ff6255818e1f">LIN_Master_Base::state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a65b575f355f393af775a48af96c64757">handler</a> (void)</td></tr>
+<tr class="memitem:a65b575f355f393af775a48af96c64757" id="r_a65b575f355f393af775a48af96c64757"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7">LIN_Master_Base::state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a65b575f355f393af775a48af96c64757">handler</a> (void)</td></tr>
 <tr class="memdesc:a65b575f355f393af775a48af96c64757"><td class="mdescLeft">&#160;</td><td class="mdescRight">Handle LIN background operation (call until STATE_DONE is returned)  <br /></td></tr>
 <tr class="separator:a65b575f355f393af775a48af96c64757"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -221,18 +218,24 @@ Protected Member Functions</h2></td></tr>
 <tr class="memitem:a665728bba0c5553de44408284749bc85" id="r_a665728bba0c5553de44408284749bc85"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a665728bba0c5553de44408284749bc85">_calculateChecksum</a> (uint8_t NumData, uint8_t Data[])</td></tr>
 <tr class="memdesc:a665728bba0c5553de44408284749bc85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate LIN frame checksum.  <br /></td></tr>
 <tr class="separator:a665728bba0c5553de44408284749bc85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43fb37f17555f9de2e0fa32084acb3fa" id="r_a43fb37f17555f9de2e0fa32084acb3fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a7ba2cf55b9114289597e098693a2a968">LIN_Master_Base::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a43fb37f17555f9de2e0fa32084acb3fa">_checkFrame</a> (void)</td></tr>
+<tr class="memitem:a43fb37f17555f9de2e0fa32084acb3fa" id="r_a43fb37f17555f9de2e0fa32084acb3fa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348">LIN_Master_Base::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a43fb37f17555f9de2e0fa32084acb3fa">_checkFrame</a> (void)</td></tr>
 <tr class="memdesc:a43fb37f17555f9de2e0fa32084acb3fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check received LIN frame.  <br /></td></tr>
 <tr class="separator:a43fb37f17555f9de2e0fa32084acb3fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae5148c9909c3578aeeba29481f60577d" id="r_ae5148c9909c3578aeeba29481f60577d"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a60989ae17866899d7f50ff6255818e1f">LIN_Master_Base::state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#ae5148c9909c3578aeeba29481f60577d">_sendBreak</a> (void)</td></tr>
+<tr class="memitem:ae5148c9909c3578aeeba29481f60577d" id="r_ae5148c9909c3578aeeba29481f60577d"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7">LIN_Master_Base::state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#ae5148c9909c3578aeeba29481f60577d">_sendBreak</a> (void)</td></tr>
 <tr class="memdesc:ae5148c9909c3578aeeba29481f60577d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send LIN break.  <br /></td></tr>
 <tr class="separator:ae5148c9909c3578aeeba29481f60577d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a97f429524415cff0d410157f3a954462" id="r_a97f429524415cff0d410157f3a954462"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a60989ae17866899d7f50ff6255818e1f">LIN_Master_Base::state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a97f429524415cff0d410157f3a954462">_sendFrame</a> (void)</td></tr>
+<tr class="memitem:a97f429524415cff0d410157f3a954462" id="r_a97f429524415cff0d410157f3a954462"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7">LIN_Master_Base::state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a97f429524415cff0d410157f3a954462">_sendFrame</a> (void)</td></tr>
 <tr class="memdesc:a97f429524415cff0d410157f3a954462"><td class="mdescLeft">&#160;</td><td class="mdescRight">Send LIN frame body.  <br /></td></tr>
 <tr class="separator:a97f429524415cff0d410157f3a954462"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9e86f666d192b4dcdbf2f5f61e2a7c35" id="r_a9e86f666d192b4dcdbf2f5f61e2a7c35"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a60989ae17866899d7f50ff6255818e1f">LIN_Master_Base::state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a9e86f666d192b4dcdbf2f5f61e2a7c35">_receiveFrame</a> (void)</td></tr>
+<tr class="memitem:a9e86f666d192b4dcdbf2f5f61e2a7c35" id="r_a9e86f666d192b4dcdbf2f5f61e2a7c35"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7">LIN_Master_Base::state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a9e86f666d192b4dcdbf2f5f61e2a7c35">_receiveFrame</a> (void)</td></tr>
 <tr class="memdesc:a9e86f666d192b4dcdbf2f5f61e2a7c35"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receive LIN frame.  <br /></td></tr>
 <tr class="separator:a9e86f666d192b4dcdbf2f5f61e2a7c35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4c538e2683efa274b2cf6e47c8fd7b41" id="r_a4c538e2683efa274b2cf6e47c8fd7b41"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a4c538e2683efa274b2cf6e47c8fd7b41">_enableTransmitter</a> (void)</td></tr>
+<tr class="memdesc:a4c538e2683efa274b2cf6e47c8fd7b41"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable RS485 transmitter (DE=high)  <br /></td></tr>
+<tr class="separator:a4c538e2683efa274b2cf6e47c8fd7b41"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a98e59593b2cda9b66453a05dadf224a2" id="r_a98e59593b2cda9b66453a05dadf224a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a98e59593b2cda9b66453a05dadf224a2">_disableTransmitter</a> (void)</td></tr>
+<tr class="memdesc:a98e59593b2cda9b66453a05dadf224a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Disable RS485 transmitter (DE=low)  <br /></td></tr>
+<tr class="separator:a98e59593b2cda9b66453a05dadf224a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -242,10 +245,10 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:a0d76d6fa578a5c41570a7370e08b05b0" id="r_a0d76d6fa578a5c41570a7370e08b05b0"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0d76d6fa578a5c41570a7370e08b05b0">baudrate</a></td></tr>
 <tr class="memdesc:a0d76d6fa578a5c41570a7370e08b05b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">communication baudrate [Baud]  <br /></td></tr>
 <tr class="separator:a0d76d6fa578a5c41570a7370e08b05b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7abdcaca964329e47a5012e6b9e1adf2" id="r_a7abdcaca964329e47a5012e6b9e1adf2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a60989ae17866899d7f50ff6255818e1f">LIN_Master_Base::state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a></td></tr>
+<tr class="memitem:a7abdcaca964329e47a5012e6b9e1adf2" id="r_a7abdcaca964329e47a5012e6b9e1adf2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7">LIN_Master_Base::state_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a></td></tr>
 <tr class="memdesc:a7abdcaca964329e47a5012e6b9e1adf2"><td class="mdescLeft">&#160;</td><td class="mdescRight">status of LIN state machine  <br /></td></tr>
 <tr class="separator:a7abdcaca964329e47a5012e6b9e1adf2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b28ff295b853573cc1cf7646bcb2c4f" id="r_a4b28ff295b853573cc1cf7646bcb2c4f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a7ba2cf55b9114289597e098693a2a968">LIN_Master_Base::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a4b28ff295b853573cc1cf7646bcb2c4f">error</a></td></tr>
+<tr class="memitem:a4b28ff295b853573cc1cf7646bcb2c4f" id="r_a4b28ff295b853573cc1cf7646bcb2c4f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348">LIN_Master_Base::error_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a4b28ff295b853573cc1cf7646bcb2c4f">error</a></td></tr>
 <tr class="memdesc:a4b28ff295b853573cc1cf7646bcb2c4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">error state. Is latched until cleared  <br /></td></tr>
 <tr class="separator:a4b28ff295b853573cc1cf7646bcb2c4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaa4e8f44deab28db2ef3066950a3059e" id="r_aaa4e8f44deab28db2ef3066950a3059e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aaa4e8f44deab28db2ef3066950a3059e">timePerByte</a></td></tr>
@@ -257,10 +260,10 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:ad974e07f201029549f23103bc44bd600" id="r_ad974e07f201029549f23103bc44bd600"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#ad974e07f201029549f23103bc44bd600">timeMax</a></td></tr>
 <tr class="memdesc:ad974e07f201029549f23103bc44bd600"><td class="mdescLeft">&#160;</td><td class="mdescRight">max. frame duration [us]  <br /></td></tr>
 <tr class="separator:ad974e07f201029549f23103bc44bd600"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad0389cb23a15c4003625ac59acb81e9" id="r_aad0389cb23a15c4003625ac59acb81e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0e14e35f8eafa336902cb1412cbd2e91">LIN_Master_Base::version_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aad0389cb23a15c4003625ac59acb81e9">version</a></td></tr>
+<tr class="memitem:aad0389cb23a15c4003625ac59acb81e9" id="r_aad0389cb23a15c4003625ac59acb81e9"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a401f498c7238602354ab063f487d5402">LIN_Master_Base::version_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aad0389cb23a15c4003625ac59acb81e9">version</a></td></tr>
 <tr class="memdesc:aad0389cb23a15c4003625ac59acb81e9"><td class="mdescLeft">&#160;</td><td class="mdescRight">LIN protocol version.  <br /></td></tr>
 <tr class="separator:aad0389cb23a15c4003625ac59acb81e9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad3d89373f776a8733b7c9c31ca5c5c93" id="r_ad3d89373f776a8733b7c9c31ca5c5c93"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a4224310b1a6a87cc1204395c3088b70f">LIN_Master_Base::frame_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#ad3d89373f776a8733b7c9c31ca5c5c93">type</a></td></tr>
+<tr class="memitem:ad3d89373f776a8733b7c9c31ca5c5c93" id="r_ad3d89373f776a8733b7c9c31ca5c5c93"><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0db700d612a65867ab78498922816b3e">LIN_Master_Base::frame_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#ad3d89373f776a8733b7c9c31ca5c5c93">type</a></td></tr>
 <tr class="memdesc:ad3d89373f776a8733b7c9c31ca5c5c93"><td class="mdescLeft">&#160;</td><td class="mdescRight">LIN frame type.  <br /></td></tr>
 <tr class="separator:ad3d89373f776a8733b7c9c31ca5c5c93"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aed2a845462718c30e9a73a3815e0aed1" id="r_aed2a845462718c30e9a73a3815e0aed1"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aed2a845462718c30e9a73a3815e0aed1">id</a></td></tr>
@@ -285,31 +288,31 @@ Protected Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00045">45</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
-<a id="a7ba2cf55b9114289597e098693a2a968" name="a7ba2cf55b9114289597e098693a2a968"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7ba2cf55b9114289597e098693a2a968">&#9670;&#160;</a></span>error_t</h2>
+<a id="a9ad5b96675e1995b42effacca2d01348" name="a9ad5b96675e1995b42effacca2d01348"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ad5b96675e1995b42effacca2d01348">&#9670;&#160;</a></span>error_t</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a7ba2cf55b9114289597e098693a2a968">LIN_Master_Base::error_t</a></td>
+          <td class="memname">enum <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348">LIN_Master_Base::error_t</a> : uint8_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>LIN error codes. Use bitmasks, as error is latched. Use same as LIN_slave_portable. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a7ba2cf55b9114289597e098693a2a968ac3060f1da4e7e941b6f91d5b096d6e04" name="a7ba2cf55b9114289597e098693a2a968ac3060f1da4e7e941b6f91d5b096d6e04"></a>NO_ERROR&#160;</td><td class="fielddoc"><p>no error </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a9ad5b96675e1995b42effacca2d01348ac3060f1da4e7e941b6f91d5b096d6e04" name="a9ad5b96675e1995b42effacca2d01348ac3060f1da4e7e941b6f91d5b096d6e04"></a>NO_ERROR&#160;</td><td class="fielddoc"><p>no error </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a7ba2cf55b9114289597e098693a2a968a2a046d29b51d83f906899f0ce79fac4c" name="a7ba2cf55b9114289597e098693a2a968a2a046d29b51d83f906899f0ce79fac4c"></a>ERROR_STATE&#160;</td><td class="fielddoc"><p>error in LIN state machine </p>
+<tr><td class="fieldname"><a id="a9ad5b96675e1995b42effacca2d01348a2a046d29b51d83f906899f0ce79fac4c" name="a9ad5b96675e1995b42effacca2d01348a2a046d29b51d83f906899f0ce79fac4c"></a>ERROR_STATE&#160;</td><td class="fielddoc"><p>error in LIN state machine </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a7ba2cf55b9114289597e098693a2a968a714c11d42d40cc3c581fa271d66eed7c" name="a7ba2cf55b9114289597e098693a2a968a714c11d42d40cc3c581fa271d66eed7c"></a>ERROR_ECHO&#160;</td><td class="fielddoc"><p>error reading LIN echo </p>
+<tr><td class="fieldname"><a id="a9ad5b96675e1995b42effacca2d01348a714c11d42d40cc3c581fa271d66eed7c" name="a9ad5b96675e1995b42effacca2d01348a714c11d42d40cc3c581fa271d66eed7c"></a>ERROR_ECHO&#160;</td><td class="fielddoc"><p>error reading response echo </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a7ba2cf55b9114289597e098693a2a968a714b85000e7c932a324fd553573ca128" name="a7ba2cf55b9114289597e098693a2a968a714b85000e7c932a324fd553573ca128"></a>ERROR_TIMEOUT&#160;</td><td class="fielddoc"><p>frame timeout error </p>
+<tr><td class="fieldname"><a id="a9ad5b96675e1995b42effacca2d01348a714b85000e7c932a324fd553573ca128" name="a9ad5b96675e1995b42effacca2d01348a714b85000e7c932a324fd553573ca128"></a>ERROR_TIMEOUT&#160;</td><td class="fielddoc"><p>frame timeout error </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a7ba2cf55b9114289597e098693a2a968a3d6dc2d40f16786986d17be11b80589e" name="a7ba2cf55b9114289597e098693a2a968a3d6dc2d40f16786986d17be11b80589e"></a>ERROR_CHK&#160;</td><td class="fielddoc"><p>LIN checksum error. </p>
+<tr><td class="fieldname"><a id="a9ad5b96675e1995b42effacca2d01348a3d6dc2d40f16786986d17be11b80589e" name="a9ad5b96675e1995b42effacca2d01348a3d6dc2d40f16786986d17be11b80589e"></a>ERROR_CHK&#160;</td><td class="fielddoc"><p>LIN checksum error. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a7ba2cf55b9114289597e098693a2a968aee211d64fab9226da94c2a59844bdc5a" name="a7ba2cf55b9114289597e098693a2a968aee211d64fab9226da94c2a59844bdc5a"></a>ERROR_MISC&#160;</td><td class="fielddoc"><p>misc error, should not occur </p>
+<tr><td class="fieldname"><a id="a9ad5b96675e1995b42effacca2d01348aee211d64fab9226da94c2a59844bdc5a" name="a9ad5b96675e1995b42effacca2d01348aee211d64fab9226da94c2a59844bdc5a"></a>ERROR_MISC&#160;</td><td class="fielddoc"><p>misc error, should not occur </p>
 </td></tr>
 </table>
 
@@ -317,23 +320,23 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a4224310b1a6a87cc1204395c3088b70f" name="a4224310b1a6a87cc1204395c3088b70f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4224310b1a6a87cc1204395c3088b70f">&#9670;&#160;</a></span>frame_t</h2>
+<a id="a0db700d612a65867ab78498922816b3e" name="a0db700d612a65867ab78498922816b3e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0db700d612a65867ab78498922816b3e">&#9670;&#160;</a></span>frame_t</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a4224310b1a6a87cc1204395c3088b70f">LIN_Master_Base::frame_t</a></td>
+          <td class="memname">enum <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0db700d612a65867ab78498922816b3e">LIN_Master_Base::frame_t</a> : uint8_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>LIN frame type. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a4224310b1a6a87cc1204395c3088b70fa8251525c2e23f210c040968ec94f8b33" name="a4224310b1a6a87cc1204395c3088b70fa8251525c2e23f210c040968ec94f8b33"></a>MASTER_REQUEST&#160;</td><td class="fielddoc"><p>LIN master request frame. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a0db700d612a65867ab78498922816b3ea8251525c2e23f210c040968ec94f8b33" name="a0db700d612a65867ab78498922816b3ea8251525c2e23f210c040968ec94f8b33"></a>MASTER_REQUEST&#160;</td><td class="fielddoc"><p>LIN master request frame. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a4224310b1a6a87cc1204395c3088b70fad0e17a676a6b6dde15950b5ff658291a" name="a4224310b1a6a87cc1204395c3088b70fad0e17a676a6b6dde15950b5ff658291a"></a>SLAVE_RESPONSE&#160;</td><td class="fielddoc"><p>LIN slave response frame. </p>
+<tr><td class="fieldname"><a id="a0db700d612a65867ab78498922816b3ead0e17a676a6b6dde15950b5ff658291a" name="a0db700d612a65867ab78498922816b3ead0e17a676a6b6dde15950b5ff658291a"></a>SLAVE_RESPONSE&#160;</td><td class="fielddoc"><p>LIN slave response frame. </p>
 </td></tr>
 </table>
 
@@ -341,29 +344,29 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a60989ae17866899d7f50ff6255818e1f" name="a60989ae17866899d7f50ff6255818e1f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a60989ae17866899d7f50ff6255818e1f">&#9670;&#160;</a></span>state_t</h2>
+<a id="aadf3f01fd628820cc103b3a5b1fcdcf7" name="aadf3f01fd628820cc103b3a5b1fcdcf7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aadf3f01fd628820cc103b3a5b1fcdcf7">&#9670;&#160;</a></span>state_t</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a60989ae17866899d7f50ff6255818e1f">LIN_Master_Base::state_t</a></td>
+          <td class="memname">enum <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7">LIN_Master_Base::state_t</a> : uint8_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>state of LIN master state machine. Use bitmasks for fast checking multiple states </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a60989ae17866899d7f50ff6255818e1fa2ca755f9cd35ff5589ce4bef269c44b3" name="a60989ae17866899d7f50ff6255818e1fa2ca755f9cd35ff5589ce4bef269c44b3"></a>STATE_OFF&#160;</td><td class="fielddoc"><p>LIN interface closed. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aadf3f01fd628820cc103b3a5b1fcdcf7a2ca755f9cd35ff5589ce4bef269c44b3" name="aadf3f01fd628820cc103b3a5b1fcdcf7a2ca755f9cd35ff5589ce4bef269c44b3"></a>STATE_OFF&#160;</td><td class="fielddoc"><p>LIN interface closed. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a60989ae17866899d7f50ff6255818e1fa5711cc44a5d2779b1f838f93a3ff0ba8" name="a60989ae17866899d7f50ff6255818e1fa5711cc44a5d2779b1f838f93a3ff0ba8"></a>STATE_IDLE&#160;</td><td class="fielddoc"><p>no LIN transmission ongoing </p>
+<tr><td class="fieldname"><a id="aadf3f01fd628820cc103b3a5b1fcdcf7a5711cc44a5d2779b1f838f93a3ff0ba8" name="aadf3f01fd628820cc103b3a5b1fcdcf7a5711cc44a5d2779b1f838f93a3ff0ba8"></a>STATE_IDLE&#160;</td><td class="fielddoc"><p>no LIN transmission ongoing </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a60989ae17866899d7f50ff6255818e1fa4f14178dcc9bcdf8144f34656c1e69a6" name="a60989ae17866899d7f50ff6255818e1fa4f14178dcc9bcdf8144f34656c1e69a6"></a>STATE_BREAK&#160;</td><td class="fielddoc"><p>sync break is being transmitted </p>
+<tr><td class="fieldname"><a id="aadf3f01fd628820cc103b3a5b1fcdcf7a4f14178dcc9bcdf8144f34656c1e69a6" name="aadf3f01fd628820cc103b3a5b1fcdcf7a4f14178dcc9bcdf8144f34656c1e69a6"></a>STATE_BREAK&#160;</td><td class="fielddoc"><p>sync break is being transmitted </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a60989ae17866899d7f50ff6255818e1fa08ec7459c22126587ae36e09884b8805" name="a60989ae17866899d7f50ff6255818e1fa08ec7459c22126587ae36e09884b8805"></a>STATE_BODY&#160;</td><td class="fielddoc"><p>rest of frame is being sent/received </p>
+<tr><td class="fieldname"><a id="aadf3f01fd628820cc103b3a5b1fcdcf7a08ec7459c22126587ae36e09884b8805" name="aadf3f01fd628820cc103b3a5b1fcdcf7a08ec7459c22126587ae36e09884b8805"></a>STATE_BODY&#160;</td><td class="fielddoc"><p>rest of frame is being sent/received </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a60989ae17866899d7f50ff6255818e1fab880004a8e64ac15545797fd129a9be2" name="a60989ae17866899d7f50ff6255818e1fab880004a8e64ac15545797fd129a9be2"></a>STATE_DONE&#160;</td><td class="fielddoc"><p>frame completed </p>
+<tr><td class="fieldname"><a id="aadf3f01fd628820cc103b3a5b1fcdcf7ab880004a8e64ac15545797fd129a9be2" name="aadf3f01fd628820cc103b3a5b1fcdcf7ab880004a8e64ac15545797fd129a9be2"></a>STATE_DONE&#160;</td><td class="fielddoc"><p>frame completed </p>
 </td></tr>
 </table>
 
@@ -371,23 +374,23 @@ Protected Attributes</h2></td></tr>
 
 </div>
 </div>
-<a id="a0e14e35f8eafa336902cb1412cbd2e91" name="a0e14e35f8eafa336902cb1412cbd2e91"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0e14e35f8eafa336902cb1412cbd2e91">&#9670;&#160;</a></span>version_t</h2>
+<a id="a401f498c7238602354ab063f487d5402" name="a401f498c7238602354ab063f487d5402"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a401f498c7238602354ab063f487d5402">&#9670;&#160;</a></span>version_t</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0e14e35f8eafa336902cb1412cbd2e91">LIN_Master_Base::version_t</a></td>
+          <td class="memname">enum <a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a401f498c7238602354ab063f487d5402">LIN_Master_Base::version_t</a> : uint8_t</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>LIN protocol version. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a0e14e35f8eafa336902cb1412cbd2e91a7b76dd938b748292cd8dcd04aaac50b6" name="a0e14e35f8eafa336902cb1412cbd2e91a7b76dd938b748292cd8dcd04aaac50b6"></a>LIN_V1&#160;</td><td class="fielddoc"><p>LIN protocol version 1.x. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a401f498c7238602354ab063f487d5402a7b76dd938b748292cd8dcd04aaac50b6" name="a401f498c7238602354ab063f487d5402a7b76dd938b748292cd8dcd04aaac50b6"></a>LIN_V1&#160;</td><td class="fielddoc"><p>LIN protocol version 1.x. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a0e14e35f8eafa336902cb1412cbd2e91a122354ea96e26896b603b3048689a75e" name="a0e14e35f8eafa336902cb1412cbd2e91a122354ea96e26896b603b3048689a75e"></a>LIN_V2&#160;</td><td class="fielddoc"><p>LIN protocol version 2.x. </p>
+<tr><td class="fieldname"><a id="a401f498c7238602354ab063f487d5402a122354ea96e26896b603b3048689a75e" name="a401f498c7238602354ab063f487d5402a122354ea96e26896b603b3048689a75e"></a>LIN_V2&#160;</td><td class="fielddoc"><p>LIN protocol version 2.x. </p>
 </td></tr>
 </table>
 
@@ -433,6 +436,36 @@ Protected Attributes</h2></td></tr>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00211">211</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
+
+</div>
+</div>
+<a id="a2624afcebabef9e7c61e8e011e2f8338" name="a2624afcebabef9e7c61e8e011e2f8338"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2624afcebabef9e7c61e8e011e2f8338">&#9670;&#160;</a></span>~LIN_Master_Base()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual LIN_Master_Base::~LIN_Master_Base </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">virtual</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>LIN master node destructor, here dummy. Any class with virtual functions should have virtual destructor. </p>
+
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00153">153</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -587,7 +620,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a7ba2cf55b9114289597e098693a2a968">LIN_Master_Base::error_t</a> LIN_Master_Base::_checkFrame </td>
+          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348">LIN_Master_Base::error_t</a> LIN_Master_Base::_checkFrame </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -636,6 +669,113 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
+<a id="a98e59593b2cda9b66453a05dadf224a2" name="a98e59593b2cda9b66453a05dadf224a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a98e59593b2cda9b66453a05dadf224a2">&#9670;&#160;</a></span>_disableTransmitter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LIN_Master_Base::_disableTransmitter </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Disable RS485 transmitter (DE=low) </p>
+
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00143">143</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d8/d3d/classLIN__Master__Base_a98e59593b2cda9b66453a05dadf224a2_icgraph.png" border="0" usemap="#ad8/d3d/classLIN__Master__Base_a98e59593b2cda9b66453a05dadf224a2_icgraph" alt=""/></div>
+<map name="ad8/d3d/classLIN__Master__Base_a98e59593b2cda9b66453a05dadf224a2_icgraph" id="ad8/d3d/classLIN__Master__Base_a98e59593b2cda9b66453a05dadf224a2_icgraph">
+<area shape="rect" title="Disable RS485 transmitter (DE=low)" alt="" coords="761,251,957,291"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a9e86f666d192b4dcdbf2f5f61e2a7c35" title="Receive LIN frame." alt="" coords="513,8,711,48"/>
+<area shape="poly" title=" " alt="" coords="840,239,819,201,790,155,754,109,712,69,680,50,683,46,715,65,758,105,795,152,824,198,845,237"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a65b575f355f393af775a48af96c64757" title="Handle LIN background operation (call until STATE_DONE is returned)" alt="" coords="272,45,463,70"/>
+<area shape="poly" title=" " alt="" coords="837,240,815,209,786,174,751,140,712,113,668,98,605,85,463,67,463,62,605,80,669,92,715,108,755,136,790,170,819,206,841,237"/>
+<area shape="rect" href="../../dd/dac/classLIN__Master__HardwareSerial.html#adf9f6a70029822f810f14bfb9987942e" title="Read and check LIN frame." alt="" coords="511,123,713,163"/>
+<area shape="poly" title=" " alt="" coords="820,244,770,210,712,177,684,165,686,160,715,172,773,205,823,240"/>
+<area shape="rect" href="../../d9/de9/classLIN__Master__HardwareSerial__ESP32.html#af0aac1cabb66e8095e00a5b441ca0207" title="Read and check LIN frame." alt="" coords="511,187,713,227"/>
+<area shape="poly" title=" " alt="" coords="767,250,689,229,690,224,769,245"/>
+<area shape="rect" href="../../d9/d29/classLIN__Master__HardwareSerial__ESP8266.html#abccb12fe89bf01b6e41251520bed2f98" title="Read and check LIN frame." alt="" coords="511,251,713,291"/>
+<area shape="poly" title=" " alt="" coords="748,273,713,273,713,268,748,268"/>
+<area shape="rect" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#ad062b6c3c47962bd970a871fff089b37" title="Read and check LIN frame." alt="" coords="514,315,710,355"/>
+<area shape="poly" title=" " alt="" coords="769,297,690,317,689,312,767,292"/>
+<area shape="rect" href="../../dd/dac/classLIN__Master__HardwareSerial.html#adb989afa408046ad8d96e92e69d8621a" title="Send LIN bytes (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID)" alt="" coords="511,379,713,419"/>
+<area shape="poly" title=" " alt="" coords="823,301,773,336,715,369,686,381,684,376,712,364,770,332,820,297"/>
+<area shape="rect" href="../../d9/d29/classLIN__Master__HardwareSerial__ESP8266.html#a4d4e2e70f7c165250bdf46df672adcea" title="Send LIN bytes (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID)" alt="" coords="511,443,713,483"/>
+<area shape="poly" title=" " alt="" coords="839,304,788,369,753,403,715,433,692,445,689,440,712,428,750,399,784,365,835,301"/>
+<area shape="rect" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#af6d1189bc5096208407311ad8da25db2" title="Send LIN bytes (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID)" alt="" coords="514,507,710,547"/>
+<area shape="poly" title=" " alt="" coords="848,304,828,348,799,399,761,452,715,497,695,509,693,504,712,493,757,448,795,397,823,345,843,302"/>
+<area shape="poly" title=" " alt="" coords="500,44,463,49,462,43,500,39"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a546b2df5bde37851a7019a14ea6f7212" title="Send a blocking LIN slave response frame (no background operation)" alt="" coords="19,5,210,45"/>
+<area shape="poly" title=" " alt="" coords="258,46,210,40,210,35,259,41"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#af0556395411273f313463fb725e891df" title="Send a blocking LIN master request frame (no background operation)" alt="" coords="5,69,224,109"/>
+<area shape="poly" title=" " alt="" coords="259,74,225,78,224,73,258,68"/>
+</map>
+</div>
+
+</div>
+</div>
+<a id="a4c538e2683efa274b2cf6e47c8fd7b41" name="a4c538e2683efa274b2cf6e47c8fd7b41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4c538e2683efa274b2cf6e47c8fd7b41">&#9670;&#160;</a></span>_enableTransmitter()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LIN_Master_Base::_enableTransmitter </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">protected</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enable RS485 transmitter (DE=high) </p>
+
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00140">140</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<div class="dynheader">
+Here is the caller graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d8/d3d/classLIN__Master__Base_a4c538e2683efa274b2cf6e47c8fd7b41_icgraph.png" border="0" usemap="#ad8/d3d/classLIN__Master__Base_a4c538e2683efa274b2cf6e47c8fd7b41_icgraph" alt=""/></div>
+<map name="ad8/d3d/classLIN__Master__Base_a4c538e2683efa274b2cf6e47c8fd7b41_icgraph" id="ad8/d3d/classLIN__Master__Base_a4c538e2683efa274b2cf6e47c8fd7b41_icgraph">
+<area shape="rect" title="Enable RS485 transmitter (DE=high)" alt="" coords="256,101,449,141"/>
+<area shape="rect" href="../../dd/dac/classLIN__Master__HardwareSerial.html#ac67e3bc2dff691c158881c1397422107" title="Send LIN break." alt="" coords="5,5,208,45"/>
+<area shape="poly" title=" " alt="" coords="296,98,207,60,174,48,175,43,209,55,298,93"/>
+<area shape="rect" href="../../d9/de9/classLIN__Master__HardwareSerial__ESP32.html#af35299d2104f2b51ab4fa52a2ccd3dc5" title="Send LIN break." alt="" coords="5,69,208,109"/>
+<area shape="poly" title=" " alt="" coords="242,110,208,105,208,100,243,104"/>
+<area shape="rect" href="../../d9/d29/classLIN__Master__HardwareSerial__ESP8266.html#afcab22d01f60bbf0c1f9c51780bd8c06" title="Send LIN break." alt="" coords="5,133,208,173"/>
+<area shape="poly" title=" " alt="" coords="243,138,208,143,208,138,242,133"/>
+<area shape="rect" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#a42f87bbd6ff615595943890fc7e27cdc" title="Send LIN break." alt="" coords="9,197,205,237"/>
+<area shape="poly" title=" " alt="" coords="298,150,209,188,175,200,174,195,207,183,296,145"/>
+</map>
+</div>
+
+</div>
+</div>
 <a id="a9e86f666d192b4dcdbf2f5f61e2a7c35" name="a9e86f666d192b4dcdbf2f5f61e2a7c35"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9e86f666d192b4dcdbf2f5f61e2a7c35">&#9670;&#160;</a></span>_receiveFrame()</h2>
 
@@ -646,7 +786,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a60989ae17866899d7f50ff6255818e1f">LIN_Master_Base::state_t</a> LIN_Master_Base::_receiveFrame </td>
+          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7">LIN_Master_Base::state_t</a> LIN_Master_Base::_receiveFrame </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -673,7 +813,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="../../d8/d3d/classLIN__Master__Base_a9e86f666d192b4dcdbf2f5f61e2a7c35_cgraph.png" border="0" usemap="#ad8/d3d/classLIN__Master__Base_a9e86f666d192b4dcdbf2f5f61e2a7c35_cgraph" alt=""/></div>
 <map name="ad8/d3d/classLIN__Master__Base_a9e86f666d192b4dcdbf2f5f61e2a7c35_cgraph" id="ad8/d3d/classLIN__Master__Base_a9e86f666d192b4dcdbf2f5f61e2a7c35_cgraph">
 <area shape="rect" title="Receive LIN frame." alt="" coords="5,5,203,45"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a66b765f866c690fbd8aee533680bea8d" title="Disable RS485 transmitter (DE=low)" alt="" coords="251,5,440,45"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a98e59593b2cda9b66453a05dadf224a2" title="Disable RS485 transmitter (DE=low)" alt="" coords="251,5,447,45"/>
 <area shape="poly" title=" " alt="" coords="203,23,237,23,237,28,203,28"/>
 </map>
 </div>
@@ -704,7 +844,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a60989ae17866899d7f50ff6255818e1f">LIN_Master_Base::state_t</a> LIN_Master_Base::_sendBreak </td>
+          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7">LIN_Master_Base::state_t</a> LIN_Master_Base::_sendBreak </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -753,7 +893,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a60989ae17866899d7f50ff6255818e1f">LIN_Master_Base::state_t</a> LIN_Master_Base::_sendFrame </td>
+          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7">LIN_Master_Base::state_t</a> LIN_Master_Base::_sendFrame </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -844,113 +984,6 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="a66b765f866c690fbd8aee533680bea8d" name="a66b765f866c690fbd8aee533680bea8d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a66b765f866c690fbd8aee533680bea8d">&#9670;&#160;</a></span>disableTransmitter()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void LIN_Master_Base::disableTransmitter </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Disable RS485 transmitter (DE=low) </p>
-
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00171">171</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../d8/d3d/classLIN__Master__Base_a66b765f866c690fbd8aee533680bea8d_icgraph.png" border="0" usemap="#ad8/d3d/classLIN__Master__Base_a66b765f866c690fbd8aee533680bea8d_icgraph" alt=""/></div>
-<map name="ad8/d3d/classLIN__Master__Base_a66b765f866c690fbd8aee533680bea8d_icgraph" id="ad8/d3d/classLIN__Master__Base_a66b765f866c690fbd8aee533680bea8d_icgraph">
-<area shape="rect" title="Disable RS485 transmitter (DE=low)" alt="" coords="761,251,951,291"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a9e86f666d192b4dcdbf2f5f61e2a7c35" title="Receive LIN frame." alt="" coords="513,8,711,48"/>
-<area shape="poly" title=" " alt="" coords="838,239,817,201,789,155,753,109,712,69,681,50,683,46,715,65,757,105,793,152,822,198,842,237"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a65b575f355f393af775a48af96c64757" title="Handle LIN background operation (call until STATE_DONE is returned)" alt="" coords="272,45,463,70"/>
-<area shape="poly" title=" " alt="" coords="834,240,813,209,785,174,751,140,712,113,668,98,605,85,463,67,463,62,605,79,669,92,715,108,754,136,789,170,817,206,838,237"/>
-<area shape="rect" href="../../dd/dac/classLIN__Master__HardwareSerial.html#adf9f6a70029822f810f14bfb9987942e" title="Read and check LIN frame." alt="" coords="511,123,713,163"/>
-<area shape="poly" title=" " alt="" coords="818,245,769,210,712,177,684,165,686,160,715,172,772,205,821,240"/>
-<area shape="rect" href="../../d9/de9/classLIN__Master__HardwareSerial__ESP32.html#af0aac1cabb66e8095e00a5b441ca0207" title="Read and check LIN frame." alt="" coords="511,187,713,227"/>
-<area shape="poly" title=" " alt="" coords="765,250,688,229,689,224,767,245"/>
-<area shape="rect" href="../../d9/d29/classLIN__Master__HardwareSerial__ESP8266.html#abccb12fe89bf01b6e41251520bed2f98" title="Read and check LIN frame." alt="" coords="511,251,713,291"/>
-<area shape="poly" title=" " alt="" coords="747,273,714,273,714,268,747,268"/>
-<area shape="rect" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#ad062b6c3c47962bd970a871fff089b37" title="Read and check LIN frame." alt="" coords="514,315,710,355"/>
-<area shape="poly" title=" " alt="" coords="767,297,689,317,688,312,765,292"/>
-<area shape="rect" href="../../dd/dac/classLIN__Master__HardwareSerial.html#adb989afa408046ad8d96e92e69d8621a" title="Send LIN bytes (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID)" alt="" coords="511,379,713,419"/>
-<area shape="poly" title=" " alt="" coords="821,301,772,336,715,369,686,381,684,376,712,364,769,331,818,297"/>
-<area shape="rect" href="../../d9/d29/classLIN__Master__HardwareSerial__ESP8266.html#a4d4e2e70f7c165250bdf46df672adcea" title="Send LIN bytes (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID)" alt="" coords="511,443,713,483"/>
-<area shape="poly" title=" " alt="" coords="837,304,786,369,753,403,715,433,692,445,689,440,712,428,749,399,782,365,832,301"/>
-<area shape="rect" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#af6d1189bc5096208407311ad8da25db2" title="Send LIN bytes (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID)" alt="" coords="514,507,710,547"/>
-<area shape="poly" title=" " alt="" coords="845,304,826,348,798,399,761,452,715,497,695,509,693,504,712,493,757,448,793,397,821,345,840,302"/>
-<area shape="poly" title=" " alt="" coords="500,44,463,49,462,43,500,39"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a546b2df5bde37851a7019a14ea6f7212" title="Send a blocking LIN slave response frame (no background operation)" alt="" coords="19,5,210,45"/>
-<area shape="poly" title=" " alt="" coords="258,46,210,40,210,35,259,41"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#af0556395411273f313463fb725e891df" title="Send a blocking LIN master request frame (no background operation)" alt="" coords="5,69,224,109"/>
-<area shape="poly" title=" " alt="" coords="259,74,225,78,224,73,258,68"/>
-</map>
-</div>
-
-</div>
-</div>
-<a id="a60a907cd17177bd2593b2221a4f29e2b" name="a60a907cd17177bd2593b2221a4f29e2b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a60a907cd17177bd2593b2221a4f29e2b">&#9670;&#160;</a></span>enableTransmitter()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void LIN_Master_Base::enableTransmitter </td>
-          <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>Enable RS485 transmitter (DE=high) </p>
-
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00168">168</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
-<div class="dynheader">
-Here is the caller graph for this function:</div>
-<div class="dyncontent">
-<div class="center"><img src="../../d8/d3d/classLIN__Master__Base_a60a907cd17177bd2593b2221a4f29e2b_icgraph.png" border="0" usemap="#ad8/d3d/classLIN__Master__Base_a60a907cd17177bd2593b2221a4f29e2b_icgraph" alt=""/></div>
-<map name="ad8/d3d/classLIN__Master__Base_a60a907cd17177bd2593b2221a4f29e2b_icgraph" id="ad8/d3d/classLIN__Master__Base_a60a907cd17177bd2593b2221a4f29e2b_icgraph">
-<area shape="rect" title="Enable RS485 transmitter (DE=high)" alt="" coords="256,109,516,134"/>
-<area shape="rect" href="../../dd/dac/classLIN__Master__HardwareSerial.html#ac67e3bc2dff691c158881c1397422107" title="Send LIN break." alt="" coords="5,5,208,45"/>
-<area shape="poly" title=" " alt="" coords="337,106,207,60,171,48,173,43,209,55,338,101"/>
-<area shape="rect" href="../../d9/de9/classLIN__Master__HardwareSerial__ESP32.html#af35299d2104f2b51ab4fa52a2ccd3dc5" title="Send LIN break." alt="" coords="5,69,208,109"/>
-<area shape="poly" title=" " alt="" coords="261,110,208,104,208,98,262,104"/>
-<area shape="rect" href="../../d9/d29/classLIN__Master__HardwareSerial__ESP8266.html#afcab22d01f60bbf0c1f9c51780bd8c06" title="Send LIN break." alt="" coords="5,133,208,173"/>
-<area shape="poly" title=" " alt="" coords="262,138,208,144,208,139,261,133"/>
-<area shape="rect" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#a42f87bbd6ff615595943890fc7e27cdc" title="Send LIN break." alt="" coords="9,197,205,237"/>
-<area shape="poly" title=" " alt="" coords="338,142,209,188,173,200,171,195,207,183,337,136"/>
-</map>
-</div>
-
-</div>
-</div>
 <a id="ab3c9b02e3f1b4576b23b38d1dec876b5" name="ab3c9b02e3f1b4576b23b38d1dec876b5"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ab3c9b02e3f1b4576b23b38d1dec876b5">&#9670;&#160;</a></span>end()</h2>
 
@@ -1010,7 +1043,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a7ba2cf55b9114289597e098693a2a968">LIN_Master_Base::error_t</a> LIN_Master_Base::getError </td>
+          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348">LIN_Master_Base::error_t</a> LIN_Master_Base::getError </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -1026,7 +1059,7 @@ Here is the caller graph for this function:</div>
 
 <p>Getter for LIN state machine error. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00164">164</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00174">174</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -1042,7 +1075,7 @@ Here is the caller graph for this function:</div>
         <tr>
           <td class="memname">void LIN_Master_Base::getFrame </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a4224310b1a6a87cc1204395c3088b70f">LIN_Master_Base::frame_t</a> &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0db700d612a65867ab78498922816b3e">LIN_Master_Base::frame_t</a> &amp;&#160;</td>
           <td class="paramname"><em>Type</em>, </td>
         </tr>
         <tr>
@@ -1078,7 +1111,7 @@ Here is the caller graph for this function:</div>
 
 <p>Getter for LIN frame. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00175">175</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00178">178</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1102,7 +1135,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a60989ae17866899d7f50ff6255818e1f">LIN_Master_Base::state_t</a> LIN_Master_Base::getState </td>
+          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7">LIN_Master_Base::state_t</a> LIN_Master_Base::getState </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -1118,7 +1151,7 @@ Here is the caller graph for this function:</div>
 
 <p>Getter for LIN state machine state. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00157">157</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00167">167</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -1129,7 +1162,7 @@ Here is the caller graph for this function:</div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a60989ae17866899d7f50ff6255818e1f">LIN_Master_Base::state_t</a> LIN_Master_Base::handler </td>
+          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7">LIN_Master_Base::state_t</a> LIN_Master_Base::handler </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -1147,14 +1180,14 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d8/d3d/classLIN__Master__Base_a65b575f355f393af775a48af96c64757_cgraph.png" border="0" usemap="#ad8/d3d/classLIN__Master__Base_a65b575f355f393af775a48af96c64757_cgraph" alt=""/></div>
 <map name="ad8/d3d/classLIN__Master__Base_a65b575f355f393af775a48af96c64757_cgraph" id="ad8/d3d/classLIN__Master__Base_a65b575f355f393af775a48af96c64757_cgraph">
-<area shape="rect" title="Handle LIN background operation (call until STATE_DONE is returned)" alt="" coords="5,70,196,95"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a9e86f666d192b4dcdbf2f5f61e2a7c35" title="Receive LIN frame." alt="" coords="256,5,453,45"/>
-<area shape="poly" title=" " alt="" coords="157,67,252,46,253,51,158,73"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a66b765f866c690fbd8aee533680bea8d" title="Disable RS485 transmitter (DE=low)" alt="" coords="513,35,703,75"/>
-<area shape="poly" title=" " alt="" coords="196,75,500,58,500,63,196,80"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a97f429524415cff0d410157f3a954462" title="Send LIN frame body." alt="" coords="244,121,465,146"/>
-<area shape="poly" title=" " alt="" coords="166,93,278,115,277,121,165,98"/>
-<area shape="poly" title=" " alt="" coords="454,34,500,39,499,45,453,39"/>
+<area shape="rect" title="Handle LIN background operation (call until STATE_DONE is returned)" alt="" coords="5,41,196,66"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a98e59593b2cda9b66453a05dadf224a2" title="Disable RS485 transmitter (DE=low)" alt="" coords="513,5,709,45"/>
+<area shape="poly" title=" " alt="" coords="146,38,193,27,244,19,376,12,499,14,499,20,376,17,244,24,194,32,148,43"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a9e86f666d192b4dcdbf2f5f61e2a7c35" title="Receive LIN frame." alt="" coords="256,33,453,73"/>
+<area shape="poly" title=" " alt="" coords="196,51,243,51,243,56,196,56"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a97f429524415cff0d410157f3a954462" title="Send LIN frame body." alt="" coords="244,98,465,123"/>
+<area shape="poly" title=" " alt="" coords="158,63,285,92,284,98,157,69"/>
+<area shape="poly" title=" " alt="" coords="453,40,499,35,500,40,454,45"/>
 </map>
 </div>
 <div class="dynheader">
@@ -1179,10 +1212,10 @@ Here is the caller graph for this function:</div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a60989ae17866899d7f50ff6255818e1f">LIN_Master_Base::state_t</a> LIN_Master_Base::receiveSlaveResponse </td>
+          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7">LIN_Master_Base::state_t</a> LIN_Master_Base::receiveSlaveResponse </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0e14e35f8eafa336902cb1412cbd2e91">LIN_Master_Base::version_t</a>&#160;</td>
-          <td class="paramname"><em>Version</em> = <code><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0e14e35f8eafa336902cb1412cbd2e91a122354ea96e26896b603b3048689a75e">LIN_Master_Base::LIN_V2</a></code>, </td>
+          <td class="paramtype"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a401f498c7238602354ab063f487d5402">LIN_Master_Base::version_t</a>&#160;</td>
+          <td class="paramname"><em>Version</em> = <code><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a401f498c7238602354ab063f487d5402a122354ea96e26896b603b3048689a75e">LIN_Master_Base::LIN_V2</a></code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1249,10 +1282,10 @@ Here is the caller graph for this function:</div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a7ba2cf55b9114289597e098693a2a968">LIN_Master_Base::error_t</a> LIN_Master_Base::receiveSlaveResponseBlocking </td>
+          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348">LIN_Master_Base::error_t</a> LIN_Master_Base::receiveSlaveResponseBlocking </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0e14e35f8eafa336902cb1412cbd2e91">LIN_Master_Base::version_t</a>&#160;</td>
-          <td class="paramname"><em>Version</em> = <code><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0e14e35f8eafa336902cb1412cbd2e91a122354ea96e26896b603b3048689a75e">LIN_Master_Base::LIN_V2</a></code>, </td>
+          <td class="paramtype"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a401f498c7238602354ab063f487d5402">LIN_Master_Base::version_t</a>&#160;</td>
+          <td class="paramname"><em>Version</em> = <code><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a401f498c7238602354ab063f487d5402a122354ea96e26896b603b3048689a75e">LIN_Master_Base::LIN_V2</a></code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1299,24 +1332,24 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d8/d3d/classLIN__Master__Base_a546b2df5bde37851a7019a14ea6f7212_cgraph.png" border="0" usemap="#ad8/d3d/classLIN__Master__Base_a546b2df5bde37851a7019a14ea6f7212_cgraph" alt=""/></div>
 <map name="ad8/d3d/classLIN__Master__Base_a546b2df5bde37851a7019a14ea6f7212_cgraph" id="ad8/d3d/classLIN__Master__Base_a546b2df5bde37851a7019a14ea6f7212_cgraph">
-<area shape="rect" title="Send a blocking LIN slave response frame (no background operation)" alt="" coords="5,84,196,124"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a20ccbc5a4878d2d71756be5edba7ff22" title="Getter for LIN frame." alt="" coords="244,42,448,67"/>
-<area shape="poly" title=" " alt="" coords="196,82,268,67,269,73,197,87"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a65b575f355f393af775a48af96c64757" title="Handle LIN background operation (call until STATE_DONE is returned)" alt="" coords="251,91,441,117"/>
-<area shape="poly" title=" " alt="" coords="196,101,237,101,237,107,196,107"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a357cc9e1f4cb8d87855c3a9b4fb4f487" title="Start sending a LIN slave response frame in background (if supported)" alt="" coords="251,163,441,203"/>
-<area shape="poly" title=" " alt="" coords="165,122,271,156,269,161,163,127"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a9e86f666d192b4dcdbf2f5f61e2a7c35" title="Receive LIN frame." alt="" coords="513,5,710,45"/>
-<area shape="poly" title=" " alt="" coords="400,89,447,76,539,47,541,52,449,81,402,94"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a66b765f866c690fbd8aee533680bea8d" title="Disable RS485 transmitter (DE=low)" alt="" coords="775,35,964,75"/>
-<area shape="poly" title=" " alt="" coords="441,92,761,62,761,67,442,98"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a97f429524415cff0d410157f3a954462" title="Send LIN frame body." alt="" coords="501,121,722,146"/>
-<area shape="poly" title=" " alt="" coords="442,112,487,117,487,122,441,117"/>
-<area shape="poly" title=" " alt="" coords="711,34,762,40,761,45,710,39"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a42863468f0691d79cb47e63cbf3dd62d" title="Calculate protected frame ID." alt="" coords="496,170,727,195"/>
-<area shape="poly" title=" " alt="" coords="441,180,482,180,482,185,441,185"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#ae5148c9909c3578aeeba29481f60577d" title="Send LIN break." alt="" coords="502,219,721,245"/>
-<area shape="poly" title=" " alt="" coords="442,198,530,214,529,219,441,203"/>
+<area shape="rect" title="Send a blocking LIN slave response frame (no background operation)" alt="" coords="5,64,196,104"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a20ccbc5a4878d2d71756be5edba7ff22" title="Getter for LIN frame." alt="" coords="244,22,448,47"/>
+<area shape="poly" title=" " alt="" coords="196,62,268,47,269,52,197,67"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a65b575f355f393af775a48af96c64757" title="Handle LIN background operation (call until STATE_DONE is returned)" alt="" coords="251,71,441,96"/>
+<area shape="poly" title=" " alt="" coords="196,81,237,81,237,86,196,86"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a357cc9e1f4cb8d87855c3a9b4fb4f487" title="Start sending a LIN slave response frame in background (if supported)" alt="" coords="251,145,441,185"/>
+<area shape="poly" title=" " alt="" coords="163,101,273,138,271,143,161,106"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a98e59593b2cda9b66453a05dadf224a2" title="Disable RS485 transmitter (DE=low)" alt="" coords="775,10,971,50"/>
+<area shape="poly" title=" " alt="" coords="411,68,447,56,460,48,470,39,480,31,495,24,563,9,632,3,700,4,761,9,761,15,700,9,633,9,564,14,497,29,483,35,473,43,464,52,449,61,413,73"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a9e86f666d192b4dcdbf2f5f61e2a7c35" title="Receive LIN frame." alt="" coords="513,38,710,78"/>
+<area shape="poly" title=" " alt="" coords="441,72,499,66,499,72,442,77"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a97f429524415cff0d410157f3a954462" title="Send LIN frame body." alt="" coords="501,103,722,128"/>
+<area shape="poly" title=" " alt="" coords="442,92,493,99,492,104,441,98"/>
+<area shape="poly" title=" " alt="" coords="710,45,761,39,761,45,710,50"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a42863468f0691d79cb47e63cbf3dd62d" title="Calculate protected frame ID." alt="" coords="496,152,727,178"/>
+<area shape="poly" title=" " alt="" coords="441,162,482,162,482,168,441,168"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#ae5148c9909c3578aeeba29481f60577d" title="Send LIN break." alt="" coords="502,202,721,227"/>
+<area shape="poly" title=" " alt="" coords="442,180,530,196,529,202,441,185"/>
 </map>
 </div>
 
@@ -1348,7 +1381,7 @@ Here is the call graph for this function:</div>
 
 <p>Clear error of LIN state machine. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00161">161</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00171">171</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -1378,7 +1411,7 @@ Here is the call graph for this function:</div>
 
 <p>Reset LIN state machine. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00154">154</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00164">164</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -1389,10 +1422,10 @@ Here is the call graph for this function:</div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a60989ae17866899d7f50ff6255818e1f">LIN_Master_Base::state_t</a> LIN_Master_Base::sendMasterRequest </td>
+          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7">LIN_Master_Base::state_t</a> LIN_Master_Base::sendMasterRequest </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0e14e35f8eafa336902cb1412cbd2e91">LIN_Master_Base::version_t</a>&#160;</td>
-          <td class="paramname"><em>Version</em> = <code><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0e14e35f8eafa336902cb1412cbd2e91a122354ea96e26896b603b3048689a75e">LIN_Master_Base::LIN_V2</a></code>, </td>
+          <td class="paramtype"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a401f498c7238602354ab063f487d5402">LIN_Master_Base::version_t</a>&#160;</td>
+          <td class="paramname"><em>Version</em> = <code><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a401f498c7238602354ab063f487d5402a122354ea96e26896b603b3048689a75e">LIN_Master_Base::LIN_V2</a></code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1468,10 +1501,10 @@ Here is the caller graph for this function:</div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a7ba2cf55b9114289597e098693a2a968">LIN_Master_Base::error_t</a> LIN_Master_Base::sendMasterRequestBlocking </td>
+          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348">LIN_Master_Base::error_t</a> LIN_Master_Base::sendMasterRequestBlocking </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0e14e35f8eafa336902cb1412cbd2e91">LIN_Master_Base::version_t</a>&#160;</td>
-          <td class="paramname"><em>Version</em> = <code><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0e14e35f8eafa336902cb1412cbd2e91a122354ea96e26896b603b3048689a75e">LIN_Master_Base::LIN_V2</a></code>, </td>
+          <td class="paramtype"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a401f498c7238602354ab063f487d5402">LIN_Master_Base::version_t</a>&#160;</td>
+          <td class="paramname"><em>Version</em> = <code><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a401f498c7238602354ab063f487d5402a122354ea96e26896b603b3048689a75e">LIN_Master_Base::LIN_V2</a></code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1517,25 +1550,25 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d8/d3d/classLIN__Master__Base_af0556395411273f313463fb725e891df_cgraph.png" border="0" usemap="#ad8/d3d/classLIN__Master__Base_af0556395411273f313463fb725e891df_cgraph" alt=""/></div>
 <map name="ad8/d3d/classLIN__Master__Base_af0556395411273f313463fb725e891df_cgraph" id="ad8/d3d/classLIN__Master__Base_af0556395411273f313463fb725e891df_cgraph">
-<area shape="rect" title="Send a blocking LIN master request frame (no background operation)" alt="" coords="5,157,224,197"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a65b575f355f393af775a48af96c64757" title="Handle LIN background operation (call until STATE_DONE is returned)" alt="" coords="286,107,477,133"/>
-<area shape="poly" title=" " alt="" coords="208,155,308,133,309,138,209,160"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#aacae2326ba91258653b54eab59afc2d2" title="Start sending a LIN master request frame in background (if supported)" alt="" coords="272,185,491,225"/>
-<area shape="poly" title=" " alt="" coords="224,186,259,190,258,195,224,191"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a9e86f666d192b4dcdbf2f5f61e2a7c35" title="Receive LIN frame." alt="" coords="551,5,748,45"/>
-<area shape="poly" title=" " alt="" coords="417,105,538,61,577,47,579,52,540,67,419,110"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a66b765f866c690fbd8aee533680bea8d" title="Disable RS485 transmitter (DE=low)" alt="" coords="829,35,1018,75"/>
-<area shape="poly" title=" " alt="" coords="477,106,815,65,815,70,478,111"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a97f429524415cff0d410157f3a954462" title="Send LIN frame body." alt="" coords="539,121,760,146"/>
-<area shape="poly" title=" " alt="" coords="477,122,525,124,525,130,477,127"/>
-<area shape="poly" title=" " alt="" coords="749,33,815,40,815,46,748,39"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a665728bba0c5553de44408284749bc85" title="Calculate LIN frame checksum." alt="" coords="545,171,753,211"/>
-<area shape="poly" title=" " alt="" coords="491,197,532,194,532,200,491,202"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a42863468f0691d79cb47e63cbf3dd62d" title="Calculate protected frame ID." alt="" coords="808,206,1039,231"/>
-<area shape="poly" title=" " alt="" coords="491,216,539,220,670,223,794,222,794,227,670,229,539,225,491,222"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#ae5148c9909c3578aeeba29481f60577d" title="Send LIN break." alt="" coords="540,286,759,311"/>
-<area shape="poly" title=" " alt="" coords="431,223,540,264,589,280,587,285,538,269,429,228"/>
-<area shape="poly" title=" " alt="" coords="754,199,794,203,794,208,753,204"/>
+<area shape="rect" title="Send a blocking LIN master request frame (no background operation)" alt="" coords="5,135,224,175"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a65b575f355f393af775a48af96c64757" title="Handle LIN background operation (call until STATE_DONE is returned)" alt="" coords="286,85,477,110"/>
+<area shape="poly" title=" " alt="" coords="208,132,308,111,309,116,209,138"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#aacae2326ba91258653b54eab59afc2d2" title="Start sending a LIN master request frame in background (if supported)" alt="" coords="272,163,491,203"/>
+<area shape="poly" title=" " alt="" coords="224,164,259,167,258,173,224,169"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a98e59593b2cda9b66453a05dadf224a2" title="Disable RS485 transmitter (DE=low)" alt="" coords="825,6,1021,46"/>
+<area shape="poly" title=" " alt="" coords="400,82,460,49,498,32,538,19,608,8,680,3,749,4,811,8,811,14,749,9,680,8,609,13,539,24,500,37,462,53,403,87"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a9e86f666d192b4dcdbf2f5f61e2a7c35" title="Receive LIN frame." alt="" coords="551,34,748,74"/>
+<area shape="poly" title=" " alt="" coords="459,82,537,69,538,75,459,88"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a97f429524415cff0d410157f3a954462" title="Send LIN frame body." alt="" coords="539,98,760,124"/>
+<area shape="poly" title=" " alt="" coords="477,100,525,102,525,107,477,105"/>
+<area shape="poly" title=" " alt="" coords="748,41,811,34,812,40,749,46"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a665728bba0c5553de44408284749bc85" title="Calculate LIN frame checksum." alt="" coords="545,148,753,188"/>
+<area shape="poly" title=" " alt="" coords="491,174,532,172,532,177,491,180"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a42863468f0691d79cb47e63cbf3dd62d" title="Calculate protected frame ID." alt="" coords="808,184,1039,209"/>
+<area shape="poly" title=" " alt="" coords="491,194,539,198,670,201,794,199,794,205,670,206,539,203,491,199"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#ae5148c9909c3578aeeba29481f60577d" title="Send LIN break." alt="" coords="540,264,759,289"/>
+<area shape="poly" title=" " alt="" coords="431,201,540,242,589,257,587,262,538,247,429,206"/>
+<area shape="poly" title=" " alt="" coords="754,176,794,180,794,186,753,182"/>
 </map>
 </div>
 
@@ -1630,7 +1663,7 @@ Here is the call graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a7ba2cf55b9114289597e098693a2a968">LIN_Master_Base::error_t</a> LIN_Master_Base::error</td>
+          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348">LIN_Master_Base::error_t</a> LIN_Master_Base::error</td>
         </tr>
       </table>
   </td>
@@ -1778,7 +1811,7 @@ Here is the call graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a60989ae17866899d7f50ff6255818e1f">LIN_Master_Base::state_t</a> LIN_Master_Base::state</td>
+          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7">LIN_Master_Base::state_t</a> LIN_Master_Base::state</td>
         </tr>
       </table>
   </td>
@@ -1882,7 +1915,7 @@ Here is the call graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a4224310b1a6a87cc1204395c3088b70f">LIN_Master_Base::frame_t</a> LIN_Master_Base::type</td>
+          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0db700d612a65867ab78498922816b3e">LIN_Master_Base::frame_t</a> LIN_Master_Base::type</td>
         </tr>
       </table>
   </td>
@@ -1908,7 +1941,7 @@ Here is the call graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a0e14e35f8eafa336902cb1412cbd2e91">LIN_Master_Base::version_t</a> LIN_Master_Base::version</td>
+          <td class="memname"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a401f498c7238602354ab063f487d5402">LIN_Master_Base::version_t</a> LIN_Master_Base::version</td>
         </tr>
       </table>
   </td>

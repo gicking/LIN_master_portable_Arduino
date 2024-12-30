@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['version_0',['version',['../d8/d3d/classLIN__Master__Base.html#aad0389cb23a15c4003625ac59acb81e9',1,'LIN_Master_Base']]],
-  ['version_5ft_1',['version_t',['../d8/d3d/classLIN__Master__Base.html#a0e14e35f8eafa336902cb1412cbd2e91',1,'LIN_Master_Base']]]
+  ['_7elin_5fmaster_5fbase_0',['~LIN_Master_Base',['../d8/d3d/classLIN__Master__Base.html#a2624afcebabef9e7c61e8e011e2f8338',1,'LIN_Master_Base']]]
 ];

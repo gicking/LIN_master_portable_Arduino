@@ -36,7 +36,7 @@ Supported (=successfully tested) boards:
 LIN_Master_HardwareSerial_ESP32   LIN(Serial2, PIN_LIN_RX, PIN_LIN_TX, "Master");
 
 
-// call when byte was received via Serial. This routine is run between each time loop() runs, 
+// call when byte was received via Serial2. This routine is run between each time loop() runs, 
 // so using delay inside loop delays response. Multiple bytes of data may be available.
 void serialEvent2()
 {

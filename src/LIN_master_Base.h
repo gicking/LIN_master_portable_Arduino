@@ -134,6 +134,13 @@ class LIN_Master_Base
 
     /// @brief Receive LIN frame
     virtual LIN_Master_Base::state_t _receiveFrame(void);
+    
+
+    /// @brief Enable RS485 transmitter (DE=high)
+    inline void _enableTransmitter(void) { if (this->pinTxEN >= 0) digitalWrite(this->pinTxEN, HIGH); }
+    
+    /// @brief Disable RS485 transmitter (DE=low)
+    inline void _disableTransmitter(void) { if (this->pinTxEN >= 0) digitalWrite(this->pinTxEN, LOW); }
 
 
   // PUBLIC METHODS
@@ -165,13 +172,6 @@ class LIN_Master_Base
     
     /// @brief Getter for LIN state machine error
     inline LIN_Master_Base::error_t getError(void) { return this->error; }
-    
-
-    /// @brief Enable RS485 transmitter (DE=high)
-    inline void enableTransmitter(void) { if (this->pinTxEN >= 0) digitalWrite(this->pinTxEN, HIGH); }
-    
-    /// @brief Disable RS485 transmitter (DE=low)
-    inline void disableTransmitter(void) { if (this->pinTxEN >= 0) digitalWrite(this->pinTxEN, LOW); }
     
     
     /// @brief Getter for LIN frame

@@ -34,7 +34,7 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendBreak(void)
   }
 
   // optionally enable transmitter
-  enableTransmitter();
+  _enableTransmitter();
 
   // generate BREAK directly via GPIO (less overhead)
   digitalWrite(pinTx, LOW);
@@ -82,7 +82,7 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendFrame(void)
 
   // optionally disable transmitter for slave response frames
   if (this->type == LIN_Master_Base::SLAVE_RESPONSE)
-    disableTransmitter();
+    _disableTransmitter();
 
   // re-enable reception (above write is blocking)
   this->SWSerial.listen();
@@ -129,7 +129,7 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) this->_checkFrame());
 
     // optionally disable transmitter after frame is completed
-    disableTransmitter();
+    _disableTransmitter();
     
     // progress state
     this->state = LIN_Master_Base::STATE_DONE;
@@ -160,7 +160,7 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
       if (micros() - this->timeStart > this->timeMax)
       {
         this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_TIMEOUT);
-        disableTransmitter();
+        _disableTransmitter();
         this->state = LIN_Master_Base::STATE_DONE;
       }
 

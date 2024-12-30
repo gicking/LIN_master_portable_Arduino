@@ -1,7 +1,14 @@
 var searchData=
 [
-  ['receiveslaveresponse_0',['receiveSlaveResponse',['../d8/d3d/classLIN__Master__Base.html#a357cc9e1f4cb8d87855c3a9b4fb4f487',1,'LIN_Master_Base']]],
-  ['receiveslaveresponseblocking_1',['receiveSlaveResponseBlocking',['../d8/d3d/classLIN__Master__Base.html#a546b2df5bde37851a7019a14ea6f7212',1,'LIN_Master_Base']]],
-  ['reseterror_2',['resetError',['../d8/d3d/classLIN__Master__Base.html#a95f62a4bf534ccb1e64c7c6c79ed7dc2',1,'LIN_Master_Base']]],
-  ['resetstatemachine_3',['resetStateMachine',['../d8/d3d/classLIN__Master__Base.html#a0715ddd4e14ee2f718e9aad5b031914a',1,'LIN_Master_Base']]]
+  ['sendmasterrequest_0',['sendMasterRequest',['../d8/d3d/classLIN__Master__Base.html#aacae2326ba91258653b54eab59afc2d2',1,'LIN_Master_Base']]],
+  ['sendmasterrequestblocking_1',['sendMasterRequestBlocking',['../d8/d3d/classLIN__Master__Base.html#af0556395411273f313463fb725e891df',1,'LIN_Master_Base']]],
+  ['slave_5fresponse_2',['SLAVE_RESPONSE',['../d8/d3d/classLIN__Master__Base.html#a0db700d612a65867ab78498922816b3ead0e17a676a6b6dde15950b5ff658291a',1,'LIN_Master_Base']]],
+  ['state_3',['state',['../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2',1,'LIN_Master_Base']]],
+  ['state_5fbody_4',['STATE_BODY',['../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7a08ec7459c22126587ae36e09884b8805',1,'LIN_Master_Base']]],
+  ['state_5fbreak_5',['STATE_BREAK',['../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7a4f14178dcc9bcdf8144f34656c1e69a6',1,'LIN_Master_Base']]],
+  ['state_5fdone_6',['STATE_DONE',['../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7ab880004a8e64ac15545797fd129a9be2',1,'LIN_Master_Base']]],
+  ['state_5fidle_7',['STATE_IDLE',['../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7a5711cc44a5d2779b1f838f93a3ff0ba8',1,'LIN_Master_Base']]],
+  ['state_5foff_8',['STATE_OFF',['../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7a2ca755f9cd35ff5589ce4bef269c44b3',1,'LIN_Master_Base']]],
+  ['state_5ft_9',['state_t',['../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7',1,'LIN_Master_Base']]],
+  ['swappins_10',['swapPins',['../d9/d29/classLIN__Master__HardwareSerial__ESP8266.html#a984c7e8c683739a6eab01e54d2a93fb0',1,'LIN_Master_HardwareSerial_ESP8266']]]
 ];

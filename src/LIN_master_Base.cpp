@@ -186,7 +186,7 @@ LIN_Master_Base::state_t LIN_Master_Base::_receiveFrame(void)
   #endif
 
   // dummy: just progress state
-  disableTransmitter();
+  _disableTransmitter();
   this->state = LIN_Master_Base::STATE_DONE;
 
   // return state
@@ -426,7 +426,7 @@ LIN_Master_Base::state_t LIN_Master_Base::handler(void)
     // this should never happen..
     default:
       this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_MISC);
-      disableTransmitter();
+      _disableTransmitter();
       this->state = LIN_Master_Base::STATE_DONE;
 
   } // switch (state)

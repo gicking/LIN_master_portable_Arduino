@@ -43,7 +43,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_sendBreak(void)
   this->pSerial->updateBaudRate(this->baudrate >> 1);
 
   // optionally enable transmitter
-  enableTransmitter();
+  _enableTransmitter();
 
   // send BREAK (>=13 bit low)
   this->pSerial->write(bufTx[0]);
@@ -126,7 +126,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_receiveFrame(void)
 
   // optionally disable transmitter for slave response frames. Here, need to read BREAK as well due to delay of Serial.available()
   if ((this->type == LIN_Master_Base::SLAVE_RESPONSE) && (this->pSerial->available() == 3))
-    disableTransmitter();
+    _disableTransmitter();
 
   // frame body received. Here, need to read BREAK as well due to delay of Serial.available()
   if (this->pSerial->available() >= this->lenRx)
@@ -138,7 +138,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_receiveFrame(void)
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) this->_checkFrame());
 
     // optionally disable transmitter after frame is completed
-    disableTransmitter();
+    _disableTransmitter();
 
     // progress state
     this->state = LIN_Master_Base::STATE_DONE;
@@ -152,7 +152,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_receiveFrame(void)
     if (micros() - this->timeStart > this->timeMax)
     {
       this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_TIMEOUT);
-      disableTransmitter();
+      _disableTransmitter();
       this->state = LIN_Master_Base::STATE_DONE;
     }
 
