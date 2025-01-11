@@ -33,7 +33,6 @@ uint8_t LIN_Master_Base::_calculatePID(void)
 
   // print debug message (debug level 3)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 3)
-    xxx
     LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
     LIN_MASTER_DEBUG_SERIAL.print(": LIN_Master_Base::_calculatePID(): PID=0x");
     LIN_MASTER_DEBUG_SERIAL.println((int) pid, HEX);

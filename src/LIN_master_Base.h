@@ -22,11 +22,11 @@
 
 // optional LIN debug output. When using together with NeoHWSerial on AVR must use NeoSerialx to avoid linker conflict
 #if !defined(LIN_MASTER_DEBUG_SERIAL)
-  #define LIN_MASTER_DEBUG_SERIAL Serial        //!< serial interface used for debug output. Comment out for none
+  //#define LIN_MASTER_DEBUG_SERIAL Serial        //!< serial interface used for debug output. Comment out for none
   //#define LIN_MASTER_DEBUG_SERIAL NeoSerial     //!< serial interface used for debug output (required for AVR). Comment out for none
 #endif
 #if !defined(LIN_MASTER_DEBUG_LEVEL)
-  #define LIN_MASTER_DEBUG_LEVEL  3             //!< debug verbosity 0..3 (1=errors only, 3=verbose)
+  #define LIN_MASTER_DEBUG_LEVEL  2             //!< debug verbosity 0..3 (1=errors only, 3=verbose)
 #endif
 
 /*-----------------------------------------------------------------------------
