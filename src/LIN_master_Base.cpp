@@ -97,7 +97,7 @@ uint8_t LIN_Master_Base::_calculateChecksum(uint8_t NumData, uint8_t Data[])
 LIN_Master_Base::error_t LIN_Master_Base::_checkFrame(void)
 {
   // print debug message (debug level 3)
-  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= )
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 3)
     LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
     LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_Base::_checkFrame()");
   #endif
