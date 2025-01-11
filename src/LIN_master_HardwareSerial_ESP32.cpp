@@ -21,9 +21,10 @@
 */
 LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_sendBreak(void)
 {
-  // print debug message
+  // print debug message (debug level 2)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_HardwareSerial_ESP32::_sendBreak()");
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_HardwareSerial_ESP32::_sendBreak()");
   #endif
   
   // if state is wrong, exit immediately
@@ -48,7 +49,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_sendBreak(void)
   // send BREAK (>=13 bit low)
   this->pSerial->write(bufTx[0]);
 
-  // store starting time
+  // store starting time to avoid using Serial.available(), which has >1ms delay
   this->timeStartBreak = micros();
 
   // progress state
@@ -68,9 +69,10 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_sendBreak(void)
 */
 LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_sendFrame(void)
 {
-  // print debug message
+  // print debug message (debug level 2)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_HardwareSerial_ESP32::_sendFrame()");
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_HardwareSerial_ESP32::_sendFrame()");
   #endif
     
   // if state is wrong, exit immediately
@@ -111,9 +113,10 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_sendFrame(void)
 */
 LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_receiveFrame(void)
 {
-  // print debug message
+  // print debug message (debug level 2)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_HardwareSerial_ESP32::_receiveFrame()");
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_HardwareSerial_ESP32::_receiveFrame()");
   #endif
     
   // if state is wrong, exit immediately
@@ -177,16 +180,17 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_receiveFrame(void)
 LIN_Master_HardwareSerial_ESP32::LIN_Master_HardwareSerial_ESP32(HardwareSerial &Interface, uint8_t PinRx, uint8_t PinTx, const char NameLIN[], const int8_t PinTxEN) :
   LIN_Master_Base::LIN_Master_Base(NameLIN, PinTxEN)
 {
-  // store pointer to used HW serial
-  this->pSerial    = &Interface;                              // used serial interface
-  this->pinRx      = PinRx;                                   // receive pin
-  this->pinTx      = PinTx;                                   // transmit pin
-
-  // optional debug output
+  // print debug message (debug level 2)
+  // Note: not be printed, because constructor is called prior to setup()
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
     LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
     LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_HardwareSerial_ESP32()");
   #endif
+  
+  // store pointer to used HW serial
+  this->pSerial    = &Interface;                              // used serial interface
+  this->pinRx      = PinRx;                                   // receive pin
+  this->pinTx      = PinTx;                                   // transmit pin
 
   // must not open connection here, else system resets
 
@@ -201,6 +205,14 @@ LIN_Master_HardwareSerial_ESP32::LIN_Master_HardwareSerial_ESP32(HardwareSerial 
 */
 void LIN_Master_HardwareSerial_ESP32::begin(uint16_t Baudrate)
 {
+  // print debug message (debug level 2)
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.print(": LIN_Master_HardwareSerial_ESP32::begin(");
+    LIN_MASTER_DEBUG_SERIAL.print((int) Baudrate);
+    LIN_MASTER_DEBUG_SERIAL.println(")");
+  #endif
+
   // call base class method
   LIN_Master_Base::begin(Baudrate);
 
@@ -219,6 +231,12 @@ void LIN_Master_HardwareSerial_ESP32::begin(uint16_t Baudrate)
 */
 void LIN_Master_HardwareSerial_ESP32::end()
 {
+  // print debug message (debug level 2)
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.print(": LIN_Master_HardwareSerial_ESP32::end()");
+  #endif
+
   // call base class method
   LIN_Master_Base::end();
     

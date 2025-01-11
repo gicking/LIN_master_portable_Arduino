@@ -22,9 +22,10 @@
 */
 LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_sendBreak(void)
 {
-  // print debug message
+  // print debug message (debug level 2)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_HardwareSerial_ESP8266::_sendBreak()");
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_HardwareSerial_ESP8266::_sendBreak()");
   #endif
   
   // if state is wrong, exit immediately
@@ -66,9 +67,10 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_sendBreak(void)
 */
 LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_sendFrame(void)
 {
-  // print debug message
+  // print debug message (debug level 2)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_HardwareSerial::_sendFrame()");
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_HardwareSerial_ESP8266::_sendFrame()");
   #endif
     
   // if state is wrong, exit immediately
@@ -123,9 +125,10 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_sendFrame(void)
 */
 LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_receiveFrame(void)
 {
-  // print debug message
+  // print debug message (debug level 2)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_HardwareSerial_ESP8266::_receiveFrame()");
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_HardwareSerial_ESP8266::_receiveFrame()");
   #endif
     
   // if state is wrong, exit immediately
@@ -187,17 +190,18 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_receiveFrame(void)
 LIN_Master_HardwareSerial_ESP8266::LIN_Master_HardwareSerial_ESP8266(bool SwapPins, const char NameLIN[], const int8_t PinTxEN) : 
   LIN_Master_Base::LIN_Master_Base(NameLIN, PinTxEN)
 {
-  // store pointer to used HW serial
-  this->pSerial    = &Serial;                               // ESP8266 only has 1 UART with send/receive
-  this->swapPins   = SwapPins;                              // use alternate pins Rx=D7 / Tx=D8 for Serial0
-
-  // optional debug output
+  // print debug message (debug level 2)
+  // Note: not be printed, because constructor is called prior to setup()
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
     LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
     LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_HardwareSerial_ESP8266()");
   #endif
 
-  // must not open connection here, else system stalls
+  // store pointer to used HW serial
+  this->pSerial    = &Serial;                               // ESP8266 only has 1 UART with send/receive
+  this->swapPins   = SwapPins;                              // use alternate pins Rx=D7 / Tx=D8 for Serial0
+
+  // must not open connection here, else system resets
 
 } // LIN_Master_HardwareSerial_ESP8266::LIN_Master_HardwareSerial_ESP8266()
 
@@ -210,6 +214,14 @@ LIN_Master_HardwareSerial_ESP8266::LIN_Master_HardwareSerial_ESP8266(bool SwapPi
 */
 void LIN_Master_HardwareSerial_ESP8266::begin(uint16_t Baudrate)
 {
+  // print debug message (debug level 2)
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.print(": LIN_Master_HardwareSerial_ESP8266::begin(");
+    LIN_MASTER_DEBUG_SERIAL.print((int) Baudrate);
+    LIN_MASTER_DEBUG_SERIAL.println(")");
+  #endif
+
   // call base class method
   LIN_Master_Base::begin(Baudrate);
 
@@ -231,6 +243,12 @@ void LIN_Master_HardwareSerial_ESP8266::begin(uint16_t Baudrate)
 */
 void LIN_Master_HardwareSerial_ESP8266::end()
 {
+  // print debug message (debug level 2)
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.print(": LIN_Master_HardwareSerial_ESP8266::end()");
+  #endif
+
   // call base class method
   LIN_Master_Base::end();
     

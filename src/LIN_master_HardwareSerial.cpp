@@ -17,9 +17,10 @@
 */
 LIN_Master_Base::state_t LIN_Master_HardwareSerial::_sendBreak(void)
 {
-  // print debug message
+  // print debug message (debug level 2)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_HardwareSerial::_sendBreak()");
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_HardwareSerial::_sendBreak()");
   #endif
     
   // if state is wrong, exit immediately
@@ -62,9 +63,10 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial::_sendBreak(void)
 */
 LIN_Master_Base::state_t LIN_Master_HardwareSerial::_sendFrame(void)
 {
-  // print debug message
+  // print debug message (debug level 2)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_HardwareSerial::_sendFrame()");
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_HardwareSerial::_sendFrame()");
   #endif
     
   // if state is wrong, exit immediately
@@ -120,9 +122,10 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial::_sendFrame(void)
 */
 LIN_Master_Base::state_t LIN_Master_HardwareSerial::_receiveFrame(void)
 {
-  // print debug message
+  // print debug message (debug level 2)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_HardwareSerial::_receiveFrame()");
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_HardwareSerial::_receiveFrame()");
   #endif
     
   // if state is wrong, exit immediately
@@ -183,15 +186,16 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial::_receiveFrame(void)
 LIN_Master_HardwareSerial::LIN_Master_HardwareSerial(HardwareSerial &Interface, const char NameLIN[], const int8_t PinTxEN) : 
   LIN_Master_Base::LIN_Master_Base(NameLIN, PinTxEN)
 {
-  // store pointer to used HW serial
-  this->pSerial = &Interface;
-
-  // optional debug output
+  // print debug message (debug level 2)
+  // Note: not be printed, because constructor is called prior to setup()
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
     LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
     LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_HardwareSerial()");
   #endif
   
+  // store pointer to used HW serial
+  this->pSerial = &Interface;
+
   // must not open connection here, else (at least) ESP32 and ESP8266 fail
 
 } // LIN_Master_HardwareSerial::LIN_Master_HardwareSerial()
@@ -205,6 +209,14 @@ LIN_Master_HardwareSerial::LIN_Master_HardwareSerial(HardwareSerial &Interface, 
 */
 void LIN_Master_HardwareSerial::begin(uint16_t Baudrate)
 {
+  // print debug message (debug level 2)
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.print(": LIN_Master_HardwareSerial::begin(");
+    LIN_MASTER_DEBUG_SERIAL.print((int) Baudrate);
+    LIN_MASTER_DEBUG_SERIAL.println(")");
+  #endif
+
   // call base class method
   LIN_Master_Base::begin(Baudrate);
 
@@ -222,6 +234,12 @@ void LIN_Master_HardwareSerial::begin(uint16_t Baudrate)
 */
 void LIN_Master_HardwareSerial::end()
 {
+  // print debug message (debug level 2)
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.print(": LIN_Master_HardwareSerial::end()");
+  #endif
+
   // call base class method
   LIN_Master_Base::end();
     

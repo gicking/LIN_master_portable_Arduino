@@ -20,7 +20,7 @@
 // misc parameters
 #define LIN_MASTER_BUFLEN_NAME  30            //!< max. length of node name
 
-// optional LIN debug output. For AVR must use NeoSerialx to avoid linker conflict
+// optional LIN debug output. When using together with NeoHWSerial on AVR must use NeoSerialx to avoid linker conflict
 //#define LIN_MASTER_DEBUG_SERIAL Serial        //!< serial interface used for debug output. Comment out for none
 //#define LIN_MASTER_DEBUG_SERIAL NeoSerial     //!< serial interface used for debug output (required for AVR). Comment out for none
 #define LIN_MASTER_DEBUG_LEVEL  2             //!< debug verbosity 0..3 (1=errors only, 3=verbose)
@@ -137,10 +137,32 @@ class LIN_Master_Base
     
 
     /// @brief Enable RS485 transmitter (DE=high)
-    inline void _enableTransmitter(void) { if (this->pinTxEN >= 0) digitalWrite(this->pinTxEN, HIGH); }
+    inline void _enableTransmitter(void)
+    {   
+      // print debug message (debug level 3)
+      #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 3)
+        LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_Base::_enableTransmitter()");
+      #endif
+
+      // enable tranmitter
+      if (this->pinTxEN >= 0)
+        digitalWrite(this->pinTxEN, HIGH);
+    
+    } // _enableTransmitter()
     
     /// @brief Disable RS485 transmitter (DE=low)
-    inline void _disableTransmitter(void) { if (this->pinTxEN >= 0) digitalWrite(this->pinTxEN, LOW); }
+    inline void _disableTransmitter(void)
+    { 
+      // print debug message (debug level 3)
+      #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 3)
+        LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_Base::_disableTransmitter()");
+      #endif
+
+      // disable tranmitter
+      if (this->pinTxEN >= 0)
+        digitalWrite(this->pinTxEN, LOW);
+            
+    } // _disableTransmitter()
 
 
   // PUBLIC METHODS
@@ -161,29 +183,75 @@ class LIN_Master_Base
     
     
     /// @brief Reset LIN state machine
-    inline void resetStateMachine(void) { this->state = LIN_Master_Base::STATE_IDLE; }
+    inline void resetStateMachine(void)
+    {
+      // print debug message (debug level 3)
+      #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 3)
+        LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_Base::resetStateMachine()");
+      #endif
+
+      // reset state
+      this->state = LIN_Master_Base::STATE_IDLE;
+
+    } // resetStateMachine()
     
     /// @brief Getter for LIN state machine state
-    inline LIN_Master_Base::state_t getState(void) { return this->state; }
+    inline LIN_Master_Base::state_t getState(void)
+    {
+      // print debug message (debug level 3)
+      #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 3)
+        LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_Base::getState()");
+      #endif
+
+      // return state
+      return this->state;
+      
+    } // getState()
 
     
     /// @brief Clear error of LIN state machine
-    inline void resetError(void) { this->error = LIN_Master_Base::NO_ERROR; }
+    inline void resetError(void) 
+    {
+      // print debug message (debug level 3)
+      #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 3)
+        LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_Base::resetError()");
+      #endif
+
+      // reset error
+      this->error = LIN_Master_Base::NO_ERROR;
+
+    } // resetError()
     
     /// @brief Getter for LIN state machine error
-    inline LIN_Master_Base::error_t getError(void) { return this->error; }
+    inline LIN_Master_Base::error_t getError(void)
+    {
+      // print debug message (debug level 3)
+      #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 3)
+        LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_Base::getError()");
+      #endif
+
+      // return error
+      return this->error;
+
+    } // getError()
     
-    
+
     /// @brief Getter for LIN frame
     inline void getFrame(LIN_Master_Base::frame_t &Type, uint8_t &Id, uint8_t &NumData, uint8_t Data[])
     { 
+      // print debug message (debug level 3)
+      #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 3)
+        LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_Base::getFrame()");
+      #endif
+
       noInterrupts();                         // for data consistency temporarily disable ISRs
       Type    = this->type;                   // frame type 
       Id      = this->id;                     // frame ID
       NumData = this->lenRx - 4;              // number of data bytes (excl. BREAK, SYNC, ID, CHK)
       memcpy(Data, this->bufRx+3, NumData);   // copy data bytes
       interrupts();                           // re-enable ISRs
-    }
+
+    } // getFrame()
 
     
     /// @brief Start sending a LIN master request frame in background (if supported)

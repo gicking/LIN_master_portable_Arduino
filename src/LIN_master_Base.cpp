@@ -24,15 +24,19 @@ uint8_t LIN_Master_Base::_calculatePID(void)
   uint8_t  pid;       // protected frame ID
   uint8_t  tmp;       // temporary variable for calculating parity bits
 
-  // copy (unprotected) ID
-  pid = this->id;
-
   // protect ID  with parity bits
-  pid  = (uint8_t) (pid & 0x3F);                                            // clear upper bits 6 & 7
+  pid  = (uint8_t) (this->id & 0x3F);                                       // clear upper bits 6 & 7
   tmp  = (uint8_t) ((pid ^ (pid>>1) ^ (pid>>2) ^ (pid>>4)) & 0x01);         // pid[6] = PI0 = ID0^ID1^ID2^ID4
   pid |= (uint8_t) (tmp << 6);
   tmp  = (uint8_t) (~((pid>>1) ^ (pid>>3) ^ (pid>>4) ^ (pid>>5)) & 0x01);   // pid[7] = PI1 = ~(ID1^ID3^ID4^ID5)
   pid |= (uint8_t) (tmp << 7);
+
+  // print debug message (debug level 3)
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 3)
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.print(": LIN_Master_Base::_calculatePID(): PID=0x")
+    LIN_MASTER_DEBUG_SERIAL.println((int) pid, HEX);
+  #endif
 
   // return protected ID
   return pid;
@@ -69,7 +73,14 @@ uint8_t LIN_Master_Base::_calculateChecksum(uint8_t NumData, uint8_t Data[])
     if (chk>255)
       chk -= 255;
   }
-  chk = (uint8_t)(0xFF - ((uint8_t) chk));   // bitwise invert
+  chk = (uint8_t)(0xFF - ((uint8_t) chk));   // bitwise invert and strip upper byte
+
+  // print debug message (debug level 3)
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 3)
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.print(": LIN_Master_Base::_calculateChecksum(): CHK=0x")
+    LIN_MASTER_DEBUG_SERIAL.println((int) chk, HEX);
+  #endif
 
   // return frame checksum
   return (uint8_t) chk;
@@ -85,25 +96,11 @@ uint8_t LIN_Master_Base::_calculateChecksum(uint8_t NumData, uint8_t Data[])
 */
 LIN_Master_Base::error_t LIN_Master_Base::_checkFrame(void)
 {
-  // print debug message
-  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_Base::_receiveFrame()");
-
-    // print data to check
-    LIN_MASTER_DEBUG_SERIAL.print('\t');
-    for (uint8_t i=0; i<this->lenTx; i++)
-    {
-      LIN_MASTER_DEBUG_SERIAL.print((int) i);
-      LIN_MASTER_DEBUG_SERIAL.print('\t');
-      LIN_MASTER_DEBUG_SERIAL.print(this->bufTx[i]);
-      LIN_MASTER_DEBUG_SERIAL.print('\t');
-      LIN_MASTER_DEBUG_SERIAL.print(this->bufRx[i]);
-      LIN_MASTER_DEBUG_SERIAL.println();
-    }
-    LIN_MASTER_DEBUG_SERIAL.println();
-
+  // print debug message (debug level 3)
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= )
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_Base::_checkFrame()");
   #endif
-
 
   // check echo of sent bytes (frame or header). Exit on mismatch
   for (uint8_t i=0; i<this->lenTx; i++)
@@ -128,9 +125,10 @@ LIN_Master_Base::error_t LIN_Master_Base::_checkFrame(void)
 */
 LIN_Master_Base::state_t LIN_Master_Base::_sendBreak(void)
 {
-  // print debug message
+  // print debug message (debug level 2)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_Base::_sendBreak()");
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_Base::_sendBreak()");
   #endif
     
   // if bus is not idle, return immediately
@@ -158,9 +156,10 @@ LIN_Master_Base::state_t LIN_Master_Base::_sendBreak(void)
 */
 LIN_Master_Base::state_t LIN_Master_Base::_sendFrame(void)
 {
-  // print debug message
+  // print debug message (debug level 2)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_Base::_sendFrame()");
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_Base::_sendFrame()");
   #endif
 
   // progress state
@@ -180,9 +179,10 @@ LIN_Master_Base::state_t LIN_Master_Base::_sendFrame(void)
 */
 LIN_Master_Base::state_t LIN_Master_Base::_receiveFrame(void)
 {
-  // print debug message
+  // print debug message (debug level 2)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_Base::_receiveFrame()");
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_Base::_receiveFrame()");
   #endif
 
   // dummy: just progress state
@@ -210,6 +210,13 @@ LIN_Master_Base::state_t LIN_Master_Base::_receiveFrame(void)
 */
 LIN_Master_Base::LIN_Master_Base(const char NameLIN[], const int8_t PinTxEN)
 {
+  // print debug message (debug level 2)
+  // Note: not be printed, because constructor is called prior to setup()
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_Base()");
+  #endif
+
   // store parameters in class variables
   memcpy(this->nameLIN, NameLIN, LIN_MASTER_BUFLEN_NAME);     // node name e.g. for debug
   this->pinTxEN = PinTxEN;                                    // optional Tx enable pin for RS485
@@ -236,6 +243,14 @@ LIN_Master_Base::LIN_Master_Base(const char NameLIN[], const int8_t PinTxEN)
 */
 void LIN_Master_Base::begin(uint16_t Baudrate)
 {
+  // print debug message (debug level 2)
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.print(": LIN_Master_Base::begin(");
+    LIN_MASTER_DEBUG_SERIAL.print((int) Baudrate);
+    LIN_MASTER_DEBUG_SERIAL.println(")");
+  #endif
+
   // store parameters in class variables
   this->baudrate   = Baudrate;                                // communication baudrate [Baud]
 
@@ -254,6 +269,12 @@ void LIN_Master_Base::begin(uint16_t Baudrate)
 */
 void LIN_Master_Base::end()
 {
+  // print debug message (debug level 2)
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.print(": LIN_Master_Base::end()");
+  #endif
+
   // initialize master node properties
   this->state = LIN_Master_Base::STATE_OFF;                        // status of LIN state machine
 
@@ -292,6 +313,12 @@ LIN_Master_Base::state_t LIN_Master_Base::sendMasterRequest(LIN_Master_Base::ver
   this->timeStart = micros();
   this->timeMax   = (((this->lenRx + 1) * this->timePerByte) * 3 ) >> 1;
 
+  // print debug message (debug level 2)
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_Base::sendMasterRequest()");
+  #endif
+
   // start LIN frame by sending a Sync Break
   this->_sendBreak();
 
@@ -314,6 +341,12 @@ LIN_Master_Base::state_t LIN_Master_Base::sendMasterRequest(LIN_Master_Base::ver
 */
 LIN_Master_Base::error_t LIN_Master_Base::sendMasterRequestBlocking(LIN_Master_Base::version_t Version, uint8_t Id, uint8_t NumData, uint8_t Data[])
 {
+  // print debug message (debug level 2)
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_Base::sendMasterRequestBlocking()");
+  #endif
+
   // start master request frame
   this->sendMasterRequest(Version, Id, NumData, Data);
   
@@ -357,6 +390,12 @@ LIN_Master_Base::state_t LIN_Master_Base::receiveSlaveResponse(LIN_Master_Base::
   this->timeMax   = (((this->lenRx + 1) * this->timePerByte) * 3 ) >> 1;
   this->timeStart = micros();
 
+  // print debug message (debug level 2)
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_Base::receiveSlaveResponse()");
+  #endif
+
   // start LIN frame by sending BREAK
   this->_sendBreak();
 
@@ -379,6 +418,12 @@ LIN_Master_Base::state_t LIN_Master_Base::receiveSlaveResponse(LIN_Master_Base::
 */
 LIN_Master_Base::error_t LIN_Master_Base::receiveSlaveResponseBlocking(LIN_Master_Base::version_t Version, uint8_t Id, uint8_t NumData, uint8_t *Data)
 {
+  // print debug message (debug level 2)
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_Base::receiveSlaveResponseBlocking()");
+  #endif
+
   // start slave response frame
   this->receiveSlaveResponse(Version, Id, NumData);
   
@@ -405,6 +450,13 @@ LIN_Master_Base::error_t LIN_Master_Base::receiveSlaveResponseBlocking(LIN_Maste
 */
 LIN_Master_Base::state_t LIN_Master_Base::handler(void)
 {
+  // print debug message (debug level 3)
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 3)
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.print(": LIN_Master_Base::handler(: state = ");
+    LIN_MASTER_DEBUG_SERIAL.println((int) this->state);
+  #endif
+
   // act according to current state
   switch (this->state)
   {

@@ -20,9 +20,10 @@
 */
 LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendBreak(void)
 {
-  // print debug message
+  // print debug message (debug level 2)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_SoftwareSerial::_sendBreak()");
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_SoftwareSerial::_sendBreak()");
   #endif
     
   // if state is wrong, exit immediately
@@ -59,9 +60,10 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendBreak(void)
 */
 LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendFrame(void)
 {
-  // print debug message
+  // print debug message (debug level 2)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_SoftwareSerial::_sendFrame()");
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_SoftwareSerial::_sendFrame()");
   #endif
     
   // if state is wrong, exit immediately
@@ -107,9 +109,10 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendFrame(void)
 */
 LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
 {
-  // print debug message
+  // print debug message (debug level 2)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.println("LIN_Master_SoftwareSerial::_receiveFrame()");
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_SoftwareSerial::_receiveFrame()");
   #endif
     
   // if state is wrong, exit immediately
@@ -187,18 +190,21 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
 LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial(uint8_t PinRx, uint8_t PinTx, bool InverseLogic, const char NameLIN[], const int8_t PinTxEN) : 
   LIN_Master_Base::LIN_Master_Base(NameLIN, PinTxEN), SWSerial(PinRx, PinTx, InverseLogic)
 {
-  // store pins used for SW serial
-  this->pinRx = PinRx;
-  this->pinTx = PinTx;
-  this->inverseLogic = InverseLogic;
-
-  // optional debug output
+  // print debug message (debug level 2)
+  // Note: not be printed, because constructor is called prior to setup()
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
     LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
     LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_SoftwareSerial()");
   #endif
+
+  // store pins used for SW serial
+  this->pinRx = PinRx;
+  this->pinTx = PinTx;
+  this->inverseLogic = InverseLogic;
   
   // must not open connection here, else (at least) ESP32 and ESP8266 fail
+
+  // cannot print debug message, as constructor is called before setup()
 
 } // LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial()
 
@@ -211,6 +217,14 @@ LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial(uint8_t PinRx, uint8_t PinT
 */
 void LIN_Master_SoftwareSerial::begin(uint16_t Baudrate)
 {
+  // print debug message (debug level 2)
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.print(": LIN_Master_SoftwareSerial::begin(");
+    LIN_MASTER_DEBUG_SERIAL.print((int) Baudrate);
+    LIN_MASTER_DEBUG_SERIAL.println(")");
+  #endif
+
   // call base class method
   LIN_Master_Base::begin(Baudrate);
   
@@ -230,6 +244,12 @@ void LIN_Master_SoftwareSerial::begin(uint16_t Baudrate)
 */
 void LIN_Master_SoftwareSerial::end()
 {
+  // print debug message (debug level 2)
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.print(": LIN_Master_SoftwareSerial::end()");
+  #endif
+
   // call base class method
   LIN_Master_Base::end();
     
