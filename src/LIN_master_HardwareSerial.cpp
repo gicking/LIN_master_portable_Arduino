@@ -190,7 +190,7 @@ LIN_Master_HardwareSerial::LIN_Master_HardwareSerial(HardwareSerial &Interface, 
   // Note: not be printed, because constructor is called prior to setup()
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
     LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
-    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_HardwareSerial()");
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_HardwareSerial::LIN_Master_HardwareSerial()");
   #endif
   
   // store pointer to used HW serial

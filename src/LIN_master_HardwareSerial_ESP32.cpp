@@ -184,7 +184,7 @@ LIN_Master_HardwareSerial_ESP32::LIN_Master_HardwareSerial_ESP32(HardwareSerial 
   // Note: not be printed, because constructor is called prior to setup()
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
     LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
-    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_HardwareSerial_ESP32()");
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_HardwareSerial_ESP32::LIN_Master_HardwareSerial_ESP32()");
   #endif
   
   // store pointer to used HW serial

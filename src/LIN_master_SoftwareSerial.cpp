@@ -194,7 +194,7 @@ LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial(uint8_t PinRx, uint8_t PinT
   // Note: not be printed, because constructor is called prior to setup()
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
     LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
-    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_SoftwareSerial()");
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial()");
   #endif
 
   // store pins used for SW serial

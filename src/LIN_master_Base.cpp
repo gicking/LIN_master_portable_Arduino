@@ -34,7 +34,7 @@ uint8_t LIN_Master_Base::_calculatePID(void)
   // print debug message (debug level 3)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 3)
     LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
-    LIN_MASTER_DEBUG_SERIAL.print(": LIN_Master_Base::_calculatePID(): PID=0x")
+    LIN_MASTER_DEBUG_SERIAL.print(": LIN_Master_Base::_calculatePID(): PID=0x");
     LIN_MASTER_DEBUG_SERIAL.println((int) pid, HEX);
   #endif
 
@@ -78,7 +78,7 @@ uint8_t LIN_Master_Base::_calculateChecksum(uint8_t NumData, uint8_t Data[])
   // print debug message (debug level 3)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 3)
     LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
-    LIN_MASTER_DEBUG_SERIAL.print(": LIN_Master_Base::_calculateChecksum(): CHK=0x")
+    LIN_MASTER_DEBUG_SERIAL.print(": LIN_Master_Base::_calculateChecksum(): CHK=0x");
     LIN_MASTER_DEBUG_SERIAL.println((int) chk, HEX);
   #endif
 
@@ -98,7 +98,6 @@ LIN_Master_Base::error_t LIN_Master_Base::_checkFrame(void)
 {
   // print debug message (debug level 3)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 3)
-    xxx
     LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
     LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_Base::_checkFrame()");
   #endif
@@ -215,7 +214,7 @@ LIN_Master_Base::LIN_Master_Base(const char NameLIN[], const int8_t PinTxEN)
   // Note: not be printed, because constructor is called prior to setup()
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
     LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
-    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_Base()");
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_Base::LIN_Master_Base()");
   #endif
 
   // store parameters in class variables
