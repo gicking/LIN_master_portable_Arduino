@@ -154,7 +154,7 @@ jobs:
             - examples/LIN_master_SWSerial_Blk
           cli-compile-flags: |
             - --warnings="all"
-          cli-compile-flags: '-DLIN_MASTER_DEBUG_SERIAL=Serial1'
+            - '-DLIN_MASTER_DEBUG_SERIAL=Serial1'
 
       # upload test reports
       - uses: actions/upload-artifact@v4.4.3
