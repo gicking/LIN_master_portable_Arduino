@@ -26,8 +26,16 @@ jobs:
         board:
           - fqbn: arduino:avr:mega                    # Arduino Mega2560
             artifact-name-suffix: arduino_avr_mega
+        example:
+          - examples/LIN_master_Dual_HWSerial_Bkg
+          - examples/LIN_master_HWSerial_Bkg
+          - examples/LIN_master_HWSerial_Bkg_Evt
+          - examples/LIN_master_HWSerial_Blk
+          - examples/LIN_master_RS485_HWSerial_Bkg
+          - examples/LIN_master_RS485_HWSerial_Blk
+          - examples/LIN_master_RS485_SWSerial_Blk
+          - examples/LIN_master_SWSerial_Blk
     steps:
-      
       - name: Checkout code
         uses: actions/checkout@v4.2.2
 
@@ -43,14 +51,7 @@ jobs:
   
       - name: Compile Sketches
         run: |
-          arduino-cli compile --fqbn ${{ matrix.board.fqbn }} --warnings all --build-property build.extra_flags="-DLIN_MASTER_DEBUG_SERIAL -DLIN_MASTER_DEBUG_LEVEL=3" examples/LIN_master_Dual_HWSerial_Bkg
-          arduino-cli compile --fqbn ${{ matrix.board.fqbn }} --warnings all --build-property build.extra_flags="-DLIN_MASTER_DEBUG_SERIAL -DLIN_MASTER_DEBUG_LEVEL=3" examples/LIN_master_HWSerial_Bkg
-          arduino-cli compile --fqbn ${{ matrix.board.fqbn }} --warnings all --build-property build.extra_flags="-DLIN_MASTER_DEBUG_SERIAL -DLIN_MASTER_DEBUG_LEVEL=3" examples/LIN_master_HWSerial_Bkg_Evt
-          arduino-cli compile --fqbn ${{ matrix.board.fqbn }} --warnings all --build-property build.extra_flags="-DLIN_MASTER_DEBUG_SERIAL -DLIN_MASTER_DEBUG_LEVEL=3" examples/LIN_master_HWSerial_Blk
-          arduino-cli compile --fqbn ${{ matrix.board.fqbn }} --warnings all --build-property build.extra_flags="-DLIN_MASTER_DEBUG_SERIAL -DLIN_MASTER_DEBUG_LEVEL=3" examples/LIN_master_RS485_HWSerial_Bkg
-          arduino-cli compile --fqbn ${{ matrix.board.fqbn }} --warnings all --build-property build.extra_flags="-DLIN_MASTER_DEBUG_SERIAL -DLIN_MASTER_DEBUG_LEVEL=3" examples/LIN_master_RS485_HWSerial_Blk
-          arduino-cli compile --fqbn ${{ matrix.board.fqbn }} --warnings all --build-property build.extra_flags="-DLIN_MASTER_DEBUG_SERIAL -DLIN_MASTER_DEBUG_LEVEL=3" examples/LIN_master_RS485_SWSerial_Blk
-          arduino-cli compile --fqbn ${{ matrix.board.fqbn }} --warnings all --build-property build.extra_flags="-DLIN_MASTER_DEBUG_SERIAL -DLIN_MASTER_DEBUG_LEVEL=3" examples/LIN_master_SWSerial_Blk
+          arduino-cli compile --fqbn ${{ matrix.board.fqbn }} --warnings all ${{ matrix.example }}
 
       - name: Upload test reports
         uses: actions/upload-artifact@v4.4.3
