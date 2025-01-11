@@ -45,8 +45,8 @@ jobs:
             - examples/LIN_master_SWSerial_Blk
           cli-compile-flags: |
             - --warnings="all"
-            - -DLIN_MASTER_DEBUG_SERIAL=Serial
-            - -DLIN_MASTER_DEBUG_LEVEL=2
+            - --build-property build.extra_flags="-DLIN_MASTER_DEBUG_SERIAL=Serial"
+            - --build-property build.extra_flags="-DLIN_MASTER_DEBUG_LEVEL=3"
       - uses: actions/upload-artifact@v4.4.3          # upload test reports
         with:
           if-no-files-found: error
