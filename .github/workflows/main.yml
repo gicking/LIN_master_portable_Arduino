@@ -84,6 +84,8 @@ jobs:
             - examples/LIN_master_RS485_HWSerial_Blk
           cli-compile-flags: |
             - --warnings="all"
+            - --build-property="compiler.cpp.extra_flags=\"-DLIN_MASTER_DEBUG_SERIAL=Serial\""
+            - --build-property="compiler.cpp.extra_flags=\"-LIN_MASTER_DEBUG_LEVEL=3\""
       - uses: actions/upload-artifact@v4.4.3          # upload test reports
         with:
           if-no-files-found: error
@@ -151,6 +153,10 @@ jobs:
             - examples/LIN_master_RS485_HWSerial_ESP8266_Blk
             - examples/LIN_master_RS485_SWSerial_Blk
             - examples/LIN_master_SWSerial_Blk
+          cli-compile-flags: |
+            - --warnings="all"
+            - --build-property="compiler.cpp.extra_flags=\"-DLIN_MASTER_DEBUG_SERIAL=Serial1\""
+            - --build-property="compiler.cpp.extra_flags=\"-LIN_MASTER_DEBUG_LEVEL=3\""
             
       # upload test reports
       - uses: actions/upload-artifact@v4.4.3
@@ -221,6 +227,10 @@ jobs:
             - examples/LIN_master_RS485_HWSerial_ESP32_Blk
             - examples/LIN_master_RS485_SWSerial_Blk
             - examples/LIN_master_SWSerial_Blk
+          cli-compile-flags: |
+            - --warnings="all"
+            - --build-property="compiler.cpp.extra_flags=\"-DLIN_MASTER_DEBUG_SERIAL=Serial1\""
+            - --build-property="compiler.cpp.extra_flags=\"-LIN_MASTER_DEBUG_LEVEL=3\""
             
       # upload test reports
       - uses: actions/upload-artifact@v4.4.3
@@ -288,6 +298,8 @@ jobs:
           sketch-paths: |
             - examples/LIN_master_RS485_SWSerial_Blk
             - examples/LIN_master_SWSerial_Blk
+          cli-compile-flags: |
+            - --warnings="all"
             
       # upload test reports
       - uses: actions/upload-artifact@v4.4.3
