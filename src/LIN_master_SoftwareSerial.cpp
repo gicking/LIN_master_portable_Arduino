@@ -1,7 +1,7 @@
 /**
   \file     LIN_master_SoftwareSerial.cpp
   \brief    LIN master emulation library for SoftwareSerial
-  \details  This library provides a master node emulation for a LIN bus via SoftwareSerial, optionally via RS485.
+  \details  This library provides a master node emulation for a LIN bus via blocking SoftwareSerial, optionally via RS485.
             For an explanation of the LIN bus and protocol e.g. see https://en.wikipedia.org/wiki/Local_Interconnect_Network
   \author   Georg Icking-Konert
 */
@@ -191,6 +191,14 @@ LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial(uint8_t PinRx, uint8_t PinT
   this->pinRx = PinRx;
   this->pinTx = PinTx;
   this->inverseLogic = InverseLogic;
+
+  // optional debug output
+  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
+    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_SoftwareSerial()");
+  #endif
+  
+  // must not open connection here, else (at least) ESP32 and ESP8266 fail
 
 } // LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial()
 

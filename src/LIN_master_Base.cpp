@@ -212,11 +212,11 @@ LIN_Master_Base::LIN_Master_Base(const char NameLIN[], const int8_t PinTxEN)
 {
   // store parameters in class variables
   memcpy(this->nameLIN, NameLIN, LIN_MASTER_BUFLEN_NAME);     // node name e.g. for debug
-  this->pinTxEN = PinTxEN;
+  this->pinTxEN = PinTxEN;                                    // optional Tx enable pin for RS485
 
   // initialize master node properties
-  this->error = LIN_Master_Base::NO_ERROR;                         // last LIN error. Is latched
-  this->state = LIN_Master_Base::STATE_OFF;                        // status of LIN state machine
+  this->error = LIN_Master_Base::NO_ERROR;                    // last LIN error. Is latched
+  this->state = LIN_Master_Base::STATE_OFF;                   // status of LIN state machine
 
   // initialize TxEN pin low (=transmitter off)
   if (this->pinTxEN >= 0)
