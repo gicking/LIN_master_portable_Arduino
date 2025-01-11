@@ -151,9 +151,7 @@ jobs:
             - examples/LIN_master_RS485_HWSerial_ESP8266_Blk
             - examples/LIN_master_RS485_SWSerial_Blk
             - examples/LIN_master_SWSerial_Blk
-          cli-compile-flags: |
-            - --warnings="all"
-          # fail to pass debug serial and level for ESP8266. Is covered by other platform
+          # fail to pass arguments via for ESP8266 using "cli-compile-flags" -> skip
 
       # upload test reports
       - uses: actions/upload-artifact@v4.4.3
