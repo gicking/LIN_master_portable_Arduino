@@ -43,9 +43,7 @@ jobs:
             - examples/LIN_master_RS485_HWSerial_Blk
             - examples/LIN_master_RS485_SWSerial_Blk
             - examples/LIN_master_SWSerial_Blk
-          cli-compile-flags: | 
-            - --warnings="all"
-            - --build-property="build.extra_flags=-DLIN_MASTER_DEBUG_SERIAL"
+          cli-compile-flags: --warnings="all" --build-property="build.extra_flags=-DLIN_MASTER_DEBUG_SERIAL"
       - uses: actions/upload-artifact@v4.4.3          # upload test reports
         with:
           if-no-files-found: error
