@@ -59,7 +59,8 @@ jobs:
           cli-compile-flags: |
             - --verbose
             - --build-property
-            - build.extra_flags=-Wall
+            - build.extra_flags=-DLIN_MASTER_DEBUG_SERIAL=Serial
+          #  - build.extra_flags=-Wall  -> error
           #  - build.extra_flags=-Wall -DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3
           # for some reason, passing arguments doesn't work for SAMD -> skip for now
 
