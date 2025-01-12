@@ -114,9 +114,7 @@ jobs:
             - examples/LIN_master_RS485_HWSerial_Blk
           cli-compile-flags: |
             - --verbose
-            - --build-property
-            - build.extra_flags=-Wall
-          # for some reason, passing macros doesn't work for SAMD -> skip
+          # for some reason, passing arguments doesn't work for SAMD -> skip
 
       # upload test reports
       - uses: actions/upload-artifact@v4.4.3
@@ -186,7 +184,7 @@ jobs:
           fqbn: ${{ matrix.board.fqbn }}
           libraries: |
             - source-path: ./
-            - source-url: https://github.com/plerup/espsoftwareserial.git
+          #  - source-url: https://github.com/plerup/espsoftwareserial.git
           sketch-paths: |
             - examples/LIN_master_HWSerial_ESP8266_Bkg
             - examples/LIN_master_HWSerial_ESP8266_Bkg_Evt
@@ -270,7 +268,7 @@ jobs:
           fqbn: ${{ matrix.board.fqbn }}
           libraries: |
             - source-path: ./
-            - source-url: https://github.com/plerup/espsoftwareserial.git
+          #  - source-url: https://github.com/plerup/espsoftwareserial.git
           sketch-paths: |
             - examples/LIN_master_HWSerial_ESP32_Bkg
             - examples/LIN_master_HWSerial_ESP32_Bkg_Evt
