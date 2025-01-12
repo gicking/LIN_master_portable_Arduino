@@ -53,5 +53,5 @@ jobs:
             - examples/LIN_master_HWSerial_Blk
           cli-compile-flags: |
             - --verbose
-          extra-flag: |
-            -DLIN_MASTER_DEBUG_SERIAL=Serial
+            - --build-property build.extra_flags=-DLIN_MASTER_DEBUG_SERIAL=Serial
+            - --build-property build.extra_flags=-DLIN_MASTER_DEBUG_LEVEL=3
