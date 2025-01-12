@@ -57,18 +57,4 @@ jobs:
             - examples/LIN_master_RS485_HWSerial_Bkg
             - examples/LIN_master_RS485_HWSerial_Blk
           build-properties: |
-            build.extra_flags=-DLIN_MASTER_DEBUG_SERIAL=Serial
-          # build.extra_flags=-Wall  -> error
-          # build.extra_flags=-Wall -DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3
-          # for some reason, passing arguments doesn't work for SAMD -> skip for now
-
-      # upload test reports
-      - uses: actions/upload-artifact@v4.4.3
-        with:
-          if-no-files-found: error
-          path: ${{ env.SKETCHES_REPORTS_PATH }}
-          name: sketches-report-${{ matrix.board.artifact-name-suffix }}
-
-      # debug step to print the build command
-      - name: Print build command
-        run: echo "arduino-cli compile --fqbn ${{ matrix.board.fqbn }} --build-property build.extra_flags=-Wall -DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3"
+            build.extra_flags=-Wall -DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3
