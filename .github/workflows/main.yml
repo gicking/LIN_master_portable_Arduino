@@ -167,12 +167,13 @@ jobs:
           echo "    - https://espressif.github.io/arduino-esp32/package_esp32_index.json" >> ~/.arduino15/arduino-cli.yaml
           cat ~/.arduino15/arduino-cli.yaml
       
-      # Install required boards
+      # Install required boards & libraries
       - name: install ESP8266 core
         run: |
           export PATH="$PWD/bin:$PATH"
           arduino-cli core update-index
           arduino-cli core install esp8266:esp8266
+          arduino-cli lib install "espsoftwareserial"
 
       # check-out this repository
       - uses: actions/checkout@v4.2.2
@@ -257,6 +258,7 @@ jobs:
           export PATH="$PWD/bin:$PATH"
           arduino-cli core update-index
           arduino-cli core install esp32:esp32
+          arduino-cli lib install "espsoftwareserial"
 
       # check-out this repository
       - uses: actions/checkout@v4.2.2
@@ -280,8 +282,8 @@ jobs:
             - examples/LIN_master_SWSerial_Blk
           cli-compile-flags: |
             - --verbose
-            - --build-property
-            - build.extra_flags=-Wall -DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3
+          #  - --build-property
+          #  - build.extra_flags=-Wall -DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3
             
       # upload test reports
       - uses: actions/upload-artifact@v4.4.3
