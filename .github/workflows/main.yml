@@ -114,7 +114,9 @@ jobs:
             - examples/LIN_master_RS485_HWSerial_Blk
           cli-compile-flags: |
             - --verbose
-          # for some reason passing arguments via "cli-compile-flags" does not work for SAMD -> skip
+            - --build-property
+            - build.extra_flags=-Wall
+          # for some reason, passing macros doesn't work for SAMD -> skip
 
       # upload test reports
       - uses: actions/upload-artifact@v4.4.3
@@ -184,6 +186,7 @@ jobs:
           fqbn: ${{ matrix.board.fqbn }}
           libraries: |
             - source-path: ./
+            - source-url: https://github.com/plerup/espsoftwareserial.git
           sketch-paths: |
             - examples/LIN_master_HWSerial_ESP8266_Bkg
             - examples/LIN_master_HWSerial_ESP8266_Bkg_Evt
@@ -256,7 +259,6 @@ jobs:
           export PATH="$PWD/bin:$PATH"
           arduino-cli core update-index
           arduino-cli core install esp32:esp32
-          arduino-cli lib install "espsoftwareserial"
 
       # check-out this repository
       - uses: actions/checkout@v4.2.2
@@ -268,6 +270,7 @@ jobs:
           fqbn: ${{ matrix.board.fqbn }}
           libraries: |
             - source-path: ./
+            - source-url: https://github.com/plerup/espsoftwareserial.git
           sketch-paths: |
             - examples/LIN_master_HWSerial_ESP32_Bkg
             - examples/LIN_master_HWSerial_ESP32_Bkg_Evt
@@ -352,7 +355,6 @@ jobs:
           fqbn: ${{ matrix.board.fqbn }}
           libraries: |
             - source-path: ./
-            - source-url: https://github.com/plerup/espsoftwareserial.git
           sketch-paths: |
             - examples/LIN_master_RS485_SWSerial_Blk
             - examples/LIN_master_SWSerial_Blk
