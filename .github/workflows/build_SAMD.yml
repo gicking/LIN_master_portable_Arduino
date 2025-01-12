@@ -67,6 +67,7 @@ jobs:
       # build Arduino examples
       - name: Compile sketches
         run: |
+          export PATH="$PWD/bin:$PATH"
           arduino-cli compile --fqbn arduino:sam:arduino_due_x_dbg --build-property build.extra_flags="-DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3" examples/LIN_master_HWSerial_Blk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
