@@ -1,6 +1,7 @@
 # based on https://github.com/arduino-libraries/ArduinoBLE/blob/master/.github/workflows/compile-examples.yml
 name: Build Lib Examples
 
+# set workflow trigger
 on:
 
   # Trigger workflow on every push and pull request
@@ -13,22 +14,36 @@ on:
     #- cron: '20 21 */7 * *'
     - cron: '0 1 2 * *'
 
+
+# configure workflow jobs
 jobs:
 
   # Build for AVR
   build-for-avr:
+    
+    # setup OS
     runs-on: ubuntu-latest
+
+    # setup environment
     env:
       SKETCHES_REPORTS_PATH: sketches-reports
+    
+    # test strategy & tested boards
     strategy:
       fail-fast: false
       matrix:
         board:
           - fqbn: arduino:avr:mega                    # Arduino Mega2560
             artifact-name-suffix: arduino_avr_mega
+
+    # integration test steps
     steps:
-      - uses: actions/checkout@v4.2.2                 # check-out this repo
-      - uses: arduino/compile-sketches@v1.1.2         # build Arduino examples
+
+      # check-out this repository
+      - uses: actions/checkout@v4.2.2
+
+      # build Arduino examples
+      - uses: arduino/compile-sketches@v1.1.2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}   # required for private repos
           fqbn: ${{ matrix.board.fqbn }}
@@ -44,20 +59,30 @@ jobs:
             - examples/LIN_master_RS485_SWSerial_Blk
             - examples/LIN_master_SWSerial_Blk
           cli-compile-flags: |
-            - --warnings="all"
-            - --build-property="build.extra_flags=\"-DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3\""
-      - uses: actions/upload-artifact@v4.4.3          # upload test reports
+            - --verbose
+            - --build-property
+            - build.extra_flags="-Wall -DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3"
+
+      # upload test reports
+      - uses: actions/upload-artifact@v4.4.3
         with:
           if-no-files-found: error
           path: ${{ env.SKETCHES_REPORTS_PATH }}
           name: sketches-report-${{ matrix.board.artifact-name-suffix }}
 
 
+
   # Build for SAMD
   build-for-samd:
+    
+    # setup OS
     runs-on: ubuntu-latest
+
+    # setup environment
     env:
       SKETCHES_REPORTS_PATH: sketches-reports
+    
+    # test strategy & tested boards
     strategy:
       fail-fast: false
       matrix:
@@ -66,9 +91,15 @@ jobs:
             artifact-name-suffix: arduino_sam_arduino_due_x
           - fqbn: arduino:sam:arduino_due_x_dbg       # Arduino Due (Programming Port)
             artifact-name-suffix: arduino_sam_arduino_due_x_dbg
+
+    # integration test steps
     steps:
-      - uses: actions/checkout@v4.2.2                 # check-out this repo
-      - uses: arduino/compile-sketches@v1.1.2         # build Arduino examples
+
+      # check-out this repository
+      - uses: actions/checkout@v4.2.2
+
+      # build Arduino examples
+      - uses: arduino/compile-sketches@v1.1.2
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}   # required for private repos
           fqbn: ${{ matrix.board.fqbn }}
@@ -81,27 +112,39 @@ jobs:
             - examples/LIN_master_HWSerial_Blk
             - examples/LIN_master_RS485_HWSerial_Bkg
             - examples/LIN_master_RS485_HWSerial_Blk
-          cli-compile-flags: |
-            - --warnings="all"
-            - --build-property="build.extra_flags=\"-DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3\""
-      - uses: actions/upload-artifact@v4.4.3          # upload test reports
+            cli-compile-flags: |
+            - --verbose
+            - --build-property
+            - build.extra_flags="-Wall -DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3"
+
+      # upload test reports
+      - uses: actions/upload-artifact@v4.4.3
         with:
           if-no-files-found: error
           path: ${{ env.SKETCHES_REPORTS_PATH }}
           name: sketches-report-${{ matrix.board.artifact-name-suffix }}
 
 
+
   # Build for ESP8266
   build-for-esp8266:
+    
+    # setup OS
     runs-on: ubuntu-latest
+
+    # setup environment
     env:
       SKETCHES_REPORTS_PATH: sketches-reports
+    
+    # test strategy & tested boards
     strategy:
       fail-fast: false
       matrix:
         board:
           - fqbn: esp8266:esp8266:d1_mini_clone       # ESP8255 Wemos D1 Mini (clone)
             artifact-name-suffix: d1_mini_clone
+
+    # integration test steps
     steps:
 
       # Install Arduino CLI
@@ -152,6 +195,10 @@ jobs:
             - examples/LIN_master_RS485_SWSerial_Blk
             - examples/LIN_master_SWSerial_Blk
           # fail to pass arguments via for ESP8266 using "cli-compile-flags" -> skip
+          cli-compile-flags: |
+            - --verbose
+            - --build-property
+            - build.extra_flags="-Wall -DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3"
 
       # upload test reports
       - uses: actions/upload-artifact@v4.4.3
@@ -161,17 +208,26 @@ jobs:
           name: sketches-report-${{ matrix.board.artifact-name-suffix }}
 
 
+
   # Build for ESP32
   build-for-esp32:
+    
+    # setup OS
     runs-on: ubuntu-latest
+
+    # setup environment
     env:
       SKETCHES_REPORTS_PATH: sketches-reports
+    
+    # test strategy & tested boards
     strategy:
       fail-fast: false
       matrix:
         board:
           - fqbn: esp32:esp32:esp32da             # ESP32-WROOM-DA
             artifact-name-suffix: esp32da
+
+    # integration test steps
     steps:
 
       # Install Arduino CLI
@@ -223,8 +279,9 @@ jobs:
             - examples/LIN_master_RS485_SWSerial_Blk
             - examples/LIN_master_SWSerial_Blk
           cli-compile-flags: |
-            - --warnings="all"
-            - --build-property="build.extra_flags=\"-DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3\""
+            - --verbose
+            - --build-property
+            - build.extra_flags="-Wall -DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3"
             
       # upload test reports
       - uses: actions/upload-artifact@v4.4.3
@@ -236,15 +293,23 @@ jobs:
 
   # Build for Trinket
   build-for-trinket:
+    
+    # setup OS
     runs-on: ubuntu-latest
+
+    # setup environment
     env:
       SKETCHES_REPORTS_PATH: sketches-reports
+    
+    # test strategy & tested boards
     strategy:
       fail-fast: false
       matrix:
         board:
           - fqbn: adafruit:avr:trinket5           # Adafruit Trinket (ATtiny85 @ 16MHz)
             artifact-name-suffix: trinket5
+
+    # integration test steps
     steps:
 
       # Install Arduino CLI
@@ -278,7 +343,7 @@ jobs:
           # arduino-cli board listall | grep --ignore-case "trink"
           arduino-cli core list
 
-          # check-out this repository
+      # check-out this repository
       - uses: actions/checkout@v4.2.2
 
       # build Arduino examples
@@ -293,7 +358,9 @@ jobs:
             - examples/LIN_master_RS485_SWSerial_Blk
             - examples/LIN_master_SWSerial_Blk
           cli-compile-flags: |
-            - --warnings="all"
+            - --verbose
+            - --build-property
+            - build.extra_flags="-Wall"
           # no debug serial available
             
       # upload test reports
