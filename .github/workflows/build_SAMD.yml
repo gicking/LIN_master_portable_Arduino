@@ -7,12 +7,6 @@ on:
   # Trigger workflow on every push and pull request
   push:
   pull_request:
-  
-  # Also run periodically to catch breakage caused by changes to external resources (libraries, platforms).
-  schedule:
-    # Minute, Hour, Day of Month, Month, Day of Week (UTC timezone)
-    #- cron: '20 21 */7 * *'
-    - cron: '0 1 2 * *'
 
 
 # configure workflow jobs
@@ -43,15 +37,14 @@ jobs:
       - uses: actions/checkout@v4.2.2
 
       # build Arduino examples
-      - uses: arduino/compile-sketches@v1.1.2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}   # required for private repos
-          fqbn: ${{ matrix.board.fqbn }}
-          libraries: |
-            - source-path: ./
-          sketch-paths: |
-            - examples/LIN_master_HWSerial_Blk
-          cli-compile-flags: |
-            - --verbose
-            - --build-property build.extra_flags=-DLIN_MASTER_DEBUG_SERIAL=Serial
-            - --build-property build.extra_flags=-DLIN_MASTER_DEBUG_LEVEL=3
+      - name: Install Arduino CLI
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
+          arduino-cli core update-index
+          arduino-cli core install arduino:sam
+
+      - name: Compile sketches
+        run: |
+          arduino-cli compile --fqbn arduino:sam:arduino_due_x_dbg --build-property build.extra_flags="-DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3" examples/LIN_master_HWSerial_Blk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
