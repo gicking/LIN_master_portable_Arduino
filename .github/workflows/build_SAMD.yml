@@ -1,5 +1,5 @@
 # based on https://github.com/arduino-libraries/ArduinoBLE/blob/master/.github/workflows/compile-examples.yml
-name: Build Lib Examples
+name: Build for SAMD
 
 # set workflow trigger
 on:
