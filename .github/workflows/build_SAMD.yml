@@ -33,8 +33,6 @@ jobs:
       fail-fast: false
       matrix:
         board:
-          - fqbn: arduino:sam:arduino_due_x           # Arduino Due (Native USB Port)
-            artifact-name-suffix: arduino_sam_arduino_due_x
           - fqbn: arduino:sam:arduino_due_x_dbg       # Arduino Due (Programming Port)
             artifact-name-suffix: arduino_sam_arduino_due_x_dbg
 
@@ -61,7 +59,8 @@ jobs:
           cli-compile-flags: |
             - --verbose
             - --build-property
-            - build.extra_flags=-Wall -DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3
+            - build.extra_flags=-Wall
+          #  - build.extra_flags=-Wall -DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3
           # for some reason, passing arguments doesn't work for SAMD -> skip for now
 
       # upload test reports
