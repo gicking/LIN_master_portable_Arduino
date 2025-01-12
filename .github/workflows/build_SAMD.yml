@@ -58,5 +58,6 @@ jobs:
             - examples/LIN_master_RS485_HWSerial_Blk
           cli-compile-flags: |
             - --verbose
-          build-properties: |
-            build.extra_flags=-Wall -DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3
+            - --build-property build.extra_flags=-Wall
+            - --build-property build.extra_flags=-DLIN_MASTER_DEBUG_SERIAL=Serial
+            - --build-property build.extra_flags=-DLIN_MASTER_DEBUG_LEVEL=3
