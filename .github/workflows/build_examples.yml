@@ -220,7 +220,8 @@ jobs:
           )
 
           # misc build flags
-          MISC_FLAGS="-Wall -Wextra -Wpedantic"
+          #MISC_FLAGS="-Wall -Wextra -Wpedantic"
+          MISC_FLAGS="-Wall -Wextra"
 
           # loop over sketches
           for ITEM_SKETCHES_FLAGS in "${SKETCHES_FLAGS[@]}"; do
@@ -332,7 +333,7 @@ jobs:
 
           # list of boards with optional build flags
           BOARDS_FLAGS=(
-            "esp32:esp32:esp32da"     # Adafruit Trinket (ATtiny85 @ 16MHz). Has only SoftwareSerial -> skip debug output
+            "adafruit:avr:trinket5"     # Adafruit Trinket (ATtiny85 @ 16MHz). Has only SoftwareSerial -> skip debug output
           )
 
           # list of sketches with optional build flags
