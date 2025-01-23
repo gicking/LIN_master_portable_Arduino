@@ -1,10 +1,7 @@
-# based on https://github.com/arduino-libraries/ArduinoBLE/blob/master/.github/workflows/compile-examples.yml
 name: Build library examples
 
-# set workflow trigger
+# Trigger workflow on push and pull requests
 on:
-
-  # Trigger workflow on every push and pull request
   push:
   pull_request:
   
@@ -14,141 +11,23 @@ on:
     #- cron: '20 21 */7 * *'
     - cron: '0 1 2 * *'
 
-
-# configure workflow jobs
+# jobs to run
 jobs:
 
-  # Build for AVR
-  build-for-avr:
+  # build all given examples. Don't use matrix for only 1 CPU instances (saves power and tests are not time-critical)
+  build_examples:
     
     # setup OS
     runs-on: ubuntu-latest
-
-    # setup environment
-    env:
-      SKETCHES_REPORTS_PATH: sketches-reports
     
-    # test strategy & tested boards
-    strategy:
-      fail-fast: false
-      matrix:
-        board:
-          - fqbn: arduino:avr:mega                    # Arduino Mega2560
-            artifact-name-suffix: arduino_avr_mega
-
-    # integration test steps
+    # actual test steps
     steps:
 
-      # check-out this repository
+      # checkout this repository
       - uses: actions/checkout@v4.2.2
-
-      # build Arduino examples
-      - uses: arduino/compile-sketches@v1.1.2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}   # required for private repos
-          fqbn: ${{ matrix.board.fqbn }}
-          libraries: |
-            - source-path: ./
-          sketch-paths: |
-            - examples/LIN_master_Dual_HWSerial_Bkg
-            - examples/LIN_master_HWSerial_Bkg
-            - examples/LIN_master_HWSerial_Bkg_Evt
-            - examples/LIN_master_HWSerial_Blk
-            - examples/LIN_master_RS485_HWSerial_Bkg
-            - examples/LIN_master_RS485_HWSerial_Blk
-            - examples/LIN_master_RS485_SWSerial_Blk
-            - examples/LIN_master_SWSerial_Blk
-          cli-compile-flags: |
-            - --verbose
-            - --build-property
-            - build.extra_flags=-Wall -DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3
-
-      # upload test reports
-      - uses: actions/upload-artifact@v4.4.3
-        with:
-          if-no-files-found: error
-          path: ${{ env.SKETCHES_REPORTS_PATH }}
-          name: sketches-report-${{ matrix.board.artifact-name-suffix }}
-
-
-
-  # Build for SAMD
-  build-for-samd:
-    
-    # setup OS
-    runs-on: ubuntu-latest
-
-    # setup environment
-    env:
-      SKETCHES_REPORTS_PATH: sketches-reports
-    
-    # test strategy & tested boards
-    strategy:
-      fail-fast: false
-      matrix:
-        board:
-          - fqbn: arduino:sam:arduino_due_x           # Arduino Due (Native USB Port)
-            artifact-name-suffix: arduino_sam_arduino_due_x
-          - fqbn: arduino:sam:arduino_due_x_dbg       # Arduino Due (Programming Port)
-            artifact-name-suffix: arduino_sam_arduino_due_x_dbg
-
-    # integration test steps
-    steps:
-
-      # check-out this repository
-      - uses: actions/checkout@v4.2.2
-
-      # build Arduino examples
-      - uses: arduino/compile-sketches@v1.1.2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}   # required for private repos
-          fqbn: ${{ matrix.board.fqbn }}
-          libraries: |
-            - source-path: ./
-          sketch-paths: |
-            - examples/LIN_master_Dual_HWSerial_Bkg
-            - examples/LIN_master_HWSerial_Bkg
-            - examples/LIN_master_HWSerial_Bkg_Evt
-            - examples/LIN_master_HWSerial_Blk
-            - examples/LIN_master_RS485_HWSerial_Bkg
-            - examples/LIN_master_RS485_HWSerial_Blk
-          cli-compile-flags: |
-            - --verbose
-          #  - --build-property "compiler.cpp.extra_flags=\"-Wall -DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3\""
-          # for some reason, passing arguments doesn't work for SAMD -> skip for now
-
-      # upload test reports
-      - uses: actions/upload-artifact@v4.4.3
-        with:
-          if-no-files-found: error
-          path: ${{ env.SKETCHES_REPORTS_PATH }}
-          name: sketches-report-${{ matrix.board.artifact-name-suffix }}
-
-
-
-  # Build for ESP8266
-  build-for-esp8266:
-    
-    # setup OS
-    runs-on: ubuntu-latest
-
-    # setup environment
-    env:
-      SKETCHES_REPORTS_PATH: sketches-reports
-    
-    # test strategy & tested boards
-    strategy:
-      fail-fast: false
-      matrix:
-        board:
-          - fqbn: esp8266:esp8266:d1_mini_clone       # ESP8255 Wemos D1 Mini (clone)
-            artifact-name-suffix: d1_mini_clone
-
-    # integration test steps
-    steps:
-
+      
       # Install Arduino CLI
-      - name: install Arduino CLI
+      - name: Install Arduino CLI
         run: |
           curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
           export PATH="$PWD/bin:$PATH"
@@ -157,7 +36,7 @@ jobs:
           arduino-cli version
 
       # Create Board Manager file
-      - name: create arduino-cli.yaml
+      - name: Create Board Manager file
         run: |
           mkdir -p ~/.arduino15
           echo "directory: ~/.arduino15" > ~/.arduino15/arduino-cli.yaml
@@ -168,207 +47,89 @@ jobs:
           echo "    - https://espressif.github.io/arduino-esp32/package_esp32_index.json" >> ~/.arduino15/arduino-cli.yaml
           cat ~/.arduino15/arduino-cli.yaml
       
-      # Install required boards & libraries
-      - name: install ESP8266 core
-        run: |
-          export PATH="$PWD/bin:$PATH"
-          arduino-cli core update-index
-          arduino-cli core install esp8266:esp8266
-          arduino-cli lib install "espsoftwareserial"
-
-      # check-out this repository
-      - uses: actions/checkout@v4.2.2
-
-      # build Arduino examples
-      - uses: arduino/compile-sketches@v1.1.2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}   # required for private repos
-          fqbn: ${{ matrix.board.fqbn }}
-          libraries: |
-            - source-path: ./
-          #  - source-url: https://github.com/plerup/espsoftwareserial.git
-          sketch-paths: |
-            - examples/LIN_master_HWSerial_ESP8266_Bkg
-            - examples/LIN_master_HWSerial_ESP8266_Bkg_Evt
-            - examples/LIN_master_HWSerial_ESP8266_Blk
-            - examples/LIN_master_HWSerial_ESP8266_Ticker
-            - examples/LIN_master_RS485_HWSerial_ESP8266_Bkg
-            - examples/LIN_master_RS485_HWSerial_ESP8266_Blk
-            - examples/LIN_master_RS485_SWSerial_Blk
-            - examples/LIN_master_SWSerial_Blk
-          cli-compile-flags: |
-            - --verbose
-            - --build-property
-            - build.extra_flags=-Wall -DLIN_MASTER_DEBUG_SERIAL=Serial1 -DLIN_MASTER_DEBUG_LEVEL=3
-
-      # upload test reports
-      - uses: actions/upload-artifact@v4.4.3
-        with:
-          if-no-files-found: error
-          path: ${{ env.SKETCHES_REPORTS_PATH }}
-          name: sketches-report-${{ matrix.board.artifact-name-suffix }}
-
-
-
-  # Build for ESP32
-  build-for-esp32:
-    
-    # setup OS
-    runs-on: ubuntu-latest
-
-    # setup environment
-    env:
-      SKETCHES_REPORTS_PATH: sketches-reports
-    
-    # test strategy & tested boards
-    strategy:
-      fail-fast: false
-      matrix:
-        board:
-          - fqbn: esp32:esp32:esp32da             # ESP32-WROOM-DA
-            artifact-name-suffix: esp32da
-
-    # integration test steps
-    steps:
-
-      # Install Arduino CLI
-      - name: install Arduino CLI
-        run: |
-          curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
-          export PATH="$PWD/bin:$PATH"
-          echo "PATH=$PATH"
-          which arduino-cli
-          arduino-cli version
-
-      # Create Board Manager file
-      - name: create arduino-cli.yaml
-        run: |
-          mkdir -p ~/.arduino15
-          echo "directory: ~/.arduino15" > ~/.arduino15/arduino-cli.yaml
-          echo "board_manager:" >> ~/.arduino15/arduino-cli.yaml
-          echo "  additional_urls:" >> ~/.arduino15/arduino-cli.yaml
-          echo "    - https://adafruit.github.io/arduino-board-index/package_adafruit_index.json" >> ~/.arduino15/arduino-cli.yaml
-          echo "    - https://arduino.esp8266.com/stable/package_esp8266com_index.json" >> ~/.arduino15/arduino-cli.yaml
-          echo "    - https://espressif.github.io/arduino-esp32/package_esp32_index.json" >> ~/.arduino15/arduino-cli.yaml
-          cat ~/.arduino15/arduino-cli.yaml
-      
-      # Install required boards & libraries
-      - name: install ESP32 core
-        run: |
-          export PATH="$PWD/bin:$PATH"
-          arduino-cli core update-index
-          arduino-cli core install esp32:esp32
-          arduino-cli lib install "espsoftwareserial"
-
-      # check-out this repository
-      - uses: actions/checkout@v4.2.2
-
-      # build Arduino examples
-      - uses: arduino/compile-sketches@v1.1.2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}   # required for private repos
-          fqbn: ${{ matrix.board.fqbn }}
-          libraries: |
-            - source-path: ./
-          #  - source-url: https://github.com/plerup/espsoftwareserial.git
-          sketch-paths: |
-            - examples/LIN_master_HWSerial_ESP32_Bkg
-            - examples/LIN_master_HWSerial_ESP32_Bkg_Evt
-            - examples/LIN_master_HWSerial_ESP32_Blk
-            - examples/LIN_master_HWSerial_ESP32_Ticker
-            - examples/LIN_master_RS485_HWSerial_ESP32_Bkg
-            - examples/LIN_master_RS485_HWSerial_ESP32_Blk
-            - examples/LIN_master_RS485_SWSerial_Blk
-            - examples/LIN_master_SWSerial_Blk
-          cli-compile-flags: |
-            - --verbose
-          #  - --build-property
-          #  - build.extra_flags=-Wall -DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3
-          # for some reason, passing arguments doesn't work for ESP32 -> skip for now
-            
-      # upload test reports
-      - uses: actions/upload-artifact@v4.4.3
-        with:
-          if-no-files-found: error
-          path: ${{ env.SKETCHES_REPORTS_PATH }}
-          name: sketches-report-${{ matrix.board.artifact-name-suffix }}
-
-
-
-  # Build for ATTiny85 / Trinket
-  build-for-trinket:
-    
-    # setup OS
-    runs-on: ubuntu-latest
-
-    # setup environment
-    env:
-      SKETCHES_REPORTS_PATH: sketches-reports
-    
-    # test strategy & tested boards
-    strategy:
-      fail-fast: false
-      matrix:
-        board:
-          - fqbn: adafruit:avr:trinket5           # Adafruit Trinket (ATtiny85 @ 16MHz)
-            artifact-name-suffix: trinket5
-
-    # integration test steps
-    steps:
-
-      # Install Arduino CLI
-      - name: install Arduino CLI
-        run: |
-          curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
-          export PATH="$PWD/bin:$PATH"
-          echo "PATH=$PATH"
-          which arduino-cli
-          arduino-cli version
-
-      # Create Board Manager file
-      - name: create arduino-cli.yaml
-        run: |
-          mkdir -p ~/.arduino15
-          echo "directory: ~/.arduino15" > ~/.arduino15/arduino-cli.yaml
-          echo "board_manager:" >> ~/.arduino15/arduino-cli.yaml
-          echo "  additional_urls:" >> ~/.arduino15/arduino-cli.yaml
-          echo "    - https://adafruit.github.io/arduino-board-index/package_adafruit_index.json" >> ~/.arduino15/arduino-cli.yaml
-          echo "    - https://arduino.esp8266.com/stable/package_esp8266com_index.json" >> ~/.arduino15/arduino-cli.yaml
-          echo "    - https://espressif.github.io/arduino-esp32/package_esp32_index.json" >> ~/.arduino15/arduino-cli.yaml
-          cat ~/.arduino15/arduino-cli.yaml
-      
-      # Install required boards
-      - name: install Trinket core
+      # Install cores for all defined boards. Don't use matrix.board.fqbn due to dependencies
+      - name: Install Cores
         run: |
           export PATH="$PWD/bin:$PATH"
           arduino-cli core update-index
           arduino-cli core install arduino:avr
+          arduino-cli core install arduino:sam
+          arduino-cli core install esp8266:esp8266
+          arduino-cli core install esp32:esp32
           arduino-cli core install adafruit:avr
-          # arduino-cli board listall | grep --ignore-case "trink"
-          arduino-cli core list
 
-      # check-out this repository
-      - uses: actions/checkout@v4.2.2
+      # Install additional libraries
+      - name: Install Additional Libraries
+        run: |
+          export PATH="$PWD/bin:$PATH"
+          arduino-cli lib install "espsoftwareserial"
 
-      # build Arduino examples
-      - uses: arduino/compile-sketches@v1.1.2
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}   # required for private repos
-          fqbn: ${{ matrix.board.fqbn }}
-          libraries: |
-            - source-path: ./
-          sketch-paths: |
-            - examples/LIN_master_RS485_SWSerial_Blk
-            - examples/LIN_master_SWSerial_Blk
-          cli-compile-flags: |
-            - --verbose
-            - --build-property
-            - build.extra_flags=-Wall
-          # no debug serial available
-            
-      # upload test reports
-      - uses: actions/upload-artifact@v4.4.3
-        with:
-          if-no-files-found: error
-          path: ${{ env.SKETCHES_REPORTS_PATH }}
-          name: sketches-report-${{ matrix.board.artifact-name-suffix }}
+      # Copy local library to Arduino libraries directory
+      - name: Copy Local Library
+        run: |
+          mkdir -p ~/Arduino/libraries/MyLibrary
+          cp -r $PWD/* $HOME/Arduino/libraries/MyLibrary
+
+
+      # Build sketches for AVR
+      - name: Build AVR
+        run: |
+          export PATH="$PWD/bin:$PATH"
+
+          # list of boards with optional build flags
+          BOARDS_FLAGS=(
+            "arduino:avr:mega -DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3"            # Arduino Mega 2560 
+          )
+
+          # list of sketches with optional build flags
+          SKETCHES_FLAGS=(
+            "examples/LIN_master_Dual_HWSerial_Bkg"
+            "examples/LIN_master_HWSerial_Bkg"
+            "examples/LIN_master_HWSerial_Bkg_Evt"
+            "examples/LIN_master_HWSerial_Blk"
+            "examples/LIN_master_RS485_HWSerial_Bkg"
+            "examples/LIN_master_RS485_HWSerial_Blk"
+            "examples/LIN_master_RS485_SWSerial_Blk"
+            "examples/LIN_master_SWSerial_Blk"
+          )
+
+          # misc build flags
+          MISC_FLAGS="-Wall -Wextra -Wpedantic"
+
+          # loop over sketches
+          for ITEM_SKETCHES_FLAGS in "${SKETCHES_FLAGS[@]}"; do
+          
+            # get sketch and corresponding sketch build flags
+            SKETCH_NAME=$(echo $ITEM_SKETCHES_FLAGS | cut -d' ' -f1)    # get 1st word
+            SKETCH_FLAGS=$(echo $ITEM_SKETCHES_FLAGS | cut -d' ' -f2-)  # get all other words
+            if [ "$SKETCH_FLAGS" == "$SKETCH_NAME" ]; then
+              SKETCH_FLAGS=""
+            fi
+            # echo "sketch: $SKETCH_NAME"
+            # echo "sketch flags: $SKETCH_FLAGS"
+
+            # loop over boards
+            for ITEM_BOARDS_FLAGS in "${BOARDS_FLAGS[@]}"; do
+
+              # get board and corresponding board build flags
+              BOARD_NAME=$(echo $ITEM_BOARDS_FLAGS | cut -d' ' -f1)     # get 1st word
+              BOARD_FLAGS=$(echo $ITEM_BOARDS_FLAGS | cut -d' ' -f2-)   # get all other words
+              if [ "$BOARD_FLAGS" == "$BOARD_NAME" ]; then
+                BOARD_FLAGS=""
+              fi
+              # echo "board: $BOARD_NAME"
+              # echo "board flags: $BOARD_FLAGS"
+              
+              # build sketch
+              echo ""
+              echo ""
+              echo "build ketch '$SKETCH_NAME' for board '$BOARD_NAME'"
+              echo arduino-cli compile --fqbn "$BOARD_NAME" --warnings all --build-property "compiler.cpp.extra_flags=$MISC_FLAGS $SKETCH_FLAGS $BOARD_FLAGS" "$SKETCH_NAME"
+              arduino-cli compile --fqbn "$BOARD_NAME" --warnings all --build-property "compiler.cpp.extra_flags=$MISC_FLAGS $SKETCH_FLAGS $BOARD_FLAGS" "$SKETCH_NAME"
+              if [ $? -ne 0 ]; then
+                echo "ERROR: build failed"
+                exit 1
+              fi
+              
+            done # end loop over boards
+          done # end loop over sketches
