@@ -9,6 +9,12 @@
 // include files
 #include <LIN_master_Base.h>
 
+// warn if debug is active (any debug level)
+#if defined(LIN_MASTER_DEBUG_SERIAL)
+  #warning Debug interface is active, see file 'LIN_master_Base.h'
+#endif
+
+
 
 /**************************
  * PROTECTED METHODS
