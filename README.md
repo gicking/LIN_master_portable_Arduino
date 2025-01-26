@@ -21,8 +21,8 @@ For a similar Arduino libary for LIN slave emulation see https://github.com/gick
 ## Supported functionality
   - blocking and non-blocking operation
   - multiple, simultaneous LIN nodes
-  - supports HardwareSerial and SoftwareSerial, if available
-  - supports LIN protocoll via RS485
+  - supports HardwareSerial and SoftwareSerial
+  - supports LIN protocoll via RS485 with Tx direction switching
   
 ## Supported Boards (with additional LIN hardware)
   - AVR boards, e.g. [Arduino Uno](https://store.arduino.cc/products/arduino-uno-rev3), [Mega](https://store.arduino.cc/products/arduino-mega-2560-rev3) or [Nano](https://store.arduino.cc/products/arduino-nano)
@@ -33,13 +33,17 @@ For a similar Arduino libary for LIN slave emulation see https://github.com/gick
 
 
 ## Notes
-  - The sender state machine relies on reading back its 1-wire echo. If no LIN or K-Line transceiver is used, connect Rx&Tx (only on same device!)
+  - The sender state machine relies on reading back its 1-wire echo. If no LIN or K-Line transceiver is used, connect Rx&Tx (only one Tx to avoid damage)
   - for background operation, the `handler()` method must be called at least every 500us, especially after initiating a frame. Optionally it can be called from within [serialEvent()](https://reference.arduino.cc/reference/de/language/functions/communication/serial/serialevent/)
   
 
 # Test Matrix
 
+An *ok* in the below test matrix indicates that normal master request frames are sent, slave responses are received and bus disconnection is detected (-> error). No extensive testing of *all* possible error cases was performed. Please let me know if you experience unexpected errors.
+
 ![Test Matrix](./extras/testing/Board_Tests.png?)
+
+Logic analyzer screenshots of LIN bus, idle pin and error pin levels are stored in folder "./extras/testing/*Board*"
 
 
 Have fun!, Georg
@@ -49,9 +53,12 @@ Have fun!, Georg
 Revision History
 ----------------
 
-**v1.4 (pending)**
-  - replace `*Stream` in base class by actual serial interface to reduce overhead
+**v1.4 (2025-01-26)**
+  - replace `*Stream` in LIN base class by actual serial interface to reduce overhead
   - add library reference via [Doxygen](https://www.doxygen.nl/)
+  - increase frame timeout to handle slow slave responses
+  - improve CI test coverage via Github Actions
+  - performed recursion tests in above test matrix
 
 **v1.3 (2024-12-14)**
   - add support for LIN protocol via RS485 PHY

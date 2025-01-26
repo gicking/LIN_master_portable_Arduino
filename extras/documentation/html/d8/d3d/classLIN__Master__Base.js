@@ -55,7 +55,7 @@ var classLIN__Master__Base =
     [ "nameLIN", "d8/d3d/classLIN__Master__Base.html#a4ba4877225c509c198e6aec231c3ea0a", null ],
     [ "pinTxEN", "d8/d3d/classLIN__Master__Base.html#a556e881b009cd614fd5dbc2acf86d18b", null ],
     [ "state", "d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2", null ],
-    [ "timeMax", "d8/d3d/classLIN__Master__Base.html#ad974e07f201029549f23103bc44bd600", null ],
+    [ "timeoutFrame", "d8/d3d/classLIN__Master__Base.html#af65bae99e0ad2faa6b340b8e3f5ee38f", null ],
     [ "timePerByte", "d8/d3d/classLIN__Master__Base.html#aaa4e8f44deab28db2ef3066950a3059e", null ],
     [ "timeStart", "d8/d3d/classLIN__Master__Base.html#a54921dd312023ab79b09ecf527032e1f", null ],
     [ "type", "d8/d3d/classLIN__Master__Base.html#ad3d89373f776a8733b7c9c31ca5c5c93", null ],

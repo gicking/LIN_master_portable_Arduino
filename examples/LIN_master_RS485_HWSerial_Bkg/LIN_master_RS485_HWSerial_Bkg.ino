@@ -9,6 +9,7 @@ Note: after starting a frame, LIN.handler() must be called every <=500us at leas
 
 Supported (=successfully tested) boards (requires 5V board!):
  - Arduino Mega 2560      https://store.arduino.cc/products/arduino-mega-2560-rev3
+ - Arduino Due            https://store.arduino.cc/products/arduino-due
 
 **********************/
 

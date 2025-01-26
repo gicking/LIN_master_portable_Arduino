@@ -20,13 +20,13 @@
 // misc parameters
 #define LIN_MASTER_BUFLEN_NAME  30            //!< max. length of node name
 
-// optional LIN debug output. When using together with NeoHWSerial on AVR must use NeoSerialx to avoid linker conflict
+// optional LIN debug output @ 115.2kBaud. When using together with NeoHWSerial on AVR must use NeoSerialx to avoid linker conflict
 #if !defined(LIN_MASTER_DEBUG_SERIAL)
   //#define LIN_MASTER_DEBUG_SERIAL Serial        //!< serial interface used for debug output. Comment out for none
   //#define LIN_MASTER_DEBUG_SERIAL NeoSerial     //!< serial interface used for debug output (required for AVR). Comment out for none
 #endif
 #if !defined(LIN_MASTER_DEBUG_LEVEL)
-  #define LIN_MASTER_DEBUG_LEVEL  2             //!< debug verbosity 0..3 (1=errors only, 3=verbose)
+  #define LIN_MASTER_DEBUG_LEVEL  2             //!< debug verbosity 0..3 (1=errors only, 3=chatty)
 #endif
 
 /*-----------------------------------------------------------------------------
@@ -99,7 +99,7 @@ class LIN_Master_Base
     LIN_Master_Base::error_t  error;            //!< error state. Is latched until cleared
     uint32_t                timePerByte;        //!< time [us] per byte at specified baudrate
     uint32_t                timeStart;          //!< starting time [us] for frame timeout
-    uint32_t                timeMax;            //!< max. frame duration [us]
+    uint32_t                timeoutFrame;       //!< max. frame duration [us]
 
     // frame properties
     LIN_Master_Base::version_t  version;        //!< LIN protocol version

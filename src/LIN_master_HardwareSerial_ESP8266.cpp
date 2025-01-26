@@ -102,7 +102,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_sendFrame(void)
   else
   {
     // check for timeout
-    if (micros() - this->timeStart > this->timeMax)
+    if (micros() - this->timeStart > this->timeoutFrame)
     {
       this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_TIMEOUT);
       _disableTransmitter();
@@ -164,7 +164,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_receiveFrame(void)
   else
   {
     // check for timeout
-    if (micros() - this->timeStart > this->timeMax)
+    if (micros() - this->timeStart > this->timeoutFrame)
     {
       this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_TIMEOUT);
       _disableTransmitter();
@@ -190,12 +190,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_receiveFrame(void)
 LIN_Master_HardwareSerial_ESP8266::LIN_Master_HardwareSerial_ESP8266(bool SwapPins, const char NameLIN[], const int8_t PinTxEN) : 
   LIN_Master_Base::LIN_Master_Base(NameLIN, PinTxEN)
 {
-  // print debug message (debug level 2)
-  // Note: not be printed, because constructor is called prior to setup()
-  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
-    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_HardwareSerial_ESP8266::LIN_Master_HardwareSerial_ESP8266()");
-  #endif
+  // Debug serial initialized in begin() -> no debug output here
 
   // store pointer to used HW serial
   this->pSerial    = &Serial;                               // ESP8266 only has 1 UART with send/receive
@@ -214,6 +209,9 @@ LIN_Master_HardwareSerial_ESP8266::LIN_Master_HardwareSerial_ESP8266(bool SwapPi
 */
 void LIN_Master_HardwareSerial_ESP8266::begin(uint16_t Baudrate)
 {
+  // call base class method
+  LIN_Master_Base::begin(Baudrate);
+
   // print debug message (debug level 2)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
     LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
@@ -221,9 +219,6 @@ void LIN_Master_HardwareSerial_ESP8266::begin(uint16_t Baudrate)
     LIN_MASTER_DEBUG_SERIAL.print((int) Baudrate);
     LIN_MASTER_DEBUG_SERIAL.println(")");
   #endif
-
-  // call base class method
-  LIN_Master_Base::begin(Baudrate);
 
   // open serial interface
   this->pSerial->begin(this->baudrate, SERIAL_8N1);

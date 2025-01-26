@@ -160,7 +160,7 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
     else
     {
       // check for timeout
-      if (micros() - this->timeStart > this->timeMax)
+      if (micros() - this->timeStart > this->timeoutFrame)
       {
         this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_TIMEOUT);
         _disableTransmitter();
@@ -190,12 +190,7 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
 LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial(uint8_t PinRx, uint8_t PinTx, bool InverseLogic, const char NameLIN[], const int8_t PinTxEN) : 
   LIN_Master_Base::LIN_Master_Base(NameLIN, PinTxEN), SWSerial(PinRx, PinTx, InverseLogic)
 {
-  // print debug message (debug level 2)
-  // Note: not be printed, because constructor is called prior to setup()
-  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
-    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial()");
-  #endif
+  // Debug serial initialized in begin() -> no debug output here
 
   // store pins used for SW serial
   this->pinRx = PinRx;
@@ -217,6 +212,9 @@ LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial(uint8_t PinRx, uint8_t PinT
 */
 void LIN_Master_SoftwareSerial::begin(uint16_t Baudrate)
 {
+  // call base class method
+  LIN_Master_Base::begin(Baudrate);
+  
   // print debug message (debug level 2)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
     LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
@@ -225,9 +223,6 @@ void LIN_Master_SoftwareSerial::begin(uint16_t Baudrate)
     LIN_MASTER_DEBUG_SERIAL.println(")");
   #endif
 
-  // call base class method
-  LIN_Master_Base::begin(Baudrate);
-  
   // calculate duration of BREAK
   this->durationBreak = this->timePerByte * 13 / 10;
   

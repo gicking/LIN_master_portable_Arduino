@@ -152,7 +152,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_receiveFrame(void)
   else
   {
     // check for timeout
-    if (micros() - this->timeStart > this->timeMax)
+    if (micros() - this->timeStart > this->timeoutFrame)
     {
       this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_TIMEOUT);
       _disableTransmitter();
@@ -180,13 +180,8 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_receiveFrame(void)
 LIN_Master_HardwareSerial_ESP32::LIN_Master_HardwareSerial_ESP32(HardwareSerial &Interface, uint8_t PinRx, uint8_t PinTx, const char NameLIN[], const int8_t PinTxEN) :
   LIN_Master_Base::LIN_Master_Base(NameLIN, PinTxEN)
 {
-  // print debug message (debug level 2)
-  // Note: not be printed, because constructor is called prior to setup()
-  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
-    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_HardwareSerial_ESP32::LIN_Master_HardwareSerial_ESP32()");
-  #endif
-  
+  // Debug serial initialized in begin() -> no debug output here
+
   // store pointer to used HW serial
   this->pSerial    = &Interface;                              // used serial interface
   this->pinRx      = PinRx;                                   // receive pin
@@ -205,6 +200,9 @@ LIN_Master_HardwareSerial_ESP32::LIN_Master_HardwareSerial_ESP32(HardwareSerial 
 */
 void LIN_Master_HardwareSerial_ESP32::begin(uint16_t Baudrate)
 {
+  // call base class method
+  LIN_Master_Base::begin(Baudrate);
+
   // print debug message (debug level 2)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
     LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
@@ -212,9 +210,6 @@ void LIN_Master_HardwareSerial_ESP32::begin(uint16_t Baudrate)
     LIN_MASTER_DEBUG_SERIAL.print((int) Baudrate);
     LIN_MASTER_DEBUG_SERIAL.println(")");
   #endif
-
-  // call base class method
-  LIN_Master_Base::begin(Baudrate);
 
   // open serial interface incl. used pins
   this->pSerial->end();

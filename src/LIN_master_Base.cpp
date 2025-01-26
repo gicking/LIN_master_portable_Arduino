@@ -216,12 +216,7 @@ LIN_Master_Base::state_t LIN_Master_Base::_receiveFrame(void)
 */
 LIN_Master_Base::LIN_Master_Base(const char NameLIN[], const int8_t PinTxEN)
 {
-  // print debug message (debug level 2)
-  // Note: not be printed, because constructor is called prior to setup()
-  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
-    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_Base::LIN_Master_Base()");
-  #endif
+  // Debug serial initialized in begin() -> no debug output here
 
   // store parameters in class variables
   memcpy(this->nameLIN, NameLIN, LIN_MASTER_BUFLEN_NAME);     // node name e.g. for debug
@@ -230,14 +225,7 @@ LIN_Master_Base::LIN_Master_Base(const char NameLIN[], const int8_t PinTxEN)
   // initialize master node properties
   this->error = LIN_Master_Base::NO_ERROR;                    // last LIN error. Is latched
   this->state = LIN_Master_Base::STATE_OFF;                   // status of LIN state machine
-
-  // initialize TxEN pin low (=transmitter off)
-  if (this->pinTxEN >= 0)
-  {
-    digitalWrite(this->pinTxEN, LOW);
-    pinMode(this->pinTxEN, OUTPUT);
-  }
-
+ 
 } // LIN_Master_Base::LIN_Master_Base()
 
 
@@ -249,6 +237,12 @@ LIN_Master_Base::LIN_Master_Base(const char NameLIN[], const int8_t PinTxEN)
 */
 void LIN_Master_Base::begin(uint16_t Baudrate)
 {
+  // initialize debug interface
+  #if defined(LIN_MASTER_DEBUG_SERIAL)
+    LIN_MASTER_DEBUG_SERIAL.begin(115200);
+    while (!LIN_MASTER_DEBUG_SERIAL);
+  #endif
+
   // print debug message (debug level 2)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
     LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
@@ -264,6 +258,13 @@ void LIN_Master_Base::begin(uint16_t Baudrate)
   this->error = LIN_Master_Base::NO_ERROR;                         // last LIN error. Is latched
   this->state = LIN_Master_Base::STATE_IDLE;                       // status of LIN state machine
   this->timePerByte = 10000000L / (uint32_t) this->baudrate;  // time [us] per byte (for performance)
+
+  // initialize optional TxEN pin to low (=transmitter off)
+  if (this->pinTxEN >= 0)
+  {
+    digitalWrite(this->pinTxEN, LOW);
+    pinMode(this->pinTxEN, OUTPUT);
+  }
 
 } // LIN_Master_Base::begin()
 
@@ -315,9 +316,9 @@ LIN_Master_Base::state_t LIN_Master_Base::sendMasterRequest(LIN_Master_Base::ver
   // init receive buffer
   memset(this->bufRx, 0, 12);
 
-  // set break timeout (= 150% nominal) and start timeout
+  // set break timeout (= 200% nominal) and start timeout
   this->timeStart = micros();
-  this->timeMax   = (((this->lenRx + 1) * this->timePerByte) * 3 ) >> 1;
+  this->timeoutFrame   = ((this->lenRx + 1) * this->timePerByte) * 2;
 
   // print debug message (debug level 2)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
@@ -392,8 +393,8 @@ LIN_Master_Base::state_t LIN_Master_Base::receiveSlaveResponse(LIN_Master_Base::
   // init receive buffer
   memset(this->bufRx, 0, 12);
 
-  // set break timeout (= 150% nominal) and start timeout
-  this->timeMax   = (((this->lenRx + 1) * this->timePerByte) * 3 ) >> 1;
+  // set break timeout (= 200% nominal) and start timeout
+  this->timeoutFrame   = ((this->lenRx + 1) * this->timePerByte) * 2;
   this->timeStart = micros();
 
   // print debug message (debug level 2)
