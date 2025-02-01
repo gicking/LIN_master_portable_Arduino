@@ -32,7 +32,7 @@ Supported (=successfully tested) boards:
 #define SERIAL_DEBUG  Serial
 
 
-// setup 2 LIN nodes
+// setup 2 LIN nodes. Parameters: interface, name, TxEN
 LIN_Master_HardwareSerial   LIN1(Serial1, "Master_1");
 LIN_Master_HardwareSerial   LIN2(Serial2, "Master_2");
 

@@ -1,7 +1,8 @@
 /**
   \file     LIN_master_Base.cpp
-  \brief    Base class for LIN master emulation
+  \brief    Base class for LIN master emulation (non-functional)
   \details  This library provides the base class for a master node emulation of a LIN bus.
+            The base class is non-functional, as it lacks the actual communication interface.
             For an explanation of the LIN bus and protocol e.g. see https://en.wikipedia.org/wiki/Local_Interconnect_Network
   \author   Georg Icking-Konert
 */
@@ -252,12 +253,12 @@ void LIN_Master_Base::begin(uint16_t Baudrate)
   #endif
 
   // store parameters in class variables
-  this->baudrate   = Baudrate;                                // communication baudrate [Baud]
+  this->baudrate   = Baudrate;                                  // communication baudrate [Baud]
 
   // initialize master node properties
-  this->error = LIN_Master_Base::NO_ERROR;                         // last LIN error. Is latched
-  this->state = LIN_Master_Base::STATE_IDLE;                       // status of LIN state machine
-  this->timePerByte = 10000000L / (uint32_t) this->baudrate;  // time [us] per byte (for performance)
+  this->error = LIN_Master_Base::NO_ERROR;                      // last LIN error. Is latched
+  this->state = LIN_Master_Base::STATE_IDLE;                    // status of LIN state machine
+  this->timePerByte = 10000000L / (uint32_t) this->baudrate;    // time [us] per byte (for performance)
 
   // initialize optional TxEN pin to low (=transmitter off)
   if (this->pinTxEN >= 0)
@@ -282,8 +283,12 @@ void LIN_Master_Base::end()
     LIN_MASTER_DEBUG_SERIAL.print(": LIN_Master_Base::end()");
   #endif
 
-  // initialize master node properties
-  this->state = LIN_Master_Base::STATE_OFF;                        // status of LIN state machine
+  // set master node properties
+  this->error = LIN_Master_Base::NO_ERROR;                    // last LIN error. Is latched
+  this->state = LIN_Master_Base::STATE_OFF;                   // status of LIN state machine
+
+  // optionally disable RS485 transmitter
+  _disableTransmitter();
 
 } // LIN_Master_Base::end()
 

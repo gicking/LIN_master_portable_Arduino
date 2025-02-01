@@ -54,7 +54,7 @@ Supported (=successfully tested) boards + MAX485 (requires 5V board!):
 #define LIN_PAUSE       200
 
 
-// setup LIN node
+// setup LIN node. Parameters: Rx, Tx, inverse, name, TxEN
 LIN_Master_SoftwareSerial   LIN(PIN_LIN_RX, PIN_LIN_TX, false, "Master", PIN_TXEN);
 
 

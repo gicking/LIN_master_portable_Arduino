@@ -1,7 +1,8 @@
 /**
   \file     LIN_master_Base.h
-  \brief    Base class for LIN master emulation
+  \brief    Base class for LIN master emulation (non-functional)
   \details  This library provides the base class for a master node emulation of a LIN bus.
+            The base class is non-functional, as it lacks the actual communication interface.
             For an explanation of the LIN bus and protocol e.g. see https://en.wikipedia.org/wiki/Local_Interconnect_Network
   \author   Georg Icking-Konert
 */
@@ -20,7 +21,7 @@
 // misc parameters
 #define LIN_MASTER_BUFLEN_NAME  30            //!< max. length of node name
 
-// optional LIN debug output @ 115.2kBaud. When using together with NeoHWSerial on AVR must use NeoSerialx to avoid linker conflict
+// optional debug output @ 115.2kBaud. When using together with NeoHWSerial on AVR must use NeoSerialx to avoid linker conflict
 #if !defined(LIN_MASTER_DEBUG_SERIAL)
   //#define LIN_MASTER_DEBUG_SERIAL Serial        //!< serial interface used for debug output. Comment out for none
   //#define LIN_MASTER_DEBUG_SERIAL NeoSerial     //!< serial interface used for debug output (required for AVR). Comment out for none
@@ -33,7 +34,17 @@
   INCLUDE FILES
 -----------------------------------------------------------------------------*/
 
+// generic Arduino functions
 #include <Arduino.h>
+
+// required for debug on AVR via NeoSerial
+#if defined (LIN_SLAVE_DEBUG_SERIAL) && (LIN_SLAVE_DEBUG_SERIAL == NeoSerial)
+  #if defined(ARDUINO_ARCH_AVR)
+    #include <NeoHWSerial.h>
+  #else
+    #error NeoSerial only available for AVR
+  #endif
+#endif
 
 
 /*-----------------------------------------------------------------------------
@@ -98,7 +109,6 @@ class LIN_Master_Base
     LIN_Master_Base::state_t  state;            //!< status of LIN state machine
     LIN_Master_Base::error_t  error;            //!< error state. Is latched until cleared
     uint32_t                timePerByte;        //!< time [us] per byte at specified baudrate
-    uint32_t                timeStart;          //!< starting time [us] for frame timeout
     uint32_t                timeoutFrame;       //!< max. frame duration [us]
 
     // frame properties
@@ -109,6 +119,7 @@ class LIN_Master_Base
     uint8_t                 bufTx[12];          //!< send buffer incl. BREAK, SYNC, DATA and CHK (max. 12B)
     uint8_t                 lenRx;              //!< receive buffer length (max. 12)
     uint8_t                 bufRx[12];          //!< receive buffer incl. BREAK, SYNC, DATA and CHK (max. 12B)
+    uint32_t                timeStart;          //!< starting time [us] for frame timeout
 
 
   // PUBLIC VARIABLES

@@ -31,7 +31,7 @@ Supported (=successfully tested) boards + MAX485:
 #define SERIAL_DEBUG  Serial
 
 
-// setup LIN node
+// setup LIN node. Parameters: interface, name, TxEN
 LIN_Master_HardwareSerial   LIN(Serial1, "Master", PIN_TXEN);
 
 

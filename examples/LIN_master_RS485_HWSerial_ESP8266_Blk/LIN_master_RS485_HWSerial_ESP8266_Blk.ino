@@ -30,7 +30,7 @@ Supported (=successfully tested) boards:
 #define SERIAL_DEBUG  Serial1
 
 
-// setup LIN node. Swap Serial pins to use Tx=D8 & Rx=D7 
+// setup LIN node. Swap Serial pins to use Tx=D8 & Rx=D7. Parameters: swapPins, name, TxEN
 LIN_Master_HardwareSerial_ESP8266   LIN(true, "Master", PIN_TXEN);
 
 

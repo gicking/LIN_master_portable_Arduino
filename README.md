@@ -34,7 +34,7 @@ For a similar Arduino libary for LIN slave emulation see https://github.com/gick
 
 ## Notes
   - The sender state machine relies on reading back its 1-wire echo. If no LIN or K-Line transceiver is used, connect Rx&Tx (only one Tx to avoid damage)
-  - for background operation, the `handler()` method must be called at least every 500us, especially after initiating a frame. Optionally it can be called from within [serialEvent()](https://reference.arduino.cc/reference/de/language/functions/communication/serial/serialevent/)
+  - For background operation, the `handler()` method must be called at least every 500us, especially after initiating a frame. Optionally it can be called from within [serialEvent()](https://reference.arduino.cc/reference/de/language/functions/communication/serial/serialevent/)
   
 
 # Test Matrix
@@ -52,6 +52,9 @@ Have fun!, Georg
 
 Revision History
 ----------------
+
+**v1.5 (pending)**
+  - xxx
 
 **v1.4 (2025-01-26)**
   - replace `*Stream` in LIN base class by actual serial interface to reduce overhead
