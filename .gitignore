@@ -51,7 +51,7 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-# Kernel Module Compile Results
+# permit editing examples in Arduino IDE
 .development
 
 # Project logo file

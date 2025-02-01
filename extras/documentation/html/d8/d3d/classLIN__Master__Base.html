@@ -254,9 +254,6 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:aaa4e8f44deab28db2ef3066950a3059e" id="r_aaa4e8f44deab28db2ef3066950a3059e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#aaa4e8f44deab28db2ef3066950a3059e">timePerByte</a></td></tr>
 <tr class="memdesc:aaa4e8f44deab28db2ef3066950a3059e"><td class="mdescLeft">&#160;</td><td class="mdescRight">time [us] per byte at specified baudrate  <br /></td></tr>
 <tr class="separator:aaa4e8f44deab28db2ef3066950a3059e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a54921dd312023ab79b09ecf527032e1f" id="r_a54921dd312023ab79b09ecf527032e1f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a54921dd312023ab79b09ecf527032e1f">timeStart</a></td></tr>
-<tr class="memdesc:a54921dd312023ab79b09ecf527032e1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">starting time [us] for frame timeout  <br /></td></tr>
-<tr class="separator:a54921dd312023ab79b09ecf527032e1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af65bae99e0ad2faa6b340b8e3f5ee38f" id="r_af65bae99e0ad2faa6b340b8e3f5ee38f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#af65bae99e0ad2faa6b340b8e3f5ee38f">timeoutFrame</a></td></tr>
 <tr class="memdesc:af65bae99e0ad2faa6b340b8e3f5ee38f"><td class="mdescLeft">&#160;</td><td class="mdescRight">max. frame duration [us]  <br /></td></tr>
 <tr class="separator:af65bae99e0ad2faa6b340b8e3f5ee38f"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -281,12 +278,15 @@ Protected Attributes</h2></td></tr>
 <tr class="memitem:ac6bbfd69df662ed6c0019b51b76c4e83" id="r_ac6bbfd69df662ed6c0019b51b76c4e83"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#ac6bbfd69df662ed6c0019b51b76c4e83">bufRx</a> [12]</td></tr>
 <tr class="memdesc:ac6bbfd69df662ed6c0019b51b76c4e83"><td class="mdescLeft">&#160;</td><td class="mdescRight">receive buffer incl. BREAK, SYNC, DATA and CHK (max. 12B)  <br /></td></tr>
 <tr class="separator:ac6bbfd69df662ed6c0019b51b76c4e83"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54921dd312023ab79b09ecf527032e1f" id="r_a54921dd312023ab79b09ecf527032e1f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d8/d3d/classLIN__Master__Base.html#a54921dd312023ab79b09ecf527032e1f">timeStart</a></td></tr>
+<tr class="memdesc:a54921dd312023ab79b09ecf527032e1f"><td class="mdescLeft">&#160;</td><td class="mdescRight">starting time [us] for frame timeout  <br /></td></tr>
+<tr class="separator:a54921dd312023ab79b09ecf527032e1f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>LIN master node base class. </p>
 <p>LIN master node base class. From this class the actual LIN classes for a Serialx are derived. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00048">48</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00059">59</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 </div><h2 class="groupheader">Member Enumeration Documentation</h2>
 <a id="a9ad5b96675e1995b42effacca2d01348" name="a9ad5b96675e1995b42effacca2d01348"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9ad5b96675e1995b42effacca2d01348">&#9670;&#160;</a></span>error_t</h2>
@@ -316,7 +316,7 @@ Protected Attributes</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00081">81</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00092">92</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -340,7 +340,7 @@ Protected Attributes</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00062">62</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00073">73</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -370,7 +370,7 @@ Protected Attributes</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00070">70</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00081">81</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -394,7 +394,7 @@ Protected Attributes</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00054">54</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00065">65</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -435,7 +435,7 @@ Protected Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00217">217</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00218">218</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
 
 </div>
 </div>
@@ -465,7 +465,7 @@ Protected Attributes</h2></td></tr>
 
 <p>LIN master node destructor, here dummy. Any class with virtual functions should have virtual destructor. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00178">178</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00189">189</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -514,7 +514,7 @@ Protected Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>calculated checksum, depending on protocol version </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00061">61</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00062">62</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -577,7 +577,7 @@ Here is the caller graph for this function:</div>
 <p>Calculate protected frame ID. </p>
 <p>Calculate protected frame ID as described in LIN2.0 spec "2.3.1.3 Protected identifier field" </p><dl class="section return"><dt>Returns</dt><dd>Protected frame ID </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00028">28</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00029">29</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -637,7 +637,7 @@ Here is the caller graph for this function:</div>
 <p>Check received LIN frame. </p>
 <p>Check received LIN frame for echo and frame checksum </p><dl class="section return"><dt>Returns</dt><dd>error check result </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00103">103</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00104">104</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -695,36 +695,46 @@ Here is the caller graph for this function:</div>
 
 <p>Disable RS485 transmitter (DE=low) </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00157">157</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00168">168</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="../../d8/d3d/classLIN__Master__Base_a98e59593b2cda9b66453a05dadf224a2_icgraph.png" border="0" usemap="#ad8/d3d/classLIN__Master__Base_a98e59593b2cda9b66453a05dadf224a2_icgraph" alt=""/></div>
 <map name="ad8/d3d/classLIN__Master__Base_a98e59593b2cda9b66453a05dadf224a2_icgraph" id="ad8/d3d/classLIN__Master__Base_a98e59593b2cda9b66453a05dadf224a2_icgraph">
-<area shape="rect" title="Disable RS485 transmitter (DE=low)" alt="" coords="761,251,957,291"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a9e86f666d192b4dcdbf2f5f61e2a7c35" title="Receive LIN frame." alt="" coords="513,8,711,48"/>
-<area shape="poly" title=" " alt="" coords="840,239,819,201,790,155,754,109,712,69,680,50,683,46,715,65,758,105,795,152,824,198,845,237"/>
-<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a65b575f355f393af775a48af96c64757" title="Handle LIN background operation (call until STATE_DONE is returned)" alt="" coords="272,45,463,70"/>
-<area shape="poly" title=" " alt="" coords="837,240,815,209,786,174,751,140,712,113,668,98,605,85,463,67,463,62,605,80,669,92,715,108,755,136,790,170,819,206,841,237"/>
-<area shape="rect" href="../../dd/dac/classLIN__Master__HardwareSerial.html#adf9f6a70029822f810f14bfb9987942e" title="Read and check LIN frame." alt="" coords="511,123,713,163"/>
-<area shape="poly" title=" " alt="" coords="820,244,770,210,712,177,684,165,686,160,715,172,773,205,823,240"/>
-<area shape="rect" href="../../d9/de9/classLIN__Master__HardwareSerial__ESP32.html#af0aac1cabb66e8095e00a5b441ca0207" title="Read and check LIN frame." alt="" coords="511,187,713,227"/>
-<area shape="poly" title=" " alt="" coords="767,250,689,229,690,224,769,245"/>
-<area shape="rect" href="../../d9/d29/classLIN__Master__HardwareSerial__ESP8266.html#abccb12fe89bf01b6e41251520bed2f98" title="Read and check LIN frame." alt="" coords="511,251,713,291"/>
-<area shape="poly" title=" " alt="" coords="748,273,713,273,713,268,748,268"/>
-<area shape="rect" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#ad062b6c3c47962bd970a871fff089b37" title="Read and check LIN frame." alt="" coords="514,315,710,355"/>
-<area shape="poly" title=" " alt="" coords="769,297,690,317,689,312,767,292"/>
-<area shape="rect" href="../../dd/dac/classLIN__Master__HardwareSerial.html#adb989afa408046ad8d96e92e69d8621a" title="Send LIN bytes (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID)" alt="" coords="511,379,713,419"/>
-<area shape="poly" title=" " alt="" coords="823,301,773,336,715,369,686,381,684,376,712,364,770,332,820,297"/>
-<area shape="rect" href="../../d9/d29/classLIN__Master__HardwareSerial__ESP8266.html#a4d4e2e70f7c165250bdf46df672adcea" title="Send LIN bytes (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID)" alt="" coords="511,443,713,483"/>
-<area shape="poly" title=" " alt="" coords="839,304,788,369,753,403,715,433,692,445,689,440,712,428,750,399,784,365,835,301"/>
-<area shape="rect" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#af6d1189bc5096208407311ad8da25db2" title="Send LIN bytes (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID)" alt="" coords="514,507,710,547"/>
-<area shape="poly" title=" " alt="" coords="848,304,828,348,799,399,761,452,715,497,695,509,693,504,712,493,757,448,795,397,823,345,843,302"/>
-<area shape="poly" title=" " alt="" coords="500,44,463,49,462,43,500,39"/>
+<area shape="rect" title="Disable RS485 transmitter (DE=low)" alt="" coords="805,283,1001,323"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a9e86f666d192b4dcdbf2f5f61e2a7c35" title="Receive LIN frame." alt="" coords="557,8,755,48"/>
+<area shape="poly" title=" " alt="" coords="887,271,868,226,839,172,802,117,756,69,726,51,729,46,759,65,806,113,844,169,873,223,892,269"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a65b575f355f393af775a48af96c64757" title="Handle LIN background operation (call until STATE_DONE is returned)" alt="" coords="294,45,485,70"/>
+<area shape="poly" title=" " alt="" coords="885,271,864,233,836,189,800,147,756,113,708,96,639,82,485,66,485,60,640,77,710,90,759,108,803,143,840,186,869,230,890,268"/>
+<area shape="rect" href="../../dd/dac/classLIN__Master__HardwareSerial.html#adf9f6a70029822f810f14bfb9987942e" title="Read and check LIN frame." alt="" coords="555,123,757,163"/>
+<area shape="poly" title=" " alt="" coords="873,274,822,225,790,199,756,177,731,165,733,160,759,172,793,195,825,221,877,271"/>
+<area shape="rect" href="../../d9/de9/classLIN__Master__HardwareSerial__ESP32.html#af0aac1cabb66e8095e00a5b441ca0207" title="Read and check LIN frame." alt="" coords="555,187,757,227"/>
+<area shape="poly" title=" " alt="" coords="846,279,756,241,722,229,724,224,758,236,848,274"/>
+<area shape="rect" href="../../d9/d29/classLIN__Master__HardwareSerial__ESP8266.html#abccb12fe89bf01b6e41251520bed2f98" title="Read and check LIN frame." alt="" coords="555,251,757,291"/>
+<area shape="poly" title=" " alt="" coords="792,291,757,286,758,281,792,286"/>
+<area shape="rect" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#ad062b6c3c47962bd970a871fff089b37" title="Read and check LIN frame." alt="" coords="558,315,754,355"/>
+<area shape="poly" title=" " alt="" coords="792,320,754,325,754,319,791,314"/>
+<area shape="rect" href="../../dd/dac/classLIN__Master__HardwareSerial.html#adb989afa408046ad8d96e92e69d8621a" title="Send LIN bytes (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID)" alt="" coords="555,379,757,419"/>
+<area shape="poly" title=" " alt="" coords="848,331,758,369,724,381,722,376,756,364,846,326"/>
+<area shape="rect" href="../../d9/d29/classLIN__Master__HardwareSerial__ESP8266.html#a4d4e2e70f7c165250bdf46df672adcea" title="Send LIN bytes (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID)" alt="" coords="555,443,757,483"/>
+<area shape="poly" title=" " alt="" coords="877,335,825,385,793,410,759,433,733,445,731,440,756,428,790,406,822,381,873,331"/>
+<area shape="rect" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#af6d1189bc5096208407311ad8da25db2" title="Send LIN bytes (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID)" alt="" coords="558,507,754,547"/>
+<area shape="poly" title=" " alt="" coords="888,336,867,373,838,416,801,460,759,497,738,509,735,504,756,492,798,456,833,413,862,370,884,334"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#ab3c9b02e3f1b4576b23b38d1dec876b5" title="Close serial interface." alt="" coords="573,571,739,597"/>
+<area shape="poly" title=" " alt="" coords="895,337,877,387,849,448,810,509,786,537,759,561,736,573,734,569,756,556,782,533,806,506,845,445,872,385,890,335"/>
+<area shape="poly" title=" " alt="" coords="544,43,485,50,484,44,543,38"/>
 <area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a546b2df5bde37851a7019a14ea6f7212" title="Send a blocking LIN slave response frame (no background operation)" alt="" coords="19,5,210,45"/>
-<area shape="poly" title=" " alt="" coords="258,46,210,40,210,35,259,41"/>
+<area shape="poly" title=" " alt="" coords="280,47,210,39,211,34,280,42"/>
 <area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#af0556395411273f313463fb725e891df" title="Send a blocking LIN master request frame (no background operation)" alt="" coords="5,69,224,109"/>
-<area shape="poly" title=" " alt="" coords="259,74,225,78,224,73,258,68"/>
+<area shape="poly" title=" " alt="" coords="281,73,225,79,224,74,280,67"/>
+<area shape="rect" href="../../dd/dac/classLIN__Master__HardwareSerial.html#a09517a075fda4b564536be3401314927" title="Close serial interface." alt="" coords="272,482,507,507"/>
+<area shape="poly" title=" " alt="" coords="573,569,553,561,539,551,529,541,519,531,505,522,471,510,473,505,508,518,523,527,533,537,542,547,556,556,575,565"/>
+<area shape="rect" href="../../d9/de9/classLIN__Master__HardwareSerial__ESP32.html#ae2ced4e6be9b89703e9f1e28c4793222" title="Close serial interface." alt="" coords="288,532,491,572"/>
+<area shape="poly" title=" " alt="" coords="559,575,490,567,491,561,559,570"/>
+<area shape="rect" href="../../d9/d29/classLIN__Master__HardwareSerial__ESP8266.html#a12ce47d681ab9c8411ca4208f984c7b6" title="Close serial interface." alt="" coords="288,596,491,636"/>
+<area shape="poly" title=" " alt="" coords="559,598,491,607,490,601,559,593"/>
+<area shape="rect" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#a847c581da1b3574cd66f615d831992a1" title="Close serial interface." alt="" coords="275,661,503,686"/>
+<area shape="poly" title=" " alt="" coords="618,605,566,628,507,651,460,663,459,658,506,645,564,624,616,600"/>
 </map>
 </div>
 
@@ -756,7 +766,7 @@ Here is the caller graph for this function:</div>
 
 <p>Enable RS485 transmitter (DE=high) </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00143">143</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00154">154</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -806,7 +816,7 @@ Here is the caller graph for this function:</div>
 
 <p>Reimplemented in <a class="el" href="../../dd/dac/classLIN__Master__HardwareSerial.html#adf9f6a70029822f810f14bfb9987942e">LIN_Master_HardwareSerial</a>, <a class="el" href="../../d9/de9/classLIN__Master__HardwareSerial__ESP32.html#af0aac1cabb66e8095e00a5b441ca0207">LIN_Master_HardwareSerial_ESP32</a>, <a class="el" href="../../d9/d29/classLIN__Master__HardwareSerial__ESP8266.html#abccb12fe89bf01b6e41251520bed2f98">LIN_Master_HardwareSerial_ESP8266</a>, and <a class="el" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#ad062b6c3c47962bd970a871fff089b37">LIN_Master_SoftwareSerial</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00186">186</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00187">187</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -863,7 +873,7 @@ Here is the caller graph for this function:</div>
 
 <p>Reimplemented in <a class="el" href="../../dd/dac/classLIN__Master__HardwareSerial.html#ac67e3bc2dff691c158881c1397422107">LIN_Master_HardwareSerial</a>, <a class="el" href="../../d9/de9/classLIN__Master__HardwareSerial__ESP32.html#af35299d2104f2b51ab4fa52a2ccd3dc5">LIN_Master_HardwareSerial_ESP32</a>, <a class="el" href="../../d9/d29/classLIN__Master__HardwareSerial__ESP8266.html#afcab22d01f60bbf0c1f9c51780bd8c06">LIN_Master_HardwareSerial_ESP8266</a>, and <a class="el" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#a42f87bbd6ff615595943890fc7e27cdc">LIN_Master_SoftwareSerial</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00132">132</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00133">133</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -912,7 +922,7 @@ Here is the caller graph for this function:</div>
 
 <p>Reimplemented in <a class="el" href="../../dd/dac/classLIN__Master__HardwareSerial.html#adb989afa408046ad8d96e92e69d8621a">LIN_Master_HardwareSerial</a>, <a class="el" href="../../d9/de9/classLIN__Master__HardwareSerial__ESP32.html#a179383b5c98fd029116baf7801826680">LIN_Master_HardwareSerial_ESP32</a>, <a class="el" href="../../d9/d29/classLIN__Master__HardwareSerial__ESP8266.html#a4d4e2e70f7c165250bdf46df672adcea">LIN_Master_HardwareSerial_ESP8266</a>, and <a class="el" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#af6d1189bc5096208407311ad8da25db2">LIN_Master_SoftwareSerial</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00163">163</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00164">164</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -964,7 +974,7 @@ Here is the caller graph for this function:</div>
 
 <p>Reimplemented in <a class="el" href="../../dd/dac/classLIN__Master__HardwareSerial.html#a815aa1f43fed85520e4205abfe53b248">LIN_Master_HardwareSerial</a>, <a class="el" href="../../d9/de9/classLIN__Master__HardwareSerial__ESP32.html#abb052c3a0e8b5f757052fd7fa9864709">LIN_Master_HardwareSerial_ESP32</a>, <a class="el" href="../../d9/d29/classLIN__Master__HardwareSerial__ESP8266.html#a58e017e8f9d5bd6aff14453e324d3778">LIN_Master_HardwareSerial_ESP8266</a>, and <a class="el" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#a20a7dc54471bd9e2a388773577a9e8d2">LIN_Master_SoftwareSerial</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00238">238</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00239">239</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1013,7 +1023,17 @@ Here is the caller graph for this function:</div>
 
 <p>Reimplemented in <a class="el" href="../../dd/dac/classLIN__Master__HardwareSerial.html#a09517a075fda4b564536be3401314927">LIN_Master_HardwareSerial</a>, <a class="el" href="../../d9/de9/classLIN__Master__HardwareSerial__ESP32.html#ae2ced4e6be9b89703e9f1e28c4793222">LIN_Master_HardwareSerial_ESP32</a>, <a class="el" href="../../d9/d29/classLIN__Master__HardwareSerial__ESP8266.html#a12ce47d681ab9c8411ca4208f984c7b6">LIN_Master_HardwareSerial_ESP8266</a>, and <a class="el" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#a847c581da1b3574cd66f615d831992a1">LIN_Master_SoftwareSerial</a>.</p>
 
-<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00277">277</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00278">278</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
+<div class="dynheader">
+Here is the call graph for this function:</div>
+<div class="dyncontent">
+<div class="center"><img src="../../d8/d3d/classLIN__Master__Base_ab3c9b02e3f1b4576b23b38d1dec876b5_cgraph.png" border="0" usemap="#ad8/d3d/classLIN__Master__Base_ab3c9b02e3f1b4576b23b38d1dec876b5_cgraph" alt=""/></div>
+<map name="ad8/d3d/classLIN__Master__Base_ab3c9b02e3f1b4576b23b38d1dec876b5_cgraph" id="ad8/d3d/classLIN__Master__Base_ab3c9b02e3f1b4576b23b38d1dec876b5_cgraph">
+<area shape="rect" title="Close serial interface." alt="" coords="5,13,172,38"/>
+<area shape="rect" href="../../d8/d3d/classLIN__Master__Base.html#a98e59593b2cda9b66453a05dadf224a2" title="Disable RS485 transmitter (DE=low)" alt="" coords="220,5,416,45"/>
+<area shape="poly" title=" " alt="" coords="172,23,206,23,206,28,172,28"/>
+</map>
+</div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1059,7 +1079,7 @@ Here is the caller graph for this function:</div>
 
 <p>Getter for LIN state machine error. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00229">229</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00240">240</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -1111,7 +1131,7 @@ Here is the caller graph for this function:</div>
 
 <p>Getter for LIN frame. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00243">243</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00254">254</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
@@ -1151,7 +1171,7 @@ Here is the caller graph for this function:</div>
 
 <p>Getter for LIN state machine state. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00202">202</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00213">213</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -1174,7 +1194,7 @@ Here is the caller graph for this function:</div>
 <p>Handle LIN background operation (call until STATE_DONE is returned) </p>
 <p>Handle LIN background operation (call until STATE_DONE is returned). For an explanation of the LIN bus and protocol e.g. see <a href="https://en.wikipedia.org/wiki/Local_Interconnect_Network">https://en.wikipedia.org/wiki/Local_Interconnect_Network</a> </p><dl class="section return"><dt>Returns</dt><dd>LIN state machine state </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00458">458</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00463">463</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1249,7 +1269,7 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>LIN state machine state </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00381">381</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00386">386</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1326,7 +1346,7 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>LIN error </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00426">426</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00431">431</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1381,7 +1401,7 @@ Here is the call graph for this function:</div>
 
 <p>Clear error of LIN state machine. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00216">216</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00227">227</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -1411,7 +1431,7 @@ Here is the call graph for this function:</div>
 
 <p>Reset LIN state machine. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00189">189</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00200">200</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -1465,7 +1485,7 @@ Here is the call graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>LIN state machine state </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00302">302</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00307">307</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1544,7 +1564,7 @@ Here is the caller graph for this function:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>LIN error </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00349">349</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html#l00354">354</a> of file <a class="el" href="../../d2/dc7/LIN__master__Base_8cpp_source.html">LIN_master_Base.cpp</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
@@ -1597,7 +1617,7 @@ Here is the call graph for this function:</div>
 
 <p>communication baudrate [Baud] </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00097">97</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00108">108</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -1623,7 +1643,7 @@ Here is the call graph for this function:</div>
 
 <p>receive buffer incl. BREAK, SYNC, DATA and CHK (max. 12B) </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00111">111</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00121">121</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -1649,7 +1669,7 @@ Here is the call graph for this function:</div>
 
 <p>send buffer incl. BREAK, SYNC, DATA and CHK (max. 12B) </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00109">109</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00119">119</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -1675,7 +1695,7 @@ Here is the call graph for this function:</div>
 
 <p>error state. Is latched until cleared </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00099">99</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00110">110</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -1701,7 +1721,7 @@ Here is the call graph for this function:</div>
 
 <p>LIN frame identifier (protected or unprotected) </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00107">107</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00117">117</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -1727,7 +1747,7 @@ Here is the call graph for this function:</div>
 
 <p>receive buffer length (max. 12) </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00110">110</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00120">120</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -1753,7 +1773,7 @@ Here is the call graph for this function:</div>
 
 <p>send buffer length (max. 12) </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00108">108</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00118">118</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -1771,7 +1791,7 @@ Here is the call graph for this function:</div>
 
 <p>LIN node name, e.g. for debug. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00117">117</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00128">128</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -1797,7 +1817,7 @@ Here is the call graph for this function:</div>
 
 <p>optional Tx direction pin, e.g. for LIN via RS485 </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00096">96</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00107">107</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -1823,7 +1843,7 @@ Here is the call graph for this function:</div>
 
 <p>status of LIN state machine </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00098">98</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00109">109</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -1849,7 +1869,7 @@ Here is the call graph for this function:</div>
 
 <p>max. frame duration [us] </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00102">102</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00112">112</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -1875,7 +1895,7 @@ Here is the call graph for this function:</div>
 
 <p>time [us] per byte at specified baudrate </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00100">100</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00111">111</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -1901,7 +1921,7 @@ Here is the call graph for this function:</div>
 
 <p>starting time [us] for frame timeout </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00101">101</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00122">122</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -1927,7 +1947,7 @@ Here is the call graph for this function:</div>
 
 <p>LIN frame type. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00106">106</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00116">116</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
@@ -1953,7 +1973,7 @@ Here is the call graph for this function:</div>
 
 <p>LIN protocol version. </p>
 
-<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00105">105</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html#l00115">115</a> of file <a class="el" href="../../db/d56/LIN__master__Base_8h_source.html">LIN_master_Base.h</a>.</p>
 
 </div>
 </div>
