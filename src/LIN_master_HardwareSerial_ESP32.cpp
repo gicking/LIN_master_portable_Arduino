@@ -32,6 +32,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_sendBreak(void)
   {
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
     this->state = LIN_Master_Base::STATE_DONE;
+    _disableTransmitter();
     return this->state;
   }
 
@@ -80,6 +81,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_sendFrame(void)
   {
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
     this->state = LIN_Master_Base::STATE_DONE;
+    _disableTransmitter();
     return this->state;
   }
 
@@ -124,6 +126,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_receiveFrame(void)
   {
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
     this->state = LIN_Master_Base::STATE_DONE;
+    _disableTransmitter();
     return this->state;
   }
 
@@ -155,8 +158,8 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_receiveFrame(void)
     if (micros() - this->timeStart > this->timeoutFrame)
     {
       this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_TIMEOUT);
-      _disableTransmitter();
       this->state = LIN_Master_Base::STATE_DONE;
+      _disableTransmitter();
     }
 
   } // not enough bytes received
