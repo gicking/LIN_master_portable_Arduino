@@ -22,12 +22,18 @@
 #define LIN_MASTER_BUFLEN_NAME          30            //!< max. length of node name
 #define LIN_MASTER_LIN_PORT_TIMEOUT     3000          //!< optional LIN.begin() timeout [ms] (<=0 -> no timeout). Is relevant for native USB ports, if USB is not connected 
 
+// required for CI test environment. Call arduino-cli with "-DINCLUDE_NEOHWSERIAL"
+#if defined(INCLUDE_NEOHWSERIAL)
+  #include <NeoHWSerial.h>
+#endif
+
 // optional debug output @ 115.2kBaud. Comment out for none. When using together with NeoHWSerial on AVR must use NeoSerialx to avoid linker conflict
 #if !defined(LIN_MASTER_DEBUG_SERIAL)
   //#define LIN_MASTER_DEBUG_SERIAL     Serial        //!< serial interface used for debug output
   //#define LIN_MASTER_DEBUG_SERIAL     NeoSerial     //!< serial interface used for debug output (optional on AVR)
+  //#include <NeoHWSerial.h>                          // comment in/out together with previous line
   //#define LIN_MASTER_DEBUG_SERIAL     SerialUSB     //!< serial interface used for debug output (optional on Due)
-  #endif
+#endif
 #if !defined(LIN_MASTER_DEBUG_LEVEL)
   #define LIN_MASTER_DEBUG_LEVEL        2             //!< debug verbosity 0..3 (1=errors only, 3=chatty)
 #endif
@@ -42,15 +48,6 @@
 
 // generic Arduino functions
 #include <Arduino.h>
-
-// required for debug on AVR via NeoSerial
-#if defined (LIN_SLAVE_DEBUG_SERIAL) && (LIN_SLAVE_DEBUG_SERIAL == NeoSerial)
-  #if defined(ARDUINO_ARCH_AVR)
-    #include <NeoHWSerial.h>
-  #else
-    #error NeoSerial only available for AVR
-  #endif
-#endif
 
 
 /*-----------------------------------------------------------------------------

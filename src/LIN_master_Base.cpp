@@ -61,8 +61,8 @@ uint8_t LIN_Master_Base::_calculatePID(void)
 */
 uint8_t LIN_Master_Base::_calculateChecksum(uint8_t NumData, uint8_t Data[])
 {
-  uint8_t  pid;       // protected frame ID
-  uint16_t chk=0x00;
+  uint8_t  pid;         // protected frame ID
+  uint16_t chk = 0x00;  // frame checksum
 
   // calculate protected frame ID
   pid = this->_calculatePID();
@@ -104,7 +104,7 @@ uint8_t LIN_Master_Base::_calculateChecksum(uint8_t NumData, uint8_t Data[])
 LIN_Master_Base::error_t LIN_Master_Base::_checkFrame(void)
 {
   // check echo of sent bytes (frame or header). Exit on mismatch
-  for (uint8_t i=0; i<this->lenTx; i++)
+  for (uint8_t i = 0; i < this->lenTx; i++)
   {
     if (this->bufTx[i] != this->bufRx[i])
     {
@@ -131,7 +131,7 @@ LIN_Master_Base::error_t LIN_Master_Base::_checkFrame(void)
 
 
   // check frame checksum
-  if (this->bufRx[lenRx-1] != _calculateChecksum(this->lenRx-4, this->bufRx+3))
+  if (this->bufRx[this->lenRx-1] != this->_calculateChecksum(this->lenRx-4, this->bufRx+3))
   {
     // print debug message (debug level 1)
     #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 1)
@@ -140,7 +140,7 @@ LIN_Master_Base::error_t LIN_Master_Base::_checkFrame(void)
       LIN_MASTER_DEBUG_SERIAL.print("checksum error: expect 0x");
       LIN_MASTER_DEBUG_SERIAL.print(_calculateChecksum(this->lenRx-4, this->bufRx+3), HEX);
       LIN_MASTER_DEBUG_SERIAL.print(", received 0x");
-      LIN_MASTER_DEBUG_SERIAL.println(this->bufRx[lenRx-1], HEX);
+      LIN_MASTER_DEBUG_SERIAL.println(this->bufRx[this->lenRx-1], HEX);
     #endif
 
     // return error code
@@ -181,7 +181,7 @@ LIN_Master_Base::state_t LIN_Master_Base::_sendBreak(void)
 
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
     this->state = LIN_Master_Base::STATE_DONE;
-    _disableTransmitter();
+    this->_disableTransmitter();
     return this->state;
 
   } // wrong state
@@ -233,7 +233,7 @@ LIN_Master_Base::state_t LIN_Master_Base::_sendFrame(void)
 LIN_Master_Base::state_t LIN_Master_Base::_receiveFrame(void)
 {
   // dummy: just progress state
-  _disableTransmitter();
+  this->_disableTransmitter();
   this->state = LIN_Master_Base::STATE_DONE;
 
   // print debug message (debug level 2)
@@ -273,6 +273,13 @@ LIN_Master_Base::LIN_Master_Base(const char NameLIN[], const int8_t PinTxEN)
   this->error = LIN_Master_Base::NO_ERROR;                    // last LIN error. Is latched
   this->state = LIN_Master_Base::STATE_OFF;                   // status of LIN state machine
  
+  // initialize TxEN pin low (=transmitter off)
+  if (this->pinTxEN >= 0)
+  {
+    digitalWrite(this->pinTxEN, LOW);
+    pinMode(this->pinTxEN, OUTPUT);
+  }
+
 } // LIN_Master_Base::LIN_Master_Base()
 
 
@@ -296,7 +303,7 @@ void LIN_Master_Base::begin(uint16_t Baudrate)
   #endif
 
   // store parameters in class variables
-  this->baudrate   = Baudrate;                                  // communication baudrate [Baud]
+  this->baudrate = Baudrate;                                    // communication baudrate [Baud]
 
   // initialize master node properties
   this->error = LIN_Master_Base::NO_ERROR;                      // last LIN error. Is latched
@@ -333,7 +340,7 @@ void LIN_Master_Base::end()
   this->state = LIN_Master_Base::STATE_OFF;                   // status of LIN state machine
 
   // optionally disable RS485 transmitter
-  _disableTransmitter();
+  this->_disableTransmitter();
 
   // print debug message (debug level 2)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
@@ -361,20 +368,20 @@ LIN_Master_Base::state_t LIN_Master_Base::sendMasterRequest(LIN_Master_Base::ver
   this->type     = LIN_Master_Base::MASTER_REQUEST;
   this->version  = Version;
   this->id       = Id;
-  this->lenTx    = NumData + 4;                                     // Frame length
-  this->bufTx[0] = 0x00;                                            // BREAK
-  this->bufTx[1] = 0x55;                                            // SYNC
-  this->bufTx[2] = this->_calculatePID();                           // PID
-  memcpy(this->bufTx+3, Data, NumData);                             // DATA[]
-  this->bufTx[this->lenTx-1] = _calculateChecksum(NumData, Data);   // CHK
-  this->lenRx    = this->lenTx;                                     // just receive LIN echo
+  this->lenTx    = NumData + 4;                                         // Frame length
+  this->bufTx[0] = 0x00;                                                // BREAK
+  this->bufTx[1] = 0x55;                                                // SYNC
+  this->bufTx[2] = this->_calculatePID();                               // PID
+  memcpy(this->bufTx+3, Data, NumData);                                 // DATA[]
+  this->bufTx[this->lenTx-1] = this->_calculateChecksum(NumData, Data); // CHK
+  this->lenRx    = this->lenTx;                                         // just receive LIN echo
 
   // init receive buffer
   memset(this->bufRx, 0, 12);
 
   // set break timeout (= 200% nominal) and start timeout
-  this->timeStart = micros();
-  this->timeoutFrame   = ((this->lenRx + 1) * this->timePerByte) * 2;
+  this->timeStart    = micros();
+  this->timeoutFrame = ((this->lenRx + 1) * this->timePerByte) * 2;
 
   // print debug message (debug level 2)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
@@ -496,7 +503,7 @@ LIN_Master_Base::error_t LIN_Master_Base::receiveSlaveResponseBlocking(LIN_Maste
   while (this->state != LIN_Master_Base::STATE_DONE);
 
   // copy received data
-  this->getFrame(type, id, NumData, Data);
+  this->getFrame(this->type, this->id, NumData, Data);
 
   // return LIN error
   return this->error;
@@ -533,7 +540,6 @@ LIN_Master_Base::state_t LIN_Master_Base::handler(void)
       this->_sendFrame();
       break;
 
-    // when frame done, read and check it
     case LIN_Master_Base::STATE_BODY:
       this->_receiveFrame();
       break;
@@ -551,9 +557,9 @@ LIN_Master_Base::state_t LIN_Master_Base::handler(void)
 
       this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_MISC);
       this->state = LIN_Master_Base::STATE_DONE;
-      _disableTransmitter();
+      this->_disableTransmitter();
 
-  } // switch (state)
+  } // switch (this->state)
   
   // return state machine state
   return this->state;

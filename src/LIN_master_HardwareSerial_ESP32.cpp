@@ -32,7 +32,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_sendBreak(void)
   {
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
     this->state = LIN_Master_Base::STATE_DONE;
-    _disableTransmitter();
+    this->_disableTransmitter();
     return this->state;
   }
 
@@ -45,10 +45,10 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_sendBreak(void)
   this->pSerial->updateBaudRate(this->baudrate >> 1);
 
   // optionally enable transmitter
-  _enableTransmitter();
+  this->_enableTransmitter();
 
   // send BREAK (>=13 bit low)
-  this->pSerial->write(bufTx[0]);
+  this->pSerial->write(this->bufTx[0]);
 
   // store starting time to avoid using Serial.available(), which has >1ms delay
   this->timeStartBreak = micros();
@@ -81,12 +81,12 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_sendFrame(void)
   {
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
     this->state = LIN_Master_Base::STATE_DONE;
-    _disableTransmitter();
+    this->_disableTransmitter();
     return this->state;
   }
 
   // Serial.available() has >1ms delay -> use duration of BREAK instead
-  if ((micros() - this->timeStartBreak) > (timePerByte << 1))
+  if ((micros() - this->timeStartBreak) > (this->timePerByte << 1))
   {
     // skip reading Rx now (is not yet in buffer)
 
@@ -126,13 +126,13 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_receiveFrame(void)
   {
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
     this->state = LIN_Master_Base::STATE_DONE;
-    _disableTransmitter();
+    this->_disableTransmitter();
     return this->state;
   }
 
   // optionally disable transmitter for slave response frames. Here, need to read BREAK as well due to delay of Serial.available()
   if ((this->type == LIN_Master_Base::SLAVE_RESPONSE) && (this->pSerial->available() == 3))
-    _disableTransmitter();
+    this->_disableTransmitter();
 
   // frame body received. Here, need to read BREAK as well due to delay of Serial.available()
   if (this->pSerial->available() >= this->lenRx)
@@ -144,7 +144,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_receiveFrame(void)
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) this->_checkFrame());
 
     // optionally disable transmitter after frame is completed
-    _disableTransmitter();
+    this->_disableTransmitter();
 
     // progress state
     this->state = LIN_Master_Base::STATE_DONE;
@@ -159,7 +159,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_receiveFrame(void)
     {
       this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_TIMEOUT);
       this->state = LIN_Master_Base::STATE_DONE;
-      _disableTransmitter();
+      this->_disableTransmitter();
     }
 
   } // not enough bytes received
@@ -206,6 +206,16 @@ void LIN_Master_HardwareSerial_ESP32::begin(uint16_t Baudrate)
   // call base class method
   LIN_Master_Base::begin(Baudrate);
 
+  // open serial interface incl. used pins
+  this->pSerial->end();
+  this->pSerial->begin(this->baudrate, SERIAL_8N1, this->pinRx, this->pinTx);
+  #if defined(LIN_MASTER_LIN_PORT_TIMEOUT) && (LIN_MASTER_LIN_PORT_TIMEOUT > 0)
+    uint32_t startMillis = millis();
+    while ((!(*(this->pSerial))) && (millis() - startMillis < LIN_MASTER_LIN_PORT_TIMEOUT));
+  #else
+    while(!(*(this->pSerial)));
+  #endif    
+
   // print debug message (debug level 2)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
     LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
@@ -213,16 +223,6 @@ void LIN_Master_HardwareSerial_ESP32::begin(uint16_t Baudrate)
     LIN_MASTER_DEBUG_SERIAL.print((int) Baudrate);
     LIN_MASTER_DEBUG_SERIAL.println(")");
   #endif
-
-  // open serial interface incl. used pins
-  this->pSerial->end();
-  this->pSerial->begin(baudrate, SERIAL_8N1, pinRx, pinTx);
-  #if defined(LIN_MASTER_LIN_PORT_TIMEOUT) && (LIN_MASTER_LIN_PORT_TIMEOUT > 0)
-    uint32_t startMillis = millis();
-    while ((!(*(this->pSerial))) && (millis() - startMillis < LIN_MASTER_LIN_PORT_TIMEOUT));
-  #else
-    while(!(*(this->pSerial)));
-  #endif    
 
 } // LIN_Master_HardwareSerial_ESP32::begin()
 

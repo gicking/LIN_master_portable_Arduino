@@ -28,7 +28,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial::_sendBreak(void)
   {
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
     this->state = LIN_Master_Base::STATE_DONE;
-    _disableTransmitter();
+    this->_disableTransmitter();
     return this->state;
   }
 
@@ -42,10 +42,10 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial::_sendBreak(void)
   while(!(*(this->pSerial)));
   
   // optionally enable transmitter
-  _enableTransmitter();
+  this->_enableTransmitter();
 
   // send BREAK (>=13 bit low)
-  this->pSerial->write(bufTx[0]);
+  this->pSerial->write(this->bufTx[0]);
 
   // progress state
   this->state = LIN_Master_Base::STATE_BREAK;
@@ -75,7 +75,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial::_sendFrame(void)
   {
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
     this->state = LIN_Master_Base::STATE_DONE;
-    _disableTransmitter();
+    this->_disableTransmitter();
     return this->state;
   }
 
@@ -105,7 +105,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial::_sendFrame(void)
     {
       this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_TIMEOUT);
       this->state = LIN_Master_Base::STATE_DONE;
-      _disableTransmitter();
+      this->_disableTransmitter();
     }
 
   } // no byte(s) received
@@ -135,13 +135,13 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial::_receiveFrame(void)
   {
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
     this->state = LIN_Master_Base::STATE_DONE;
-    _disableTransmitter();
+    this->_disableTransmitter();
     return this->state;
   }
 
   // optionally disable transmitter for slave response frames. Len==2 because BREAK is handled already handled in _sendFrame()
   if ((this->type == LIN_Master_Base::SLAVE_RESPONSE) && (this->pSerial->available() == 2))
-    _disableTransmitter();
+    this->_disableTransmitter();
 
   // frame body received (-1 because BREAK is handled already handled in _sendFrame())
   if (this->pSerial->available() >= this->lenRx-1)
@@ -153,7 +153,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial::_receiveFrame(void)
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) this->_checkFrame());
 
     // optionally disable transmitter after frame is completed
-    _disableTransmitter();
+    this->_disableTransmitter();
 
     // progress state
     this->state = LIN_Master_Base::STATE_DONE;
@@ -168,7 +168,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial::_receiveFrame(void)
     {
       this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_TIMEOUT);
       this->state = LIN_Master_Base::STATE_DONE;
-      _disableTransmitter();
+      this->_disableTransmitter();
     }
 
   } // not enough bytes received
