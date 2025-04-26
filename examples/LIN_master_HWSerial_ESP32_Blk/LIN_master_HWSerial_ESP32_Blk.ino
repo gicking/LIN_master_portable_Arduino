@@ -45,7 +45,7 @@ void setup()
   // for debug output
   #if defined(SERIAL_DEBUG)
     SERIAL_DEBUG.begin(115200);
-    #if (SERIAL_DEBUG_BEGIN_TIMEOUT > 0)
+    #if defined(SERIAL_DEBUG_BEGIN_TIMEOUT) && (SERIAL_DEBUG_BEGIN_TIMEOUT > 0)
       for (uint32_t startMillis = millis(); (!SERIAL_DEBUG) && (millis() - startMillis < SERIAL_DEBUG_BEGIN_TIMEOUT); );
     #else
       while (!SERIAL_DEBUG);

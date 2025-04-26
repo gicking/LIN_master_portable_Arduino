@@ -23,11 +23,14 @@ Supported (=successfully tested) boards:
 // indicate LIN return status
 #define PIN_ERROR     D2
 
-// pause between LIN frames
+// pause [ms] between LIN frames
 #define LIN_PAUSE     200
 
 // serial I/F for debug output (comment for no output). Use Tx-only UART1 on pin D4 via UART<->USB adapter
 #define SERIAL_DEBUG  Serial1
+
+// SERIAL_DEBUG.begin() timeout [ms] (<=0 -> no timeout). Is relevant for native USB ports, if USB is not connected 
+#define SERIAL_DEBUG_BEGIN_TIMEOUT  3000
 
 
 // setup LIN node. Swap Serial pins to use Tx=D8 & Rx=D7. Parameters: swapPins, name, TxEN
@@ -40,7 +43,11 @@ void setup()
   // for debug output
   #if defined(SERIAL_DEBUG)
     SERIAL_DEBUG.begin(115200);
-    while(!SERIAL_DEBUG);
+    #if defined(SERIAL_DEBUG_BEGIN_TIMEOUT) && (SERIAL_DEBUG_BEGIN_TIMEOUT > 0)
+      for (uint32_t startMillis = millis(); (!SERIAL_DEBUG) && (millis() - startMillis < SERIAL_DEBUG_BEGIN_TIMEOUT); );
+    #else
+      while (!SERIAL_DEBUG);
+    #endif
   #endif // SERIAL_DEBUG
 
   // indicate background operation

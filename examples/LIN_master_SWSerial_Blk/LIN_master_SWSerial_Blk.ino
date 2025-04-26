@@ -45,8 +45,11 @@ Supported (=successfully tested) boards:
   #error adapt parameters to board   
 #endif
 
-// pause between LIN frames
+// pause [ms] between LIN frames
 #define LIN_PAUSE       200
+
+// SERIAL_DEBUG.begin() timeout [ms] (<=0 -> no timeout). Is relevant for native USB ports, if USB is not connected 
+#define SERIAL_DEBUG_BEGIN_TIMEOUT  3000
 
 
 // setup LIN node. Parameters: Rx, Tx, inverse, name, TxEN
@@ -59,7 +62,11 @@ void setup()
   // for debug output
   #if defined(SERIAL_DEBUG)
     SERIAL_DEBUG.begin(115200);
-    while(!SERIAL_DEBUG);
+    #if defined(SERIAL_DEBUG_BEGIN_TIMEOUT) && (SERIAL_DEBUG_BEGIN_TIMEOUT > 0)
+      for (uint32_t startMillis = millis(); (!SERIAL_DEBUG) && (millis() - startMillis < SERIAL_DEBUG_BEGIN_TIMEOUT); );
+    #else
+      while (!SERIAL_DEBUG);
+    #endif
   #endif // SERIAL_DEBUG
 
   // indicate background operation
