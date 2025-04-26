@@ -53,8 +53,8 @@ Have fun!, Georg
 Revision History
 ----------------
 
-**v1.5 (pending)**
-  - xxx
+**v1.5 (2025-04-26)**
+  - added optional timeout to SERIAL.begin(). Is relevant for native USB ports if no USB is connected
 
 **v1.4 (2025-01-26)**
   - replace `*Stream` in LIN base class by actual serial interface to reduce overhead
