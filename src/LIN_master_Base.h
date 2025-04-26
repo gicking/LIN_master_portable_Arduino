@@ -19,16 +19,21 @@
 -----------------------------------------------------------------------------*/
 
 // misc parameters
-#define LIN_MASTER_BUFLEN_NAME  30            //!< max. length of node name
+#define LIN_MASTER_BUFLEN_NAME      30            //!< max. length of node name
 
-// optional debug output @ 115.2kBaud. When using together with NeoHWSerial on AVR must use NeoSerialx to avoid linker conflict
+// optional debug output @ 115.2kBaud. Comment out for none. When using together with NeoHWSerial on AVR must use NeoSerialx to avoid linker conflict
 #if !defined(LIN_MASTER_DEBUG_SERIAL)
-  //#define LIN_MASTER_DEBUG_SERIAL Serial        //!< serial interface used for debug output. Comment out for none
-  //#define LIN_MASTER_DEBUG_SERIAL NeoSerial     //!< serial interface used for debug output (required for AVR). Comment out for none
-#endif
+  //#define LIN_MASTER_DEBUG_SERIAL Serial        //!< serial interface used for debug output
+  //#define LIN_MASTER_DEBUG_SERIAL NeoSerial     //!< serial interface used for debug output (optional on AVR)
+  //#define LIN_MASTER_DEBUG_SERIAL SerialUSB     //!< serial interface used for debug output (optional on Due)
+  #endif
 #if !defined(LIN_MASTER_DEBUG_LEVEL)
-  #define LIN_MASTER_DEBUG_LEVEL  2             //!< debug verbosity 0..3 (1=errors only, 3=chatty)
+  #define LIN_MASTER_DEBUG_LEVEL    2             //!< debug verbosity 0..3 (1=errors only, 3=chatty)
 #endif
+#if !defined(LIN_MASTER_DEBUG_TIMEOUT)
+  #define LIN_MASTER_DEBUG_TIMEOUT  3000          //!< LIN_MASTER_DEBUG_SERIAL.begin() timeout [ms] (<=0 -> no timeout). Is relevant for native USB ports, if USB is not connected 
+#endif
+
 
 /*-----------------------------------------------------------------------------
   INCLUDE FILES
