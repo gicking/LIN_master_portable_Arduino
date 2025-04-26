@@ -225,7 +225,12 @@ void LIN_Master_HardwareSerial_ESP8266::begin(uint16_t Baudrate)
 
   // open serial interface
   this->pSerial->begin(this->baudrate, SERIAL_8N1);
-  while(!(*(this->pSerial)));
+  #if defined(LIN_MASTER_LIN_PORT_TIMEOUT) && (LIN_MASTER_LIN_PORT_TIMEOUT > 0)
+    uint32_t startMillis = millis();
+    while ((!(*(this->pSerial))) && (millis() - startMillis < LIN_MASTER_LIN_PORT_TIMEOUT));
+  #else
+    while(!(*(this->pSerial)));
+  #endif    
 
   // optionally route Serial0 to alternate pins
   if (this->swapPins == true)

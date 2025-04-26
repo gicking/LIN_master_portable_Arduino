@@ -287,9 +287,9 @@ void LIN_Master_Base::begin(uint16_t Baudrate)
   // initialize debug interface with optional timeout
   #if defined(LIN_MASTER_DEBUG_SERIAL)
     LIN_MASTER_DEBUG_SERIAL.begin(115200);
-    #if (LIN_MASTER_DEBUG_TIMEOUT > 0)
+    #if defined(LIN_MASTER_DEBUG_PORT_TIMEOUT) && (LIN_MASTER_DEBUG_PORT_TIMEOUT > 0)
       uint32_t startMillis = millis();
-      while ((!LIN_MASTER_DEBUG_SERIAL) && (millis() - startMillis < LIN_MASTER_DEBUG_TIMEOUT));
+      while ((!LIN_MASTER_DEBUG_SERIAL) && (millis() - startMillis < LIN_MASTER_DEBUG_PORT_TIMEOUT));
     #else
       while (!LIN_MASTER_DEBUG_SERIAL);
     #endif    

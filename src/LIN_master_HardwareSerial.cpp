@@ -37,10 +37,10 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial::_sendBreak(void)
   while (this->pSerial->available())
     this->pSerial->read();
 
-  // set half baudrate for BREAK
+  // set half baudrate for BREAK (w/o timeout)
   this->pSerial->begin(this->baudrate >> 1);
   while(!(*(this->pSerial)));
-
+  
   // optionally enable transmitter
   _enableTransmitter();
 
@@ -85,7 +85,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial::_sendFrame(void)
     // store echo in Rx
     this->bufRx[0] = this->pSerial->read();
 
-    // restore nominal baudrate
+    // restore nominal baudrate (w/o timeout)
     this->pSerial->begin(this->baudrate);
     while(!(*(this->pSerial)));
 
@@ -220,7 +220,12 @@ void LIN_Master_HardwareSerial::begin(uint16_t Baudrate)
 
   // open serial interface
   this->pSerial->begin(this->baudrate);
-  while(!(*(this->pSerial)));
+  #if defined(LIN_MASTER_LIN_PORT_TIMEOUT) && (LIN_MASTER_LIN_PORT_TIMEOUT > 0)
+    uint32_t startMillis = millis();
+    while ((!(*(this->pSerial))) && (millis() - startMillis < LIN_MASTER_LIN_PORT_TIMEOUT));
+  #else
+    while(!(*(this->pSerial)));
+  #endif    
 
 } // LIN_Master_HardwareSerial::begin()
 

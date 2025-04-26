@@ -217,7 +217,12 @@ void LIN_Master_HardwareSerial_ESP32::begin(uint16_t Baudrate)
   // open serial interface incl. used pins
   this->pSerial->end();
   this->pSerial->begin(baudrate, SERIAL_8N1, pinRx, pinTx);
-  while(!(*(this->pSerial)));
+  #if defined(LIN_MASTER_LIN_PORT_TIMEOUT) && (LIN_MASTER_LIN_PORT_TIMEOUT > 0)
+    uint32_t startMillis = millis();
+    while ((!(*(this->pSerial))) && (millis() - startMillis < LIN_MASTER_LIN_PORT_TIMEOUT));
+  #else
+    while(!(*(this->pSerial)));
+  #endif    
 
 } // LIN_Master_HardwareSerial_ESP32::begin()
 
