@@ -53,6 +53,9 @@ Have fun!, Georg
 Revision History
 ----------------
 
+**v1.6 (xxxx-xx-xx)**
+  - pending
+
 **v1.5 (2025-04-26)**
   - added optional timeout to SERIAL.begin(). Is relevant for native USB ports if no USB is connected
 
