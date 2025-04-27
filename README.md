@@ -53,8 +53,10 @@ Have fun!, Georg
 Revision History
 ----------------
 
-**v1.6 (xxxx-xx-xx)**
-  - add optional timeout to LIN Serial begin(). Is relevant for native USB ports if no USB is connected
+**v1.6 (2026-04-27)**
+  - for clarity add "this->" for all internal method calls and class variable access  
+  - re-test v1.6 and add some comments
+  - update reference
 
 **v1.5 (2025-04-26)**
   - add optional timeout to debug Serial begin(). Is relevant for native USB ports if no USB is connected
