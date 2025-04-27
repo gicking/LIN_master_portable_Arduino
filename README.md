@@ -53,7 +53,7 @@ Have fun!, Georg
 Revision History
 ----------------
 
-**v1.6 (2026-04-27)**
+**v1.6 (2025-04-27)**
   - for clarity add "this->" for all internal method calls and class variable access  
   - re-test v1.6 and add some comments
   - update reference
