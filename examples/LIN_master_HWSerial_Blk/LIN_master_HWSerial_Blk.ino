@@ -25,6 +25,7 @@ Supported (=successfully tested) boards:
 
 // serial I/F for debug output (comment for no output)
 #define SERIAL_DEBUG  Serial
+//#define SERIAL_DEBUG  SerialUSB         // Arduino Due native USB port
 
 // SERIAL_DEBUG.begin() timeout [ms] (<=0 -> no timeout). Is relevant for native USB ports, if USB is not connected 
 #define SERIAL_DEBUG_BEGIN_TIMEOUT  3000

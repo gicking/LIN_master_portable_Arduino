@@ -7,6 +7,8 @@ This code runs a LIN master node in "background" operation using HardwareSerial 
 Supported (=successfully tested) boards:
  - ESP8266 D1 mini        https://www.wemos.cc/en/latest/d1/d1_mini.html
 
+Important: during programming and boot, D8(=Tx) must be left open! 
+
 **********************/
 
 // include files

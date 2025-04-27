@@ -9,6 +9,8 @@ Note: after starting a frame, LIN.handler() must be called every <=500us at leas
 Supported (=successfully tested) boards:
  - ESP8266 D1 mini        https://www.wemos.cc/en/latest/d1/d1_mini.html
 
+Important: during programming and boot, D8(=Tx) must be left open! 
+
 **********************/
 
 // include files

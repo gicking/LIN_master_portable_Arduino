@@ -10,6 +10,8 @@ Supported (=successfully tested) boards:
  - ESP8266 D1 mini        https://www.wemos.cc/en/latest/d1/d1_mini.html
  - ESP32 Wroom-32UE       https://www.etechnophiles.com/esp32-dev-board-pinout-specifications-datasheet-and-schematic/
 
+Important: for ESP8266 during programming and boot, D8(=Tx) must be left open! 
+
 **********************/
 
 // include files
@@ -24,7 +26,7 @@ Supported (=successfully tested) boards:
   #define PIN_ERROR     32        // indicate LIN return status
   #define SERIAL_DEBUG	Serial    // serial I/F for debug output (comment for no output)
 #elif defined(ARDUINO_ESP8266_WEMOS_D1MINI)
-  #define PIN_LIN_TX    D8
+  #define PIN_LIN_TX    D8        // must be left open during programming and boot 
   #define PIN_LIN_RX    D7
   #define PIN_TOGGLE    D1
   #define PIN_ERROR     D2
