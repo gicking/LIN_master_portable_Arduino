@@ -17,15 +17,13 @@
 */
 LIN_Master_Base::state_t LIN_Master_HardwareSerial::_sendBreak(void)
 {
-  // print debug message (debug level 2)
-  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
-    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_HardwareSerial::_sendBreak()");
-  #endif
-    
   // if state is wrong, exit immediately
   if (this->state != LIN_Master_Base::STATE_IDLE)
   {
+    // print debug message
+    DEBUG_PRINT_FULL(1, "wrong state 0x%02X", this->state);
+
+    // set error state and return immediately
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
     this->state = LIN_Master_Base::STATE_DONE;
     this->_disableTransmitter();
@@ -50,6 +48,9 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial::_sendBreak(void)
   // progress state
   this->state = LIN_Master_Base::STATE_BREAK;
 
+  // print debug message
+  DEBUG_PRINT_HEADER(3);
+
   // return state
   return this->state;
 
@@ -64,15 +65,13 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial::_sendBreak(void)
 */
 LIN_Master_Base::state_t LIN_Master_HardwareSerial::_sendFrame(void)
 {
-  // print debug message (debug level 2)
-  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
-    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_HardwareSerial::_sendFrame()");
-  #endif
-    
   // if state is wrong, exit immediately
   if (this->state != LIN_Master_Base::STATE_BREAK)
   {
+    // print debug message
+    DEBUG_PRINT_FULL(1, "wrong state 0x%02X", this->state);
+
+    // set error state and return immediately
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
     this->state = LIN_Master_Base::STATE_DONE;
     this->_disableTransmitter();
@@ -103,12 +102,20 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial::_sendFrame(void)
     // check for timeout
     if (micros() - this->timeStart > this->timeoutFrame)
     {
+      // print debug message
+      DEBUG_PRINT_FULL(1, "Rx timeout");
+
+      // set error state and return immediately
       this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_TIMEOUT);
       this->state = LIN_Master_Base::STATE_DONE;
       this->_disableTransmitter();
+      return this->state;
     }
 
   } // no byte(s) received
+  
+  // print debug message
+  DEBUG_PRINT_HEADER(2);
   
   // return state
   return this->state;
@@ -124,15 +131,13 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial::_sendFrame(void)
 */
 LIN_Master_Base::state_t LIN_Master_HardwareSerial::_receiveFrame(void)
 {
-  // print debug message (debug level 2)
-  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
-    LIN_MASTER_DEBUG_SERIAL.println(": LIN_Master_HardwareSerial::_receiveFrame()");
-  #endif
-    
   // if state is wrong, exit immediately
   if (this->state != LIN_Master_Base::STATE_BODY)
   {
+    // print debug message
+    DEBUG_PRINT_FULL(1, "wrong state 0x%02X", this->state);
+
+    // set error state and return immediately
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
     this->state = LIN_Master_Base::STATE_DONE;
     this->_disableTransmitter();
@@ -166,12 +171,20 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial::_receiveFrame(void)
     // check for timeout
     if (micros() - this->timeStart > this->timeoutFrame)
     {
+      // print debug message
+      DEBUG_PRINT_FULL(1, "Rx timeout");
+
+      // set error state and return immediately
       this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_TIMEOUT);
       this->state = LIN_Master_Base::STATE_DONE;
       this->_disableTransmitter();
+      return this->state;
     }
 
   } // not enough bytes received
+  
+  // print debug message
+  DEBUG_PRINT_HEADER(2);
   
   // return state
   return this->state;
@@ -219,13 +232,8 @@ void LIN_Master_HardwareSerial::begin(uint16_t Baudrate)
     while(!(*(this->pSerial)));
   #endif
 
-  // print debug message (debug level 2)
-  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
-    LIN_MASTER_DEBUG_SERIAL.print(": LIN_Master_HardwareSerial::begin(");
-    LIN_MASTER_DEBUG_SERIAL.print((int) Baudrate);
-    LIN_MASTER_DEBUG_SERIAL.println(")");
-  #endif
+  // print debug message
+  DEBUG_PRINT_FULL(2, "ok, BR=%d", (int) Baudrate);
 
 } // LIN_Master_HardwareSerial::begin()
 
@@ -237,17 +245,14 @@ void LIN_Master_HardwareSerial::begin(uint16_t Baudrate)
 */
 void LIN_Master_HardwareSerial::end()
 {
-  // print debug message (debug level 2)
-  #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
-    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
-    LIN_MASTER_DEBUG_SERIAL.print(": LIN_Master_HardwareSerial::end()");
-  #endif
-
   // call base class method
   LIN_Master_Base::end();
     
   // close serial interface
   this->pSerial->end();
+
+  // print debug message
+  DEBUG_PRINT_FULL(2, "ok");
 
 } // LIN_Master_HardwareSerial::end()
 

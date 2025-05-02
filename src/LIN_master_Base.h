@@ -29,17 +29,61 @@
 
 // optional debug output @ 115.2kBaud. Comment out for none. When using together with NeoHWSerial on AVR must use NeoSerialx to avoid linker conflict
 #if !defined(LIN_MASTER_DEBUG_SERIAL)
-  //#define LIN_MASTER_DEBUG_SERIAL     Serial        //!< serial interface used for debug output
-  //#define LIN_MASTER_DEBUG_SERIAL     NeoSerial     //!< serial interface used for debug output (optional on AVR)
+  //#define LIN_MASTER_DEBUG_SERIAL       Serial        //!< serial interface used for debug output
+  //#define LIN_MASTER_DEBUG_SERIAL       NeoSerial     //!< serial interface used for debug output (optional on AVR)
   //#include <NeoHWSerial.h>                          // comment in/out together with previous line
-  //#define LIN_MASTER_DEBUG_SERIAL     SerialUSB     //!< serial interface used for debug output (optional on Due)
+  //#define LIN_MASTER_DEBUG_SERIAL       SerialUSB     //!< serial interface used for debug output (optional on Due)
 #endif
 #if !defined(LIN_MASTER_DEBUG_LEVEL)
   #define LIN_MASTER_DEBUG_LEVEL        2             //!< debug verbosity 0..3 (1=errors only, 3=chatty)
 #endif
 #if !defined(LIN_MASTER_DEBUG_PORT_TIMEOUT)
-  #define LIN_MASTER_DEBUG_PORT_TIMEOUT 3000          //!< optional LIN_MASTER_DEBUG_SERIAL.begin() timeout [ms] (<=0 -> no timeout). Is relevant for native USB ports, if USB is not connected 
+  #define LIN_MASTER_DEBUG_PORT_TIMEOUT 3000          //!< LIN_MASTER_DEBUG_SERIAL.begin() timeout [ms] (<=0 -> no timeout). Is relevant for native USB ports, if USB is not connected 
 #endif
+#if !defined(LIN_MASTER_DEBUG_BUFSIZE)
+  #define LIN_MASTER_DEBUG_BUFSIZE      128           //!< optional buffer for debug messages 
+#endif
+
+// define logging macros for optional debug output.
+// Use with printf() format like: DEBUG_PRINT_FULL(2, "Text=%s, Value=%d", text, value);
+#if defined(LIN_MASTER_DEBUG_SERIAL)
+  
+  #define DEBUG_PRINT_HEADER(level) \
+    do { \
+      if (LIN_MASTER_DEBUG_LEVEL >= level) { \
+        LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN); \
+        LIN_MASTER_DEBUG_SERIAL.print(F(": ")); \
+        LIN_MASTER_DEBUG_SERIAL.print(__PRETTY_FUNCTION__); \
+        LIN_MASTER_DEBUG_SERIAL.print(F(": ")); \
+      } \
+    } while(0)
+
+  #define DEBUG_PRINT_BODY(level, fmt, ...) \
+    do { \
+      if (LIN_MASTER_DEBUG_LEVEL >= level) { \
+        char debug_buf[LIN_MASTER_DEBUG_BUFSIZE]; \
+        snprintf(debug_buf, sizeof(debug_buf), (fmt), ##__VA_ARGS__); \
+        LIN_MASTER_DEBUG_SERIAL.print(debug_buf); \
+        LIN_MASTER_DEBUG_SERIAL.println(); \
+      } \
+    } while(0)
+
+  #define DEBUG_PRINT_FULL(level, fmt, ...) \
+    do { \
+      DEBUG_PRINT_HEADER(level); \
+      DEBUG_PRINT_BODY(level, fmt, ##__VA_ARGS__); \
+    } while(0)
+  
+
+// no debug output -> omit logging macro
+#else
+
+  // do nothing. Use safe empty macros
+  #define DEBUG_PRINT_HEADER(level)         do {} while (0)
+  #define DEBUG_PRINT_BODY(level, fmt, ...) do {} while (0)
+  #define DEBUG_PRINT_FULL(level, fmt, ...) do {} while (0)
+
+#endif // LIN_MASTER_DEBUG_SERIAL
 
 
 /*-----------------------------------------------------------------------------
