@@ -23,12 +23,12 @@ Supported (=successfully tested) boards:
 // pause [ms] between LIN frames
 #define LIN_PAUSE     200
 
-// serial I/F for debug output (comment for no output)
-#define SERIAL_DEBUG  Serial
-//#define SERIAL_DEBUG  SerialUSB         // Arduino Due native USB port
+// serial I/F for console output (comment for no output)
+#define SERIAL_CONSOLE  Serial
+//#define SERIAL_CONSOLE  SerialUSB         // Arduino Due native USB port
 
-// SERIAL_DEBUG.begin() timeout [ms] (<=0 -> no timeout). Is relevant for native USB ports, if USB is not connected 
-#define SERIAL_DEBUG_BEGIN_TIMEOUT  3000
+// SERIAL_CONSOLE.begin() timeout [ms] (<=0 -> no timeout). Is relevant for native USB ports, if USB is not connected 
+#define SERIAL_CONSOLE_BEGIN_TIMEOUT  3000
 
 
 // setup LIN node. Parameters: interface, name, TxEN
@@ -49,14 +49,14 @@ void serialEvent1()
 void setup()
 {
   // for debug output
-  #if defined(SERIAL_DEBUG)
-    SERIAL_DEBUG.begin(115200);
-    #if defined(SERIAL_DEBUG_BEGIN_TIMEOUT) && (SERIAL_DEBUG_BEGIN_TIMEOUT > 0)
-      for (uint32_t startMillis = millis(); (!SERIAL_DEBUG) && (millis() - startMillis < SERIAL_DEBUG_BEGIN_TIMEOUT); );
+  #if defined(SERIAL_CONSOLE)
+    SERIAL_CONSOLE.begin(115200);
+    #if defined(SERIAL_CONSOLE_BEGIN_TIMEOUT) && (SERIAL_CONSOLE_BEGIN_TIMEOUT > 0)
+      for (uint32_t startMillis = millis(); (!SERIAL_CONSOLE) && (millis() - startMillis < SERIAL_CONSOLE_BEGIN_TIMEOUT); );
     #else
-      while (!SERIAL_DEBUG);
+      while (!SERIAL_CONSOLE);
     #endif
-  #endif // SERIAL_DEBUG
+  #endif // SERIAL_CONSOLE
 
   // indicate background operation
   pinMode(PIN_TOGGLE, OUTPUT);
@@ -104,52 +104,52 @@ void loop()
     digitalWrite(PIN_ERROR, error);
 
     // print result
-    #if defined(SERIAL_DEBUG)
+    #if defined(SERIAL_CONSOLE)
       if (Type == LIN_Master_Base::MASTER_REQUEST)
       {
-        SERIAL_DEBUG.print(LIN.nameLIN);
-        SERIAL_DEBUG.print(", request, ID=0x");
-        SERIAL_DEBUG.print(Id, HEX);
+        SERIAL_CONSOLE.print(LIN.nameLIN);
+        SERIAL_CONSOLE.print(", request, ID=0x");
+        SERIAL_CONSOLE.print(Id, HEX);
         if (error != LIN_Master_Base::NO_ERROR)
         { 
-          SERIAL_DEBUG.print(", err=0x");
-          SERIAL_DEBUG.println(error, HEX);
+          SERIAL_CONSOLE.print(", err=0x");
+          SERIAL_CONSOLE.println(error, HEX);
         }
         else
         {
-          SERIAL_DEBUG.print(", data=");        
+          SERIAL_CONSOLE.print(", data=");        
           for (uint8_t i=0; (i < NumData); i++)
           {
-            SERIAL_DEBUG.print("0x");
-            SERIAL_DEBUG.print((int) Data[i], HEX);
-            SERIAL_DEBUG.print(" ");
+            SERIAL_CONSOLE.print("0x");
+            SERIAL_CONSOLE.print((int) Data[i], HEX);
+            SERIAL_CONSOLE.print(" ");
           }
-          SERIAL_DEBUG.println();
+          SERIAL_CONSOLE.println();
         }
       }
       else
       {
-        SERIAL_DEBUG.print(LIN.nameLIN);
-        SERIAL_DEBUG.print(", response, ID=0x");
-        SERIAL_DEBUG.print(Id, HEX);
+        SERIAL_CONSOLE.print(LIN.nameLIN);
+        SERIAL_CONSOLE.print(", response, ID=0x");
+        SERIAL_CONSOLE.print(Id, HEX);
         if (error != LIN_Master_Base::NO_ERROR)
         { 
-          SERIAL_DEBUG.print(", err=0x");
-          SERIAL_DEBUG.println(error, HEX);
+          SERIAL_CONSOLE.print(", err=0x");
+          SERIAL_CONSOLE.println(error, HEX);
         }
         else
         {
-          SERIAL_DEBUG.print(", data=");        
+          SERIAL_CONSOLE.print(", data=");        
           for (uint8_t i=0; (i < NumData); i++)
           {
-            SERIAL_DEBUG.print("0x");
-            SERIAL_DEBUG.print((int) Data[i], HEX);
-            SERIAL_DEBUG.print(" ");
+            SERIAL_CONSOLE.print("0x");
+            SERIAL_CONSOLE.print((int) Data[i], HEX);
+            SERIAL_CONSOLE.print(" ");
           }
-          SERIAL_DEBUG.println();
+          SERIAL_CONSOLE.println();
         }
       }
-    #endif // SERIAL_DEBUG
+    #endif // SERIAL_CONSOLE
 
     // reset state machine & error
     LIN.resetStateMachine();

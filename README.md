@@ -55,6 +55,7 @@ Revision History
 
 **v1.7 (xxxx-xx-xx)**
   - harmonize with [LIN slave portable](https://github.com/gicking/LIN_slave_portable_Arduino)
+  - simplified debug output via macro
 
 **v1.6 (2025-04-27)**
   - for clarity add "this->" for all internal method calls and class variable access  

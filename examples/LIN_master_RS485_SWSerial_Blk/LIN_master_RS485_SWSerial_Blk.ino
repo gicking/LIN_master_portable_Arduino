@@ -19,26 +19,26 @@ Supported (=successfully tested) boards + MAX485 (requires 5V board!):
 
 // board pin definitions. Note: for supported Rx pins see https://docs.arduino.cc/learn/built-in-libraries/software-serial/
 #if defined(ARDUINO_AVR_MEGA2560)
-  #define PIN_LIN_TX    18        // transmit pin for LIN
-  #define PIN_LIN_RX    10        // receive pin for LIN
-  #define PIN_TXEN      17        // pin to switch RS485 Tx direction (=DE)
-  #define PIN_TOGGLE    30        // pin to demonstrate background operation
-  #define PIN_ERROR     32        // indicate LIN return status
-  #define SERIAL_DEBUG	Serial    // serial I/F for debug output (comment for no output)
+  #define PIN_LIN_TX      18        // transmit pin for LIN
+  #define PIN_LIN_RX      10        // receive pin for LIN
+  #define PIN_TXEN        17        // pin to switch RS485 Tx direction (=DE)
+  #define PIN_TOGGLE      30        // pin to demonstrate background operation
+  #define PIN_ERROR       32        // indicate LIN return status
+  #define SERIAL_CONSOLE  Serial    // serial I/F for console output (comment for no output)
 #elif defined(ARDUINO_ESP8266_WEMOS_D1MINI)
-  #define PIN_LIN_TX    D8
-  #define PIN_LIN_RX    D7
-  #define PIN_TXEN      D3
-  #define PIN_TOGGLE    D1
-  #define PIN_ERROR     D2
-  #define SERIAL_DEBUG	Serial1   // Use Tx-only UART1 on pin D4 via UART<->USB adapter
+  #define PIN_LIN_TX      D8
+  #define PIN_LIN_RX      D7
+  #define PIN_TXEN        D3
+  #define PIN_TOGGLE      D1
+  #define PIN_ERROR       D2
+  #define SERIAL_CONSOLE  Serial1   // Use Tx-only UART1 on pin D4 via UART<->USB adapter
 #elif defined(ARDUINO_ESP32_WROOM_DA)
   #define PIN_LIN_TX    17
   #define PIN_LIN_RX    16
   #define PIN_TXEN      21
   #define PIN_TOGGLE    19
   #define PIN_ERROR     18
-  #define SERIAL_DEBUG	Serial
+  #define SERIAL_CONSOLE	Serial
 #elif defined(ARDUINO_AVR_TRINKET3) || defined(ARDUINO_AVR_TRINKET5)
   #define PIN_LIN_TX    2
   #define PIN_LIN_RX    0
@@ -53,8 +53,8 @@ Supported (=successfully tested) boards + MAX485 (requires 5V board!):
 // pause [ms] between LIN frames
 #define LIN_PAUSE       200
 
-// SERIAL_DEBUG.begin() timeout [ms] (<=0 -> no timeout). Is relevant for native USB ports, if USB is not connected 
-#define SERIAL_DEBUG_BEGIN_TIMEOUT  3000
+// SERIAL_CONSOLE.begin() timeout [ms] (<=0 -> no timeout). Is relevant for native USB ports, if USB is not connected 
+#define SERIAL_CONSOLE_BEGIN_TIMEOUT  3000
 
 
 // setup LIN node. Parameters: Rx, Tx, inverse, name, TxEN
@@ -65,14 +65,14 @@ LIN_Master_SoftwareSerial   LIN(PIN_LIN_RX, PIN_LIN_TX, false, "Master", PIN_TXE
 void setup()
 {
   // for debug output
-  #if defined(SERIAL_DEBUG)
-    SERIAL_DEBUG.begin(115200);
-    #if defined(SERIAL_DEBUG_BEGIN_TIMEOUT) && (SERIAL_DEBUG_BEGIN_TIMEOUT > 0)
-      for (uint32_t startMillis = millis(); (!SERIAL_DEBUG) && (millis() - startMillis < SERIAL_DEBUG_BEGIN_TIMEOUT); );
+  #if defined(SERIAL_CONSOLE)
+    SERIAL_CONSOLE.begin(115200);
+    #if defined(SERIAL_CONSOLE_BEGIN_TIMEOUT) && (SERIAL_CONSOLE_BEGIN_TIMEOUT > 0)
+      for (uint32_t startMillis = millis(); (!SERIAL_CONSOLE) && (millis() - startMillis < SERIAL_CONSOLE_BEGIN_TIMEOUT); );
     #else
-      while (!SERIAL_DEBUG);
+      while (!SERIAL_CONSOLE);
     #endif
-  #endif // SERIAL_DEBUG
+  #endif // SERIAL_CONSOLE
 
   // indicate background operation
   pinMode(PIN_TOGGLE, OUTPUT);
@@ -108,27 +108,27 @@ void loop()
   LIN.getFrame(Type, Id, NumData, Data);
 
   // print result
-  #if defined(SERIAL_DEBUG)
-    SERIAL_DEBUG.print(LIN.nameLIN);
-    SERIAL_DEBUG.print(", request, ID=0x");
-    SERIAL_DEBUG.print(Id, HEX);
+  #if defined(SERIAL_CONSOLE)
+    SERIAL_CONSOLE.print(LIN.nameLIN);
+    SERIAL_CONSOLE.print(", request, ID=0x");
+    SERIAL_CONSOLE.print(Id, HEX);
     if (error != LIN_Master_Base::NO_ERROR)
     { 
-      SERIAL_DEBUG.print(", err=0x");
-      SERIAL_DEBUG.println(error, HEX);
+      SERIAL_CONSOLE.print(", err=0x");
+      SERIAL_CONSOLE.println(error, HEX);
     }
     else
     {
-      SERIAL_DEBUG.print(", data=");        
+      SERIAL_CONSOLE.print(", data=");        
       for (uint8_t i=0; (i < NumData); i++)
       {
-        SERIAL_DEBUG.print("0x");
-        SERIAL_DEBUG.print((int) Data[i], HEX);
-        SERIAL_DEBUG.print(" ");
+        SERIAL_CONSOLE.print("0x");
+        SERIAL_CONSOLE.print((int) Data[i], HEX);
+        SERIAL_CONSOLE.print(" ");
       }
-      SERIAL_DEBUG.println();
+      SERIAL_CONSOLE.println();
     }
-  #endif // SERIAL_DEBUG
+  #endif // SERIAL_CONSOLE
 
   // reset state machine & error
   LIN.resetStateMachine();
@@ -153,27 +153,27 @@ void loop()
   LIN.getFrame(Type, Id, NumData, Data);
 
   // print result
-  #if defined(SERIAL_DEBUG)
-    SERIAL_DEBUG.print(LIN.nameLIN);
-    SERIAL_DEBUG.print(", response, ID=0x");
-    SERIAL_DEBUG.print(Id, HEX);
+  #if defined(SERIAL_CONSOLE)
+    SERIAL_CONSOLE.print(LIN.nameLIN);
+    SERIAL_CONSOLE.print(", response, ID=0x");
+    SERIAL_CONSOLE.print(Id, HEX);
     if (error != LIN_Master_Base::NO_ERROR)
     { 
-      SERIAL_DEBUG.print(", err=0x");
-      SERIAL_DEBUG.println(error, HEX);
+      SERIAL_CONSOLE.print(", err=0x");
+      SERIAL_CONSOLE.println(error, HEX);
     }
     else
     {
-      SERIAL_DEBUG.print(", data=");        
+      SERIAL_CONSOLE.print(", data=");        
       for (uint8_t i=0; (i < NumData); i++)
       {
-        SERIAL_DEBUG.print("0x");
-        SERIAL_DEBUG.print((int) Data[i], HEX);
-        SERIAL_DEBUG.print(" ");
+        SERIAL_CONSOLE.print("0x");
+        SERIAL_CONSOLE.print((int) Data[i], HEX);
+        SERIAL_CONSOLE.print(" ");
       }
-      SERIAL_DEBUG.println();
+      SERIAL_CONSOLE.println();
     }
-  #endif // SERIAL_DEBUG
+  #endif // SERIAL_CONSOLE
 
   // reset state machine & error
   LIN.resetStateMachine();
