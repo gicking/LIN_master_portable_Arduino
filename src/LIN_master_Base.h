@@ -116,7 +116,7 @@ class LIN_Master_Base
 
     // frame properties
     LIN_Master_Base::version_t  version;        //!< LIN protocol version
-    LIN_Master_Base::frame_t  type;             //!< LIN frame type
+    LIN_Master_Base::frame_t    type;           //!< LIN frame type
     uint8_t                 id;                 //!< LIN frame identifier (protected or unprotected)
     uint8_t                 lenTx;              //!< send buffer length (max. 12)
     uint8_t                 bufTx[12];          //!< send buffer incl. BREAK, SYNC, DATA and CHK (max. 12B)

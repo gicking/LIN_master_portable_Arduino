@@ -1,6 +1,6 @@
 /*********************
 
-Example code for LIN master node with background operation using HardwareSerial
+Example code for LIN master node with background operation via Ticker using HardwareSerial
 
 This code runs a LIN master node in "background" operation using HardwareSerial interface
 
