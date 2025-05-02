@@ -210,6 +210,15 @@ void LIN_Master_HardwareSerial::begin(uint16_t Baudrate)
   // call base class method
   LIN_Master_Base::begin(Baudrate);
 
+  // open serial interface with optional timeout
+  this->pSerial->begin(this->baudrate);
+  #if defined(LIN_MASTER_LIN_PORT_TIMEOUT) && (LIN_MASTER_LIN_PORT_TIMEOUT > 0)
+    uint32_t startMillis = millis();
+    while ((!(*(this->pSerial))) && (millis() - startMillis < LIN_MASTER_LIN_PORT_TIMEOUT));
+  #else
+    while(!(*(this->pSerial)));
+  #endif
+
   // print debug message (debug level 2)
   #if defined(LIN_MASTER_DEBUG_SERIAL) && (LIN_MASTER_DEBUG_LEVEL >= 2)
     LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN);
@@ -217,15 +226,6 @@ void LIN_Master_HardwareSerial::begin(uint16_t Baudrate)
     LIN_MASTER_DEBUG_SERIAL.print((int) Baudrate);
     LIN_MASTER_DEBUG_SERIAL.println(")");
   #endif
-
-  // open serial interface
-  this->pSerial->begin(this->baudrate);
-  #if defined(LIN_MASTER_LIN_PORT_TIMEOUT) && (LIN_MASTER_LIN_PORT_TIMEOUT > 0)
-    uint32_t startMillis = millis();
-    while ((!(*(this->pSerial))) && (millis() - startMillis < LIN_MASTER_LIN_PORT_TIMEOUT));
-  #else
-    while(!(*(this->pSerial)));
-  #endif    
 
 } // LIN_Master_HardwareSerial::begin()
 

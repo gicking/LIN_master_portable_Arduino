@@ -206,7 +206,7 @@ void LIN_Master_HardwareSerial_ESP32::begin(uint16_t Baudrate)
   // call base class method
   LIN_Master_Base::begin(Baudrate);
 
-  // open serial interface incl. used pins
+  // open serial interface incl. used pins with optional timeout
   this->pSerial->end();
   this->pSerial->begin(this->baudrate, SERIAL_8N1, this->pinRx, this->pinTx);
   #if defined(LIN_MASTER_LIN_PORT_TIMEOUT) && (LIN_MASTER_LIN_PORT_TIMEOUT > 0)

@@ -53,6 +53,9 @@ Have fun!, Georg
 Revision History
 ----------------
 
+**v1.7 (xxxx-xx-xx)**
+  - harmonize with [LIN slave portable](https://github.com/gicking/LIN_slave_portable_Arduino)
+
 **v1.6 (2025-04-27)**
   - for clarity add "this->" for all internal method calls and class variable access  
   - re-test v1.6 and add some comments

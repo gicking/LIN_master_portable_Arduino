@@ -61,17 +61,13 @@ uint8_t LIN_Master_Base::_calculatePID(void)
 */
 uint8_t LIN_Master_Base::_calculateChecksum(uint8_t NumData, uint8_t Data[])
 {
-  uint8_t  pid;         // protected frame ID
   uint16_t chk = 0x00;  // frame checksum
-
-  // calculate protected frame ID
-  pid = this->_calculatePID();
 
   // LIN2.x uses extended checksum which includes protected ID, i.e. including parity bits
   // LIN1.x uses classical checksum only over data bytes
   // Diagnostic frames with ID 0x3C and 0x3D/0x7D always use classical checksum (see LIN spec "2.3.1.5 Checkum")
   if (!((this->version == LIN_V1) || (pid == 0x3C) || (pid == 0x7D)))    // if version 2  & no diagnostic frames (0x3C=60 (PID=0x3C) or 0x3D=61 (PID=0x7D))
-    chk = (uint16_t) pid;
+    chk = (uint16_t) this->_calculatePID();
 
   // loop over data bytes
   for (uint8_t i = 0; i < NumData; i++)

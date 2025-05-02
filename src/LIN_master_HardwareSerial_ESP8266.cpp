@@ -215,7 +215,7 @@ void LIN_Master_HardwareSerial_ESP8266::begin(uint16_t Baudrate)
   // call base class method
   LIN_Master_Base::begin(Baudrate);
 
-  // open serial interface
+  // open serial interface with optional timeout
   this->pSerial->begin(this->baudrate, SERIAL_8N1);
   #if defined(LIN_MASTER_LIN_PORT_TIMEOUT) && (LIN_MASTER_LIN_PORT_TIMEOUT > 0)
     uint32_t startMillis = millis();
