@@ -53,7 +53,7 @@ Have fun!, Georg
 Revision History
 ----------------
 
-**v1.7 (xxxx-xx-xx)**
+**v1.7 (2025-05-03)**
   - harmonize with [LIN slave portable](https://github.com/gicking/LIN_slave_portable_Arduino)
   - simplified debug output via macro
   - renamed `SERIAL_DEBUG` to `SERIAL_CONSOLE` to avoid mixup with (internal) debug output
