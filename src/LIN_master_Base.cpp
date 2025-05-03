@@ -28,21 +28,21 @@
 */
 uint8_t LIN_Master_Base::_calculatePID(void)
 {
-  uint8_t  pid;       // protected frame ID
+  uint8_t  pid_tmp;   // calculated protected frame ID
   uint8_t  tmp;       // temporary variable for calculating parity bits
 
   // protect ID  with parity bits
-  pid  = (uint8_t) (this->id & 0x3F);                                       // clear upper bits 6 & 7
-  tmp  = (uint8_t) ((pid ^ (pid>>1) ^ (pid>>2) ^ (pid>>4)) & 0x01);         // pid[6] = PI0 = ID0^ID1^ID2^ID4
-  pid |= (uint8_t) (tmp << 6);
-  tmp  = (uint8_t) (~((pid>>1) ^ (pid>>3) ^ (pid>>4) ^ (pid>>5)) & 0x01);   // pid[7] = PI1 = ~(ID1^ID3^ID4^ID5)
-  pid |= (uint8_t) (tmp << 7);
+  pid_tmp  = (uint8_t) (this->id & 0x3F);                                                   // clear upper bits 6 & 7
+  tmp  = (uint8_t) ((pid_tmp ^ (pid_tmp>>1) ^ (pid_tmp>>2) ^ (pid_tmp>>4)) & 0x01);         // pid[6] = PI0 = ID0^ID1^ID2^ID4
+  pid_tmp |= (uint8_t) (tmp << 6);
+  tmp  = (uint8_t) (~((pid_tmp>>1) ^ (pid_tmp>>3) ^ (pid_tmp>>4) ^ (pid_tmp>>5)) & 0x01);   // pid[7] = PI1 = ~(ID1^ID3^ID4^ID5)
+  pid_tmp |= (uint8_t) (tmp << 7);
 
   // print debug message
-  DEBUG_PRINT_FULL(3, "PID=0x%02X", pid);
+  DEBUG_PRINT_FULL(3, "PID=0x%02X", pid_tmp);
 
   // return protected ID
-  return pid;
+  return pid_tmp;
 
 } // LIN_Master_Base::_calculatePID()
 
