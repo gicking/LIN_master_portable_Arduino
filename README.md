@@ -37,7 +37,7 @@ For a similar Arduino libary for LIN slave emulation see https://github.com/gick
   - For background operation, the `handler()` method must be called at least every 500us, especially after initiating a frame. Optionally it can be called from within [serialEvent()](https://reference.arduino.cc/reference/de/language/functions/communication/serial/serialevent/)
   
 
-# Test Matrix (v1.6)
+# Test Matrix
 
 An *ok* in the below test matrix indicates that normal master request frames are sent, slave responses are received and bus disconnection is detected (-> error). Also, code execution starts with only external supple, i.e. USB not connected. No extensive testing of *all* possible error cases was performed. Please let me know if you experience unexpected errors.
 
