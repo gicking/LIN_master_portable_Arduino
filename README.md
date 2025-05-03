@@ -56,10 +56,13 @@ Revision History
 **v1.7 (xxxx-xx-xx)**
   - harmonize with [LIN slave portable](https://github.com/gicking/LIN_slave_portable_Arduino)
   - simplified debug output via macro
-
+  - renamed `SERIAL_DEBUG` to `SERIAL_CONSOLE` to avoid mixup with (internal) debug output
+  - full regresstion tests and add some comments
+  - update reference
+  
 **v1.6 (2025-04-27)**
   - for clarity add "this->" for all internal method calls and class variable access  
-  - re-test v1.6 and add some comments
+  - full regresstion tests and add some comments
   - update reference
 
 **v1.5 (2025-04-26)**

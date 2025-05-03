@@ -233,7 +233,7 @@ void LIN_Master_SoftwareSerial::begin(uint16_t Baudrate)
   this->SWSerial.begin(this->baudrate);
  
   // print debug message
-  DEBUG_PRINT_FULL(2, "ok, BR=%d", (int) Baudrate);
+  DEBUG_PRINT_FULL(2, "ok");
 
 } // LIN_Master_SoftwareSerial::begin()
 
@@ -252,7 +252,7 @@ void LIN_Master_SoftwareSerial::end()
   this->SWSerial.end();
 
   // print debug message
-  DEBUG_PRINT_FULL(2, "ok");
+  DEBUG_PRINT_HEADER(2);
 
 } // LIN_Master_SoftwareSerial::end()
 

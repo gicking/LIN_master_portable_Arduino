@@ -176,7 +176,7 @@ void LIN_print()
 // call once
 void setup()
 {
-  // for debug output
+  // open console with timeout
   #if defined(SERIAL_CONSOLE)
     SERIAL_CONSOLE.begin(115200);
     #if defined(SERIAL_CONSOLE_BEGIN_TIMEOUT) && (SERIAL_CONSOLE_BEGIN_TIMEOUT > 0)

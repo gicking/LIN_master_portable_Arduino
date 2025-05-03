@@ -225,7 +225,7 @@ void LIN_Master_HardwareSerial_ESP32::begin(uint16_t Baudrate)
   #endif    
 
   // print debug message
-  DEBUG_PRINT_FULL(2, "ok, BR=%d", (int) Baudrate);
+  DEBUG_PRINT_FULL(2, "ok");
 
 } // LIN_Master_HardwareSerial_ESP32::begin()
 
@@ -244,7 +244,7 @@ void LIN_Master_HardwareSerial_ESP32::end()
   this->pSerial->end();
 
   // print debug message
-  DEBUG_PRINT_FULL(2, "ok");
+  DEBUG_PRINT_HEADER(2);
 
 } // LIN_Master_HardwareSerial_ESP32::end()
 

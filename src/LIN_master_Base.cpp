@@ -227,13 +227,6 @@ LIN_Master_Base::LIN_Master_Base(const char NameLIN[], const int8_t PinTxEN)
   // initialize master node properties
   this->error = LIN_Master_Base::NO_ERROR;                    // last LIN error. Is latched
   this->state = LIN_Master_Base::STATE_OFF;                   // status of LIN state machine
- 
-  // initialize TxEN pin low (=transmitter off)
-  if (this->pinTxEN >= 0)
-  {
-    digitalWrite(this->pinTxEN, LOW);
-    pinMode(this->pinTxEN, OUTPUT);
-  }
 
 } // LIN_Master_Base::LIN_Master_Base()
 
@@ -273,7 +266,7 @@ void LIN_Master_Base::begin(uint16_t Baudrate)
   }
 
   // print debug message
-  DEBUG_PRINT_FULL(2, "ok");
+  DEBUG_PRINT_FULL(2, "BR=%d", (int) Baudrate);
   
 } // LIN_Master_Base::begin()
 
@@ -293,7 +286,7 @@ void LIN_Master_Base::end()
   this->_disableTransmitter();
 
   // print debug message
-  DEBUG_PRINT_FULL(2, "ok");
+  DEBUG_PRINT_HEADER(2);
 
 } // LIN_Master_Base::end()
 
