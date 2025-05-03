@@ -48,29 +48,31 @@
 // Use with printf() format like: DEBUG_PRINT(2, "Text=%s, Value=%d", text, value);
 #if defined(LIN_MASTER_DEBUG_SERIAL)
   
-#define DEBUG_PRINT(level, fmt, ...) \
-do { \
-  if (LIN_MASTER_DEBUG_LEVEL >= level) { \
-    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN); \
-    LIN_MASTER_DEBUG_SERIAL.print(F(": ")); \
-    LIN_MASTER_DEBUG_SERIAL.print(__PRETTY_FUNCTION__); \
-    LIN_MASTER_DEBUG_SERIAL.print(F(": ")); \
-    char debug_buf[LIN_MASTER_DEBUG_BUFSIZE]; \
-    snprintf(debug_buf, sizeof(debug_buf), (fmt), ##__VA_ARGS__); \
-    LIN_MASTER_DEBUG_SERIAL.println(debug_buf); \
-  } \
-} while(0)
+  // debug output macro for normal class methods
+  #define DEBUG_PRINT(level, fmt, ...) \
+  do { \
+    if (LIN_MASTER_DEBUG_LEVEL >= level) { \
+      LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN); \
+      LIN_MASTER_DEBUG_SERIAL.print(F(": ")); \
+      LIN_MASTER_DEBUG_SERIAL.print(__PRETTY_FUNCTION__); \
+      LIN_MASTER_DEBUG_SERIAL.print(F(": ")); \
+      char debug_buf[LIN_MASTER_DEBUG_BUFSIZE]; \
+      snprintf(debug_buf, sizeof(debug_buf), (fmt), ##__VA_ARGS__); \
+      LIN_MASTER_DEBUG_SERIAL.println(debug_buf); \
+    } \
+  } while(0)
 
-#define DEBUG_PRINT_STATIC(level, fmt, ...) \
-do { \
-  if (LIN_MASTER_DEBUG_LEVEL >= level) { \
-    LIN_MASTER_DEBUG_SERIAL.print(__PRETTY_FUNCTION__); \
-    LIN_MASTER_DEBUG_SERIAL.print(F(": ")); \
-    char debug_buf[LIN_MASTER_DEBUG_BUFSIZE]; \
-    snprintf(debug_buf, sizeof(debug_buf), (fmt), ##__VA_ARGS__); \
-    LIN_MASTER_DEBUG_SERIAL.println(debug_buf); \
-  } \
-} while(0)
+  // debug output macro for static class methods and functions
+  #define DEBUG_PRINT_STATIC(level, fmt, ...) \
+  do { \
+    if (LIN_MASTER_DEBUG_LEVEL >= level) { \
+      LIN_MASTER_DEBUG_SERIAL.print(__PRETTY_FUNCTION__); \
+      LIN_MASTER_DEBUG_SERIAL.print(F(": ")); \
+      char debug_buf[LIN_MASTER_DEBUG_BUFSIZE]; \
+      snprintf(debug_buf, sizeof(debug_buf), (fmt), ##__VA_ARGS__); \
+      LIN_MASTER_DEBUG_SERIAL.println(debug_buf); \
+    } \
+  } while(0)
 
 
 // no debug output -> omit logging macro
