@@ -225,12 +225,13 @@ void LIN_Master_SoftwareSerial::begin(uint16_t Baudrate)
 {
   // call base class method
   LIN_Master_Base::begin(Baudrate);
+  
+  // open serial interface. Timeout not required here
+  this->SWSerial.end();
+  this->SWSerial.begin(this->baudrate);
 
   // calculate duration of BREAK
   this->durationBreak = this->timePerByte * 13 / 10;
-  
-  // open serial interface. Timeout not required here
-  this->SWSerial.begin(this->baudrate);
  
   // print debug message
   DEBUG_PRINT_FULL(2, "ok");
