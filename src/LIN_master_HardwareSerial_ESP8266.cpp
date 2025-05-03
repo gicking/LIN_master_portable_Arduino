@@ -26,7 +26,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_sendBreak(void)
   if (this->state != LIN_Master_Base::STATE_IDLE)
   {
     // print debug message
-    DEBUG_PRINT_FULL(1, "wrong state 0x%02X", this->state);
+    DEBUG_PRINT(1, "wrong state 0x%02X", this->state);
 
     // set error state and return immediately
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
@@ -53,7 +53,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_sendBreak(void)
   this->state = LIN_Master_Base::STATE_BREAK;
 
   // print debug message
-  DEBUG_PRINT_HEADER(3);
+  DEBUG_PRINT(3, " ");
   
   // return state
   return this->state;
@@ -73,7 +73,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_sendFrame(void)
   if (this->state != LIN_Master_Base::STATE_BREAK)
   {
     // print debug message
-    DEBUG_PRINT_FULL(1, "wrong state 0x%02X", this->state);
+    DEBUG_PRINT(1, "wrong state 0x%02X", this->state);
 
     // set error state and return immediately
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
@@ -113,7 +113,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_sendFrame(void)
   } // no byte(s) received
   
   // print debug message
-  DEBUG_PRINT_HEADER(2);
+  DEBUG_PRINT(2, " ");
     
   // return state
   return this->state;
@@ -133,7 +133,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_receiveFrame(void)
   if (this->state != LIN_Master_Base::STATE_BODY)
   {
     // print debug message
-    DEBUG_PRINT_FULL(1, "wrong state 0x%02X", this->state);
+    DEBUG_PRINT(1, "wrong state 0x%02X", this->state);
 
     // set error state and return immediately
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
@@ -170,7 +170,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_receiveFrame(void)
     if (micros() - this->timeStart > this->timeoutFrame)
     {
       // print debug message
-      DEBUG_PRINT_FULL(1, "Rx timeout");
+      DEBUG_PRINT(1, "Rx timeout");
 
       // set error state and return immediately
       this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_TIMEOUT);
@@ -182,7 +182,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP8266::_receiveFrame(void)
   } // not enough bytes received
   
   // print debug message
-  DEBUG_PRINT_HEADER(2);
+  DEBUG_PRINT(2, " ");
   
   // return state
   return this->state;
@@ -237,7 +237,7 @@ void LIN_Master_HardwareSerial_ESP8266::begin(uint16_t Baudrate)
     this->pSerial->swap();
 
   // print debug message
-  DEBUG_PRINT_FULL(2, "ok, pin swap=%d", (int) this->swapPins);
+  DEBUG_PRINT(2, "ok, pin swap=%d", (int) this->swapPins);
 
 } // LIN_Master_HardwareSerial_ESP8266::begin()
 
@@ -256,7 +256,7 @@ void LIN_Master_HardwareSerial_ESP8266::end()
   this->pSerial->end();
 
   // print debug message
-  DEBUG_PRINT_HEADER(2);
+  DEBUG_PRINT(2, " ");
 
 } // LIN_Master_HardwareSerial_ESP8266::end()
 

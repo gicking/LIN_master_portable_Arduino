@@ -39,7 +39,7 @@ uint8_t LIN_Master_Base::_calculatePID(void)
   pid_tmp |= (uint8_t) (tmp << 7);
 
   // print debug message
-  DEBUG_PRINT_FULL(3, "PID=0x%02X", pid_tmp);
+  DEBUG_PRINT(3, "PID=0x%02X", pid_tmp);
 
   // return protected ID
   return pid_tmp;
@@ -75,7 +75,7 @@ uint8_t LIN_Master_Base::_calculateChecksum(uint8_t NumData, uint8_t Data[])
   chk = (uint8_t)(0xFF - ((uint8_t) chk));   // bitwise invert and strip upper byte
 
   // print debug message
-  DEBUG_PRINT_FULL(3, "CHK=0x%02X", chk);
+  DEBUG_PRINT(3, "CHK=0x%02X", chk);
 
   // return frame checksum
   return (uint8_t) chk;
@@ -97,7 +97,7 @@ LIN_Master_Base::error_t LIN_Master_Base::_checkFrame(void)
     if (this->bufTx[i] != this->bufRx[i])
     {
       // print debug message
-      DEBUG_PRINT_FULL(1, "echo error: Tx[%d]=0x%02X, Rx[%d]=0x%02X", (int) i, (int) this->bufTx[i], (int) i, (int) this->bufRx[i]);
+      DEBUG_PRINT(1, "echo error: Tx[%d]=0x%02X, Rx[%d]=0x%02X", (int) i, (int) this->bufTx[i], (int) i, (int) this->bufRx[i]);
         
       // return error code
       return LIN_Master_Base::ERROR_ECHO;
@@ -111,7 +111,7 @@ LIN_Master_Base::error_t LIN_Master_Base::_checkFrame(void)
   if (this->bufRx[this->lenRx-1] != this->_calculateChecksum(this->lenRx-4, this->bufRx+3))
   {
     // print debug message
-    DEBUG_PRINT_FULL(1, "checksum error: expect 0x%02X, received 0x%02X", (int) _calculateChecksum(this->lenRx-4, this->bufRx+3), 
+    DEBUG_PRINT(1, "checksum error: expect 0x%02X, received 0x%02X", (int) _calculateChecksum(this->lenRx-4, this->bufRx+3), 
       (int) this->bufRx[this->lenRx-1]);
 
     // return error code
@@ -120,7 +120,7 @@ LIN_Master_Base::error_t LIN_Master_Base::_checkFrame(void)
   } // checksum error
 
   // print debug message
-  DEBUG_PRINT_FULL(3, "ok");
+  DEBUG_PRINT(3, "ok");
 
   // return result of check
   return LIN_Master_Base::NO_ERROR;
@@ -140,7 +140,7 @@ LIN_Master_Base::state_t LIN_Master_Base::_sendBreak(void)
   if (this->state != LIN_Master_Base::STATE_IDLE)
   {
     // print debug message
-    DEBUG_PRINT_FULL(1, "wrong state 0x%02X", this->state);
+    DEBUG_PRINT(1, "wrong state 0x%02X", this->state);
     
     // set error state and return immediately
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
@@ -154,7 +154,7 @@ LIN_Master_Base::state_t LIN_Master_Base::_sendBreak(void)
   this->state = LIN_Master_Base::STATE_BREAK;
 
   // print debug message
-  DEBUG_PRINT_FULL(3, "ok");
+  DEBUG_PRINT(3, "ok");
 
   // return state machine state
   return this->state;
@@ -174,7 +174,7 @@ LIN_Master_Base::state_t LIN_Master_Base::_sendFrame(void)
   this->state = LIN_Master_Base::STATE_BODY;
 
   // print debug message
-  DEBUG_PRINT_FULL(2, "ok");
+  DEBUG_PRINT(2, "ok");
 
   // return state
   return this->state;
@@ -195,7 +195,7 @@ LIN_Master_Base::state_t LIN_Master_Base::_receiveFrame(void)
   this->state = LIN_Master_Base::STATE_DONE;
 
   // print debug message
-  DEBUG_PRINT_FULL(2, "ok");
+  DEBUG_PRINT(2, "ok");
 
   // return state
   return this->state;
@@ -266,7 +266,7 @@ void LIN_Master_Base::begin(uint16_t Baudrate)
   }
 
   // print debug message
-  DEBUG_PRINT_FULL(2, "BR=%d", (int) Baudrate);
+  DEBUG_PRINT(2, "BR=%d", (int) Baudrate);
   
 } // LIN_Master_Base::begin()
 
@@ -286,7 +286,7 @@ void LIN_Master_Base::end()
   this->_disableTransmitter();
 
   // print debug message
-  DEBUG_PRINT_HEADER(2);
+  DEBUG_PRINT(2, " ");
 
 } // LIN_Master_Base::end()
 
@@ -324,7 +324,7 @@ LIN_Master_Base::state_t LIN_Master_Base::sendMasterRequest(LIN_Master_Base::ver
   this->timeoutFrame = ((this->lenRx + 1) * this->timePerByte) * 2;
 
   // print debug message
-  DEBUG_PRINT_HEADER(2);
+  DEBUG_PRINT(2, " ");
 
   // start LIN frame by sending a Sync Break
   this->_sendBreak();
@@ -349,7 +349,7 @@ LIN_Master_Base::state_t LIN_Master_Base::sendMasterRequest(LIN_Master_Base::ver
 LIN_Master_Base::error_t LIN_Master_Base::sendMasterRequestBlocking(LIN_Master_Base::version_t Version, uint8_t Id, uint8_t NumData, uint8_t Data[])
 {
   // print debug message
-  DEBUG_PRINT_HEADER(2);
+  DEBUG_PRINT(2, " ");
 
   // start master request frame
   this->sendMasterRequest(Version, Id, NumData, Data);
@@ -395,7 +395,7 @@ LIN_Master_Base::state_t LIN_Master_Base::receiveSlaveResponse(LIN_Master_Base::
   this->timeStart = micros();
 
   // print debug message
-  DEBUG_PRINT_HEADER(2);
+  DEBUG_PRINT(2, " ");
 
   // start LIN frame by sending BREAK
   this->_sendBreak();
@@ -420,7 +420,7 @@ LIN_Master_Base::state_t LIN_Master_Base::receiveSlaveResponse(LIN_Master_Base::
 LIN_Master_Base::error_t LIN_Master_Base::receiveSlaveResponseBlocking(LIN_Master_Base::version_t Version, uint8_t Id, uint8_t NumData, uint8_t *Data)
 {
   // print debug message
-  DEBUG_PRINT_HEADER(2);
+  DEBUG_PRINT(2, " ");
 
   // start slave response frame
   this->receiveSlaveResponse(Version, Id, NumData);
@@ -449,7 +449,7 @@ LIN_Master_Base::error_t LIN_Master_Base::receiveSlaveResponseBlocking(LIN_Maste
 LIN_Master_Base::state_t LIN_Master_Base::handler(void)
 {
   // print debug message
-  DEBUG_PRINT_FULL(3, "state=%d", (int) this->state);
+  DEBUG_PRINT(3, "state=%d", (int) this->state);
 
   // act according to current state
   switch (this->state)
@@ -472,7 +472,7 @@ LIN_Master_Base::state_t LIN_Master_Base::handler(void)
     default:
     
       // print debug message
-      DEBUG_PRINT_FULL(1, "wrong state 0x%02X", this->state);
+      DEBUG_PRINT(1, "wrong state 0x%02X", this->state);
       
       // set error state
       this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_MISC);

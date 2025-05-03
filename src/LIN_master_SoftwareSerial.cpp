@@ -24,7 +24,7 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendBreak(void)
   if (this->state != LIN_Master_Base::STATE_IDLE)
   {
     // print debug message
-    DEBUG_PRINT_FULL(1, "wrong state 0x%02X", this->state);
+    DEBUG_PRINT(1, "wrong state 0x%02X", this->state);
 
     // set error state and return immediately
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
@@ -46,7 +46,7 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendBreak(void)
   this->state = LIN_Master_Base::STATE_BREAK;
 
   // print debug message
-  DEBUG_PRINT_HEADER(3);
+  DEBUG_PRINT(3, " ");
 
   // return state
   return this->state;
@@ -66,7 +66,7 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendFrame(void)
   if (this->state != LIN_Master_Base::STATE_BREAK)
   {
     // print debug message
-    DEBUG_PRINT_FULL(1, "wrong state 0x%02X", this->state);
+    DEBUG_PRINT(1, "wrong state 0x%02X", this->state);
 
     // set error state and return immediately
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
@@ -97,7 +97,7 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendFrame(void)
   this->state = LIN_Master_Base::STATE_BODY;
   
   // print debug message
-  DEBUG_PRINT_HEADER(2);
+  DEBUG_PRINT(2, " ");
     
   // return state
   return this->state;
@@ -117,7 +117,7 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
   if (this->state != LIN_Master_Base::STATE_BODY)
   {
     // print debug message
-    DEBUG_PRINT_FULL(1, "wrong state 0x%02X", this->state);
+    DEBUG_PRINT(1, "wrong state 0x%02X", this->state);
 
     // set error state and return immediately
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_STATE);
@@ -166,7 +166,7 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
       if (micros() - this->timeStart > this->timeoutFrame)
       {
         // print debug message
-        DEBUG_PRINT_FULL(1, "Rx timeout");
+        DEBUG_PRINT(1, "Rx timeout");
 
         // set error state and return immediately
         this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_TIMEOUT);
@@ -180,7 +180,7 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
   } // slave response frame
   
   // print debug message
-  DEBUG_PRINT_HEADER(2);
+  DEBUG_PRINT(2, " ");
   
   // return state
   return this->state;
@@ -234,7 +234,7 @@ void LIN_Master_SoftwareSerial::begin(uint16_t Baudrate)
   this->durationBreak = this->timePerByte * 13 / 10;
  
   // print debug message
-  DEBUG_PRINT_FULL(2, "ok");
+  DEBUG_PRINT(2, "ok");
 
 } // LIN_Master_SoftwareSerial::begin()
 
@@ -253,7 +253,7 @@ void LIN_Master_SoftwareSerial::end()
   this->SWSerial.end();
 
   // print debug message
-  DEBUG_PRINT_HEADER(2);
+  DEBUG_PRINT(2, " ");
 
 } // LIN_Master_SoftwareSerial::end()
 

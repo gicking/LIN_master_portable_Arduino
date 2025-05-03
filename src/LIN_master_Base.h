@@ -45,43 +45,40 @@
 #endif
 
 // define logging macros for optional debug output.
-// Use with printf() format like: DEBUG_PRINT_FULL(2, "Text=%s, Value=%d", text, value);
+// Use with printf() format like: DEBUG_PRINT(2, "Text=%s, Value=%d", text, value);
 #if defined(LIN_MASTER_DEBUG_SERIAL)
   
-  #define DEBUG_PRINT_HEADER(level) \
-    do { \
-      if (LIN_MASTER_DEBUG_LEVEL >= level) { \
-        LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN); \
-        LIN_MASTER_DEBUG_SERIAL.print(F(": ")); \
-        LIN_MASTER_DEBUG_SERIAL.print(__PRETTY_FUNCTION__); \
-        LIN_MASTER_DEBUG_SERIAL.print(F(": ")); \
-      } \
-    } while(0)
+#define DEBUG_PRINT(level, fmt, ...) \
+do { \
+  if (LIN_MASTER_DEBUG_LEVEL >= level) { \
+    LIN_MASTER_DEBUG_SERIAL.print(this->nameLIN); \
+    LIN_MASTER_DEBUG_SERIAL.print(F(": ")); \
+    LIN_MASTER_DEBUG_SERIAL.print(__PRETTY_FUNCTION__); \
+    LIN_MASTER_DEBUG_SERIAL.print(F(": ")); \
+    char debug_buf[LIN_MASTER_DEBUG_BUFSIZE]; \
+    snprintf(debug_buf, sizeof(debug_buf), (fmt), ##__VA_ARGS__); \
+    LIN_MASTER_DEBUG_SERIAL.println(debug_buf); \
+  } \
+} while(0)
 
-  #define DEBUG_PRINT_BODY(level, fmt, ...) \
-    do { \
-      if (LIN_MASTER_DEBUG_LEVEL >= level) { \
-        char debug_buf[LIN_MASTER_DEBUG_BUFSIZE]; \
-        snprintf(debug_buf, sizeof(debug_buf), (fmt), ##__VA_ARGS__); \
-        LIN_MASTER_DEBUG_SERIAL.print(debug_buf); \
-        LIN_MASTER_DEBUG_SERIAL.println(); \
-      } \
-    } while(0)
+#define DEBUG_PRINT_STATIC(level, fmt, ...) \
+do { \
+  if (LIN_MASTER_DEBUG_LEVEL >= level) { \
+    LIN_MASTER_DEBUG_SERIAL.print(__PRETTY_FUNCTION__); \
+    LIN_MASTER_DEBUG_SERIAL.print(F(": ")); \
+    char debug_buf[LIN_MASTER_DEBUG_BUFSIZE]; \
+    snprintf(debug_buf, sizeof(debug_buf), (fmt), ##__VA_ARGS__); \
+    LIN_MASTER_DEBUG_SERIAL.println(debug_buf); \
+  } \
+} while(0)
 
-  #define DEBUG_PRINT_FULL(level, fmt, ...) \
-    do { \
-      DEBUG_PRINT_HEADER(level); \
-      DEBUG_PRINT_BODY(level, fmt, ##__VA_ARGS__); \
-    } while(0)
-  
 
 // no debug output -> omit logging macro
 #else
 
   // do nothing. Use safe empty macros
-  #define DEBUG_PRINT_HEADER(level)         do {} while (0)
-  #define DEBUG_PRINT_BODY(level, fmt, ...) do {} while (0)
-  #define DEBUG_PRINT_FULL(level, fmt, ...) do {} while (0)
+  #define DEBUG_PRINT(level, fmt, ...) do {} while (0)
+  #define DEBUG_PRINT_STATIC(level, fmt, ...) do {} while (0)
 
 #endif // LIN_MASTER_DEBUG_SERIAL
 
@@ -202,7 +199,7 @@ class LIN_Master_Base
     inline void _enableTransmitter(void)
     {   
       // print debug message
-      DEBUG_PRINT_HEADER(3);
+      DEBUG_PRINT(3, " ");
 
       // enable tranmitter
       if (this->pinTxEN >= 0)
@@ -214,7 +211,7 @@ class LIN_Master_Base
     inline void _disableTransmitter(void)
     { 
       // print debug message
-      DEBUG_PRINT_HEADER(3);
+      DEBUG_PRINT(3, " ");
 
       // disable tranmitter
       if (this->pinTxEN >= 0)
@@ -244,7 +241,7 @@ class LIN_Master_Base
     inline void resetStateMachine(void)
     {
       // print debug message
-      DEBUG_PRINT_HEADER(3);
+      DEBUG_PRINT(3, " ");
 
       // reset state
       this->state = LIN_Master_Base::STATE_IDLE;
@@ -255,7 +252,7 @@ class LIN_Master_Base
     inline LIN_Master_Base::state_t getState(void)
     {
       // print debug message
-      DEBUG_PRINT_HEADER(3);
+      DEBUG_PRINT(3, " ");
 
       // return state
       return this->state;
@@ -267,7 +264,7 @@ class LIN_Master_Base
     inline void resetError(void) 
     {
       // print debug message
-      DEBUG_PRINT_HEADER(3);
+      DEBUG_PRINT(3, " ");
 
       // reset error
       this->error = LIN_Master_Base::NO_ERROR;
@@ -278,7 +275,7 @@ class LIN_Master_Base
     inline LIN_Master_Base::error_t getError(void)
     {
       // print debug message
-      DEBUG_PRINT_HEADER(3);
+      DEBUG_PRINT(3, " ");
 
       // return error
       return this->error;
@@ -290,7 +287,7 @@ class LIN_Master_Base
     inline void getFrame(LIN_Master_Base::frame_t &Type, uint8_t &Id, uint8_t &NumData, uint8_t Data[])
     { 
       // print debug message
-      DEBUG_PRINT_HEADER(3);
+      DEBUG_PRINT(3, " ");
 
       noInterrupts();                         // for data consistency temporarily disable ISRs
       Type    = this->type;                   // frame type 
