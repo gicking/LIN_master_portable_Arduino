@@ -192,7 +192,7 @@ void setup()
   LIN.begin(19200);
 
   // add LIN background tasks
-  taskHandler.attach_ms(1, LIN_handler);                // LIN background handler
+  taskHandler.attach_ms(1, LIN_handler);                // LIN background handler (1ms is minimum)
   taskScheduler.attach_ms(LIN_PAUSE, LIN_scheduler);    // start frames
   delay(20);
   taskPrint.attach_ms(LIN_PAUSE, LIN_print);            // print result of LIN frame (start task with delay!)

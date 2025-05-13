@@ -33,8 +33,12 @@ For a similar Arduino libary for LIN slave emulation see https://github.com/gick
 
 
 ## Notes
+
   - The sender state machine relies on reading back its 1-wire echo. If no LIN or K-Line transceiver is used, connect Rx&Tx (only one Tx to avoid damage)
+
   - For background operation, the `handler()` method must be called at least every 500us, especially after initiating a frame. Optionally it can be called from within [serialEvent()](https://reference.arduino.cc/reference/de/language/functions/communication/serial/serialevent/)
+
+  - For ESP32 and ESP8266, library `EspSoftwareSerial` must be installed, even if `SoftwareSerial` is not used in project 
   
 
 # Test Matrix
@@ -52,6 +56,12 @@ Have fun!, Georg
 
 Revision History
 ----------------
+
+**v1.8 (xxxx-xx-xx)**
+  - add dependency on `EspSoftwareSerial` in `library.properties`
+  - add notes for `EspSoftwareSerial` dependency
+  - in ESP32 Ticker example use standard `Ticker.attach()` instead of Espressif specific `Ticker.attach_us()`. Note: ESP8266 has 1ms minimum
+  - add ESP32 Nano w/ Arduino ESP32 core to integration tests
 
 **v1.7 (2025-05-03)**
   - harmonize with [LIN slave portable](https://github.com/gicking/LIN_slave_portable_Arduino)
