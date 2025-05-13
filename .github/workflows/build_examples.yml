@@ -53,6 +53,7 @@ jobs:
           arduino-cli core update-index
           arduino-cli core install arduino:avr
           arduino-cli core install arduino:sam
+          arduino-cli core install arduino:esp32
           arduino-cli core install esp8266:esp8266
           arduino-cli core install esp32:esp32
           arduino-cli core install adafruit:avr
@@ -271,7 +272,8 @@ jobs:
 
           # list of boards with optional build flags
           BOARDS_FLAGS=(
-            "esp32:esp32:esp32da -DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3"     # ESP32-WROOM-DA
+            "esp32:esp32:esp32da -DLIN_SLAVE_DEBUG_SERIAL=Serial -DLIN_SLAVE_DEBUG_LEVEL=3"       # ESP32-WROOM-DA (Espressif ESP32 core)
+            "arduino:esp32:nano_nora -DLIN_SLAVE_DEBUG_SERIAL=Serial -DLIN_SLAVE_DEBUG_LEVEL=3"   # ESP32-Nano (Arduino ESP32 core)
           )
 
           # list of sketches with optional build flags

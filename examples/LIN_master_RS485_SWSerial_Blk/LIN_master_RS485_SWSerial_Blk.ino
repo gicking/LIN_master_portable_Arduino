@@ -32,7 +32,7 @@ Supported (=successfully tested) boards + MAX485 (requires 5V board!):
   #define PIN_TOGGLE      D1
   #define PIN_ERROR       D2
   #define SERIAL_CONSOLE  Serial1   // Use Tx-only UART1 on pin D4 via UART<->USB adapter
-#elif defined(ARDUINO_ESP32_WROOM_DA)
+#elif defined(ARDUINO_ESP32_WROOM_DA) || defined(ARDUINO_NANO_ESP32)
   #define PIN_LIN_TX    17
   #define PIN_LIN_RX    16
   #define PIN_TXEN      21

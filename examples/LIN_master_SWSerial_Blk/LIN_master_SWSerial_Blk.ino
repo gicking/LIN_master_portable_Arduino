@@ -31,7 +31,7 @@ Important: for ESP8266 during programming and boot, D8(=Tx) must be left open!
   #define PIN_TOGGLE      D1
   #define PIN_ERROR       D2
   #define SERIAL_CONSOLE  Serial1  // Use Tx-only UART1 on pin D4 via UART<->USB adapter
-#elif defined(ARDUINO_ESP32_WROOM_DA)
+#elif defined(ARDUINO_ESP32_WROOM_DA) || defined(ARDUINO_NANO_ESP32)
   #define PIN_LIN_TX    17
   #define PIN_LIN_RX    16
   #define PIN_TOGGLE    19
