@@ -5,7 +5,8 @@ Example code for LIN master node with background operation using HardwareSerial
 This code runs a LIN master node in "background" operation using HardwareSerial interface. Handler is called by Serial.event()
 
 Supported (=successfully tested) boards:
- - ESP32 Wroom-32UE       https://www.etechnophiles.com/esp32-dev-board-pinout-specifications-datasheet-and-schematic/
+ - Arduino Nano ESP32           https://docs.arduino.cc/hardware/nano-esp32/
+ - Espressif ESP32-WROOM-32UE   https://www.etechnophiles.com/esp32-dev-board-pinout-specifications-datasheet-and-schematic/
 
 **********************/
 
@@ -13,17 +14,41 @@ Supported (=successfully tested) boards:
 #include "LIN_master_HardwareSerial_ESP32.h"
 
 
-// LIN transmit pin
-#define PIN_LIN_TX    17
+// Arduino Nano ESP32 board (using Arduino ESP32 core)
+#if defined(ARDUINO_NANO_ESP32)
 
-// LIN receive pin
-#define PIN_LIN_RX    16
+  // LIN transmit pin
+  #define PIN_LIN_TX    3
 
-// pin to demonstrate background operation
-#define PIN_TOGGLE    19
+  // LIN receive pin
+  #define PIN_LIN_RX    4
 
-// indicate LIN return status
-#define PIN_ERROR     18
+  // pin to demonstrate background operation
+  #define PIN_TOGGLE    5
+
+  // indicate LIN return status
+  #define PIN_ERROR     6
+
+// Espressif ESP32-WROOM-32UE board (using Espressif ESP32 core)
+#elif defined(ARDUINO_ESP32_WROOM_DA)
+
+  // LIN transmit pin
+  #define PIN_LIN_TX    17
+
+  // LIN receive pin
+  #define PIN_LIN_RX    16
+
+  // pin to demonstrate background operation
+  #define PIN_TOGGLE    19
+
+  // indicate LIN return status
+  #define PIN_ERROR     18
+
+// not tested -> throw error
+#else
+  #error board not yet tested -> define board pins, check for incompatibilities!
+#endif
+
 
 // pause [ms] between LIN frames
 #define LIN_PAUSE     200
