@@ -7,7 +7,8 @@
 */
 
 // assert platform which supports SoftwareSerial. Note: ARDUINO_ARCH_ESP32 requires library ESPSoftwareSerial
-#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32) 
+#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32) || \
+  defined(ARDUINO_ARCH_MEGAAVR) || defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_RENESAS)
 
 // include files
 #include <LIN_master_SoftwareSerial.h>
@@ -33,8 +34,25 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendBreak(void)
     return this->state;
   }
 
+  // empty buffers, just in case...
+  this->SWSerial.flush();
+  while (this->SWSerial.available())
+    this->SWSerial.read();
+
   // optionally enable transmitter
   this->_enableTransmitter();
+
+  // for Renesas core temporarily close SW serial. Notes:
+  //   - using SWSerial to send BREAK doesn't work, see https://github.com/arduino/ArduinoCore-renesas/issues/523
+  //   - listen()/stopListening() not yet implemented, see https://github.com/arduino/ArduinoCore-renesas/issues/522
+  #if defined(ARDUINO_ARCH_RENESAS)
+    this->SWSerial.end();
+    pinMode(this->pinTx, OUTPUT);
+
+  // for other cores only disable reception
+  #else
+    this->SWSerial.stopListening();
+  #endif
 
   // generate BREAK directly via GPIO (less overhead)
   digitalWrite(this->pinTx, LOW);
@@ -62,6 +80,8 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendBreak(void)
 */
 LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendFrame(void)
 {    
+  uint8_t   bufEcho[11];  // temp buffer for echo bytes (max: SYNC+ID+DATA[8]+CHK)
+  
   // if state is wrong, exit immediately
   if (this->state != LIN_Master_Base::STATE_BREAK)
   {
@@ -75,22 +95,46 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendFrame(void)
     return this->state;
   }
 
-  // restore nominal baudrate not required, use digitalWrite() for BREAK
+  // restore nominal baudrate not required, used digitalWrite() for BREAK above
 
-  // disable reception to skip LIN echo (disturbs SoftwareSerial)
-  this->SWSerial.stopListening();
-  
+  // for Renesas core re-open SW serial & flush Rx buffer. Notes:
+  //   - listen()/stopListening() not yet implemented, see https://github.com/arduino/ArduinoCore-renesas/issues/522
+  #if defined(ARDUINO_ARCH_RENESAS)
+    this->SWSerial.begin(this->baudrate, this->inverseLogic);
+    while (this->SWSerial.available())
+      this->SWSerial.read();
+  #endif
+
+  // for STM32 core re-enable reception. Apparently listen() takes long to take effect, so we call it before write()
+  #if defined (ARDUINO_ARCH_STM32)
+    this->SWSerial.listen();
+  #endif
+
   // send rest of frame (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID). Is blocking and receive is disabled!
   this->SWSerial.write(this->bufTx+1, this->lenTx-1);
+  this->SWSerial.flush();
 
-  // optionally disable transmitter for slave response frames
+  // optionally disable RS485 transmitter for slave response frames
   if (this->type == LIN_Master_Base::SLAVE_RESPONSE)
     this->_disableTransmitter();
 
-  // re-enable reception (above write is blocking)
-  this->SWSerial.listen();
+  // for Renesas core flush Rx buffer. Notes:
+  //   - listen()/stopListening() not yet implemented, see https://github.com/arduino/ArduinoCore-renesas/issues/522
+  #if defined(ARDUINO_ARCH_RENESAS)
+    delayMicroseconds(10);          // wait a bit to ensure LIN echo is in Rx buffer
+    int num = this->SWSerial.readBytes(bufEcho, min((int) (this->SWSerial.available()), (int) (this->lenTx-1)));
 
-  // Emulate LIN echo for sent bytes
+  // for STM32 core flush Rx buffer
+  #elif defined(ARDUINO_ARCH_STM32) 
+    delayMicroseconds(10);          // wait a bit to ensure LIN echo is in Rx buffer
+    int num = this->SWSerial.readBytes(bufEcho, min((int) (this->SWSerial.available()), (int) (this->lenTx-1)));
+
+  // for other cores re-enable reception
+  #else
+    this->SWSerial.listen();
+  #endif
+
+  // Emulate LIN echo for sent bytes (w/o BREAK)
   memcpy(this->bufRx, this->bufTx, this->lenTx);
 
   // progress state
@@ -134,7 +178,7 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
     // check frame for errors
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) this->_checkFrame());
 
-    // optionally disable transmitter after frame is completed
+    // optionally disable RS485 transmitter after frame is completed
     this->_disableTransmitter();
     
     // progress state
@@ -166,7 +210,19 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
       if (micros() - this->timeStart > this->timeoutFrame)
       {
         // print debug message
-        DEBUG_PRINT(1, "Rx timeout");
+        DEBUG_PRINT(1, "Rx timeout (%dB vs. %dB)", this->SWSerial.available(), this->lenRx - this->lenTx);
+
+        // for debug only
+        #if defined(LIN_MASTER_DEBUG_SERIAL)
+          int num = this->SWSerial.available();
+          for (int i=0; i<num; i++) {
+            LIN_MASTER_DEBUG_SERIAL.print(i);
+            LIN_MASTER_DEBUG_SERIAL.print(": 0x");
+            int c = this->SWSerial.read();
+            LIN_MASTER_DEBUG_SERIAL.println(c, HEX);
+          }
+          LIN_MASTER_DEBUG_SERIAL.println("---");
+        #endif
 
         // set error state and return immediately
         this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) LIN_Master_Base::ERROR_TIMEOUT);
@@ -198,8 +254,13 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_receiveFrame(void)
   \param[in]  NameLIN       LIN node name (default = "Master")
   \param[in]  PinTxEN       optional Tx enable pin (high active) e.g. for LIN via RS485 (default = -127/none)
 */
-LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial(uint8_t PinRx, uint8_t PinTx, bool InverseLogic, const char NameLIN[], const int8_t PinTxEN) : 
-  LIN_Master_Base::LIN_Master_Base(NameLIN, PinTxEN), SWSerial(PinRx, PinTx, InverseLogic)
+#if defined(ARDUINO_ARCH_RENESAS)   // for Renesas core inverse logic is parameter for begin()
+  LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial(uint8_t PinRx, uint8_t PinTx, bool InverseLogic, const char NameLIN[], const int8_t PinTxEN) : 
+    LIN_Master_Base::LIN_Master_Base(NameLIN, PinTxEN), SWSerial(PinRx, PinTx)
+#else
+  LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial(uint8_t PinRx, uint8_t PinTx, bool InverseLogic, const char NameLIN[], const int8_t PinTxEN) : 
+    LIN_Master_Base::LIN_Master_Base(NameLIN, PinTxEN), SWSerial(PinRx, PinTx, InverseLogic)
+#endif
 {
   // Debug serial initialized in begin() -> no debug output here
 
@@ -228,10 +289,14 @@ void LIN_Master_SoftwareSerial::begin(uint16_t Baudrate)
   
   // open serial interface. Timeout not required here
   this->SWSerial.end();
-  this->SWSerial.begin(this->baudrate);
+  #if defined(ARDUINO_ARCH_RENESAS)       // for Renesas core inverse logic is parameter for begin()
+    this->SWSerial.begin(this->baudrate, this->inverseLogic);
+  #else
+    this->SWSerial.begin(this->baudrate);
+  #endif
 
   // calculate duration of BREAK
-  this->durationBreak = this->timePerByte * 13 / 10;
+  this->durationBreak = this->timePerByte * 16 / 10;
  
   // print debug message
   DEBUG_PRINT(2, "ok");
@@ -258,7 +323,8 @@ void LIN_Master_SoftwareSerial::end()
 } // LIN_Master_SoftwareSerial::end()
 
 
-#endif // ARDUINO_ARCH_AVR || ARDUINO_ARCH_ESP8266 || ARDUINO_ARCH_ESP32
+#endif // ARDUINO_ARCH_AVR || ARDUINO_ARCH_ESP8266 || ARDUINO_ARCH_ESP32 || ARDUINO_ARCH_MEGAAVR || ARDUINO_ARCH_STM32 || ARDUINO_ARCH_RENESAS
+
 
 /*-----------------------------------------------------------------------------
     END OF FILE

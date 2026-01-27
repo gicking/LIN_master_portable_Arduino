@@ -25,11 +25,12 @@ For a similar Arduino libary for LIN slave emulation see https://github.com/gick
   - supports LIN protocoll via RS485 with Tx direction switching
   
 ## Supported Boards (with additional LIN hardware)
-  - AVR boards, e.g. [Arduino Uno](https://store.arduino.cc/products/arduino-uno-rev3), [Mega](https://store.arduino.cc/products/arduino-mega-2560-rev3) or [Nano](https://store.arduino.cc/products/arduino-nano)
+  - Arduino AVR boards, e.g. [Uno](https://store.arduino.cc/products/arduino-uno-rev3), [Mega](https://store.arduino.cc/products/arduino-mega-2560-rev3) or [Nano](https://store.arduino.cc/products/arduino-nano)
+  - Arduino ARM Cortex-M boards, e.g. [Due](https://store.arduino.cc/products/arduino-due) or [Uno R4 Minima](https://docs.arduino.cc/hardware/uno-r4-minima/)
   - ATtiny boards, e.g. [Adafruit Trinket](https://www.adafruit.com/product/1501) (only SoftwareSerial)
-  - SAM boards, e.g. [Arduino Due](https://store.arduino.cc/products/arduino-due)
-  - ESP32 boards, e.g. [Espressif Wroom-32U](https://www.etechnophiles.com/esp32-dev-board-pinout-specifications-datasheet-and-schematic/) 
-  - ESP8266 boards, [Wemos D1 mini](https://www.wemos.cc/en/latest/d1/d1_mini.html)
+  - ESP32 boards, e.g. [Arduino Nano ESP32](https://docs.arduino.cc/hardware/nano-esp32/) or [Espressif Wroom-32U](https://www.etechnophiles.com/esp32-dev-board-pinout-specifications-datasheet-and-schematic/)
+  - ESP8266 boards, e.g. [Wemos D1 mini](https://www.wemos.cc/en/latest/d1/d1_mini.html)
+  - STM32 boards, e.g. [Nucleo-STM32L432KC](https://www.st.com/en/evaluation-tools/nucleo-l432kc.html)
 
 
 ## Notes
@@ -56,6 +57,12 @@ Have fun!, Georg
 
 Revision History
 ----------------
+
+**v1.9 (2026-01-xx)**
+  - remove `Ticker` examples, due to standard 1ms min. period too long
+  - add support for ESP32-S3 and Nano Every
+  - start support for Uno R4 Minima and STM32, but not yet fully functional
+  - consolidate examples for different boards and LIN/RS485 interfaces
 
 **v1.8 (2025-10-28)**
   - add dependency on `EspSoftwareSerial` in `library.properties`

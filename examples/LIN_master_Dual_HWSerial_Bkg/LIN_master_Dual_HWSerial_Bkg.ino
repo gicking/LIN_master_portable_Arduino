@@ -47,11 +47,6 @@ void setup()
   // open console with timeout
   #if defined(SERIAL_CONSOLE)
     SERIAL_CONSOLE.begin(115200);
-    #if defined(SERIAL_CONSOLE_BEGIN_TIMEOUT) && (SERIAL_CONSOLE_BEGIN_TIMEOUT > 0)
-      for (uint32_t startMillis = millis(); (!SERIAL_CONSOLE) && (millis() - startMillis < SERIAL_CONSOLE_BEGIN_TIMEOUT); );
-    #else
-      while (!SERIAL_CONSOLE);
-    #endif
   #endif // SERIAL_CONSOLE
 
   // indicate background operation

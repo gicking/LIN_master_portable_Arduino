@@ -144,7 +144,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial::_receiveFrame(void)
     return this->state;
   }
 
-  // optionally disable transmitter for slave response frames. Len==2 because BREAK is handled already handled in _sendFrame()
+  // optionally disable RS485 transmitter for slave response frames. Len==2 because BREAK is handled already handled in _sendFrame()
   if ((this->type == LIN_Master_Base::SLAVE_RESPONSE) && (this->pSerial->available() == 2))
     this->_disableTransmitter();
 
@@ -157,7 +157,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial::_receiveFrame(void)
     // check frame for errors
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) this->_checkFrame());
 
-    // optionally disable transmitter after frame is completed
+    // optionally disable RS485 transmitter after frame is completed
     this->_disableTransmitter();
 
     // progress state

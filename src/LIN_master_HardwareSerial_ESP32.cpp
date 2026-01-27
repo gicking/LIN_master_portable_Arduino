@@ -130,7 +130,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_receiveFrame(void)
     return this->state;
   }
 
-  // optionally disable transmitter for slave response frames. Here, need to read BREAK as well due to delay of Serial.available()
+  // optionally disable RS485 transmitter for slave response frames. Here, need to read BREAK as well due to delay of Serial.available()
   if ((this->type == LIN_Master_Base::SLAVE_RESPONSE) && (this->pSerial->available() == 3))
     this->_disableTransmitter();
 
@@ -143,7 +143,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_receiveFrame(void)
     // check frame for errors
     this->error = (LIN_Master_Base::error_t) ((int) this->error | (int) this->_checkFrame());
 
-    // optionally disable transmitter after frame is completed
+    // optionally disable RS485 transmitter after frame is completed
     this->_disableTransmitter();
 
     // progress state

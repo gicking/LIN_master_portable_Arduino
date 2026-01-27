@@ -7,7 +7,8 @@
 */
 
 // assert platform which supports SoftwareSerial. Note: ARDUINO_ARCH_ESP32 requires library ESPSoftwareSerial
-#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32) 
+#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32) || \
+  defined(ARDUINO_ARCH_MEGAAVR) || defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_RENESAS)
 
 /*-----------------------------------------------------------------------------
   MODULE DEFINITION FOR MULTIPLE INCLUSION
@@ -79,7 +80,11 @@ class LIN_Master_SoftwareSerial : public LIN_Master_Base
 -----------------------------------------------------------------------------*/
 #endif // _LIN_MASTER_SW_SERIAL_H_
 
-#endif // ARDUINO_ARCH_AVR || ARDUINO_ARCH_ESP8266 || ARDUINO_ARCH_ESP32
+#else // ARDUINO_ARCH_AVR || ARDUINO_ARCH_ESP8266 || ARDUINO_ARCH_ESP32 || ARDUINO_ARCH_MEGAAVR || ARDUINO_ARCH_STM32 || ARDUINO_ARCH_RENESAS
+
+  #error LIN_master_SoftwareSerial.h is only compatible with AVR, ESP8266 or ESP32 architecture!
+
+#endif
 
 /*-----------------------------------------------------------------------------
     END OF FILE
