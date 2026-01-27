@@ -1,13 +1,10 @@
 name: Build library examples
 
-# Trigger workflow on push and pull requests
+# Trigger workflow on push & pull requests, and periodically
 on:
   push:
   pull_request:
-  
-  # Also run periodically to catch breakage caused by changes to external resources (libraries, platforms).
   schedule:
-    # Minute, Hour, Day of Month, Month, Day of Week (UTC timezone)
     - cron: '0 1 2 * *'
 
 # jobs to run
@@ -15,22 +12,39 @@ jobs:
 
   # build all given examples. Don't use matrix for only 1 CPU instances (saves power and tests are not time-critical)
   build_examples:
-    
+
     # setup OS
     runs-on: ubuntu-latest
-    
-    # actual test steps
+
+    # actual test steps (sequential)
     steps:
 
-      # checkout this repository
+      # Checkout this repository
       - uses: actions/checkout@v4.2.2
-      
+
+      # Cache Arduino cores
+      - name: Cache Arduino Cores
+        uses: actions/cache@v3
+        with:
+          path: ~/.arduino15
+          key: arduino-cores-${{ runner.os }}-${{ hashFiles('**/platforms.txt') }}
+          restore-keys: |
+            arduino-cores-${{ runner.os }}-
+
+      # Cache Arduino Libraries
+      - name: Cache Arduino Libraries
+        uses: actions/cache@v3
+        with:
+          path: ~/Arduino/libraries
+          key: arduino-libs-${{ runner.os }}-${{ hashFiles('**/library.properties') }}
+          restore-keys: |
+            arduino-libs-${{ runner.os }}-
+
       # Install Arduino CLI
       - name: Install Arduino CLI
         run: |
           curl -fsSL https://raw.githubusercontent.com/arduino/arduino-cli/master/install.sh | sh
           export PATH="$PWD/bin:$PATH"
-          echo "PATH=$PATH"
           which arduino-cli
           arduino-cli version
 
@@ -46,7 +60,7 @@ jobs:
           echo "    - https://espressif.github.io/arduino-esp32/package_esp32_index.json" >> ~/.arduino15/arduino-cli.yaml
           echo "    - https://github.com/stm32duino/BoardManagerFiles/raw/main/package_stmicroelectronics_index.json" >> ~/.arduino15/arduino-cli.yaml
           cat ~/.arduino15/arduino-cli.yaml
-      
+
       # Install cores for all defined boards. Don't use matrix.board.fqbn due to dependencies
       - name: Install Cores
         run: |
@@ -66,14 +80,9 @@ jobs:
       - name: Install Libraries
         run: |
           export PATH="$PWD/bin:$PATH"
-          
-          # required for ESP32 & ESP8266
           arduino-cli lib install "espsoftwareserial"
-
-          # copy repo to library folder 
           mkdir -p ~/Arduino/libraries/MyLibrary
           cp -r $PWD/* $HOME/Arduino/libraries/MyLibrary
-
 
       # Build sketches for AVR
       - name: Build AVR
