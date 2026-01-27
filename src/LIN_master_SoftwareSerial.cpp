@@ -80,8 +80,11 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendBreak(void)
 */
 LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendFrame(void)
 {    
-  uint8_t   bufEcho[11];  // temp buffer for echo bytes (max: SYNC+ID+DATA[8]+CHK)
-  
+  // temp buffer for echo bytes (max: SYNC+ID+DATA[8]+CHK)
+  #if defined(ARDUINO_ARCH_RENESAS) || defined(ARDUINO_ARCH_STM32)
+    uint8_t   bufEcho[11];
+  #endif
+
   // if state is wrong, exit immediately
   if (this->state != LIN_Master_Base::STATE_BREAK)
   {
@@ -122,12 +125,12 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendFrame(void)
   //   - listen()/stopListening() not yet implemented, see https://github.com/arduino/ArduinoCore-renesas/issues/522
   #if defined(ARDUINO_ARCH_RENESAS)
     delayMicroseconds(10);          // wait a bit to ensure LIN echo is in Rx buffer
-    int num = this->SWSerial.readBytes(bufEcho, min((int) (this->SWSerial.available()), (int) (this->lenTx-1)));
+    this->SWSerial.readBytes(bufEcho, min((int) (this->SWSerial.available()), (int) (this->lenTx-1)));
 
   // for STM32 core flush Rx buffer
   #elif defined(ARDUINO_ARCH_STM32) 
     delayMicroseconds(10);          // wait a bit to ensure LIN echo is in Rx buffer
-    int num = this->SWSerial.readBytes(bufEcho, min((int) (this->SWSerial.available()), (int) (this->lenTx-1)));
+    this->SWSerial.readBytes(bufEcho, min((int) (this->SWSerial.available()), (int) (this->lenTx-1)));
 
   // for other cores re-enable reception
   #else

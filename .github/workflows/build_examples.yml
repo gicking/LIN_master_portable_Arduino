@@ -508,7 +508,7 @@ jobs:
 
           # list of boards with optional build flags
           BOARDS_FLAGS=(
-            "STMicroelectronics:stm32:Nucleo_32:board=NUCLEO_L432KC -DLIN_MASTER_DEBUG_SERIAL=Serial1 -DLIN_MASTER_DEBUG_LEVEL=3"     # Nucleo-STM32L432KC
+            "STMicroelectronics:stm32:Nucleo_32:pnum=NUCLEO_L432KC -DLIN_MASTER_DEBUG_SERIAL=Serial1 -DLIN_MASTER_DEBUG_LEVEL=3"     # Nucleo-STM32L432KC
           )
 
           # list of sketches with optional build flags
