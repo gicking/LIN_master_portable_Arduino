@@ -324,7 +324,7 @@ jobs:
 
           # list of boards with optional build flags
           BOARDS_FLAGS=(
-            "arduino:renesas_uno:unor4minima -DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3"      # Arduino Uno R4 Minima
+            "arduino:renesas_uno:minima -DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3"      # Arduino Uno R4 Minima
           )
 
           # list of sketches with optional build flags
@@ -508,7 +508,7 @@ jobs:
 
           # list of boards with optional build flags
           BOARDS_FLAGS=(
-            "STMicroelectronics:stm32:Nucleo-32:board=NUCLEO_L432KC -DLIN_MASTER_DEBUG_SERIAL=Serial1 -DLIN_MASTER_DEBUG_LEVEL=3"     # Nucleo-STM32L432KC
+            "STMicroelectronics:stm32:Nucleo_32:board=NUCLEO_L432KC -DLIN_MASTER_DEBUG_SERIAL=Serial1 -DLIN_MASTER_DEBUG_LEVEL=3"     # Nucleo-STM32L432KC
           )
 
           # list of sketches with optional build flags
