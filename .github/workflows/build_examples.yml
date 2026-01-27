@@ -508,7 +508,7 @@ jobs:
 
           # list of boards with optional build flags
           BOARDS_FLAGS=(
-            "STMicroelectronics:stm32:Nucleo_32:pnum=NUCLEO_L432KC -DLIN_MASTER_DEBUG_SERIAL=Serial1 -DLIN_MASTER_DEBUG_LEVEL=3"     # Nucleo-STM32L432KC
+            "STMicroelectronics:stm32:Nucleo_32:pnum=NUCLEO_L432KC -DLIN_MASTER_DEBUG_SERIAL=Serial -DLIN_MASTER_DEBUG_LEVEL=3"     # Nucleo-STM32L432KC
           )
 
           # list of sketches with optional build flags
@@ -520,8 +520,8 @@ jobs:
           )
 
           # misc build flags
-          #MISC_FLAGS="-Wall -Wextra -DENABLE_HWSERIAL1 -Wpedantic"
-          #MISC_FLAGS="-Wall -Wextra -DENABLE_HWSERIAL1"
+          #MISC_FLAGS="-Wall -Wextra -Wpedantic"
+          #MISC_FLAGS="-Wall -Wextra"
           MISC_FLAGS="-Wall -Wextra"
 
           # loop over sketches
