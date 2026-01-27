@@ -520,8 +520,8 @@ jobs:
           )
 
           # misc build flags
-          #MISC_FLAGS="-Wall -Wextra -Wpedantic"
-          MISC_FLAGS="-Wall -Wextra"
+          #MISC_FLAGS="-Wall -Wextra -DENABLE_HWSERIAL1 -Wpedantic"
+          MISC_FLAGS="-Wall -Wextra -DENABLE_HWSERIAL1"
 
           # loop over sketches
           for ITEM_SKETCHES_FLAGS in "${SKETCHES_FLAGS[@]}"; do
