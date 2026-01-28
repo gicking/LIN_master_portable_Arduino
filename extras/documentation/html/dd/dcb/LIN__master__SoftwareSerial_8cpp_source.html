@@ -167,239 +167,242 @@ $(document).ready(function(){initNavTree('dd/dcb/LIN__master__SoftwareSerial_8cp
 <div class="foldopen" id="foldopen00081" data-start="{" data-end="}">
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno"><a class="line" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#af6d1189bc5096208407311ad8da25db2">   81</a></span><a class="code hl_enumeration" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7">LIN_Master_Base::state_t</a> <a class="code hl_function" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#af6d1189bc5096208407311ad8da25db2">LIN_Master_SoftwareSerial::_sendFrame</a>(<span class="keywordtype">void</span>)</div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>{    </div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  uint8_t   bufEcho[11];  <span class="comment">// temp buffer for echo bytes (max: SYNC+ID+DATA[8]+CHK)</span></div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>  </div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>  <span class="comment">// if state is wrong, exit immediately</span></div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>  <span class="keywordflow">if</span> (this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a> != <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7a4f14178dcc9bcdf8144f34656c1e69a6">LIN_Master_Base::STATE_BREAK</a>)</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>  {</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <span class="comment">// print debug message</span></div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    DEBUG_PRINT(1, <span class="stringliteral">&quot;wrong state 0x%02X&quot;</span>, this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a>);</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    <span class="comment">// set error state and return immediately</span></div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a4b28ff295b853573cc1cf7646bcb2c4f">error</a> = (<a class="code hl_enumeration" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348">LIN_Master_Base::error_t</a>) ((<span class="keywordtype">int</span>) this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a4b28ff295b853573cc1cf7646bcb2c4f">error</a> | (int) <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348a2a046d29b51d83f906899f0ce79fac4c">LIN_Master_Base::ERROR_STATE</a>);</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a> = <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7ab880004a8e64ac15545797fd129a9be2">LIN_Master_Base::STATE_DONE</a>;</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    this-&gt;<a class="code hl_function" href="../../d8/d3d/classLIN__Master__Base.html#a98e59593b2cda9b66453a05dadf224a2">_disableTransmitter</a>();</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <span class="keywordflow">return</span> this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a>;</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>  }</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>  <span class="comment">// restore nominal baudrate not required, used digitalWrite() for BREAK above</span></div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>  <span class="comment">// for Renesas core re-open SW serial &amp; flush Rx buffer. Notes:</span></div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>  <span class="comment">//   - listen()/stopListening() not yet implemented, see https://github.com/arduino/ArduinoCore-renesas/issues/522</span></div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="preprocessor">  #if defined(ARDUINO_ARCH_RENESAS)</span></div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    this-&gt;SWSerial.begin(this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a0d76d6fa578a5c41570a7370e08b05b0">baudrate</a>, this-&gt;inverseLogic);</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    <span class="keywordflow">while</span> (this-&gt;SWSerial.available())</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>      this-&gt;SWSerial.read();</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span><span class="preprocessor">  #endif</span></div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>  <span class="comment">// for STM32 core re-enable reception. Apparently listen() takes long to take effect, so we call it before write()</span></div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="preprocessor">  #if defined (ARDUINO_ARCH_STM32)</span></div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    this-&gt;SWSerial.listen();</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span><span class="preprocessor">  #endif</span></div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>  <span class="comment">// send rest of frame (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID). Is blocking and receive is disabled!</span></div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>  this-&gt;SWSerial.write(this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a2a80464f73f0cfb45cdea83236288b14">bufTx</a>+1, this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a5ee05d7a680e31032e33c0f2556b03c5">lenTx</a>-1);</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>  this-&gt;SWSerial.flush();</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>  <span class="comment">// optionally disable RS485 transmitter for slave response frames</span></div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>  <span class="keywordflow">if</span> (this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#ad3d89373f776a8733b7c9c31ca5c5c93">type</a> == <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#a0db700d612a65867ab78498922816b3ead0e17a676a6b6dde15950b5ff658291a">LIN_Master_Base::SLAVE_RESPONSE</a>)</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    this-&gt;<a class="code hl_function" href="../../d8/d3d/classLIN__Master__Base.html#a98e59593b2cda9b66453a05dadf224a2">_disableTransmitter</a>();</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>  <span class="comment">// for Renesas core flush Rx buffer. Notes:</span></div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>  <span class="comment">//   - listen()/stopListening() not yet implemented, see https://github.com/arduino/ArduinoCore-renesas/issues/522</span></div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span><span class="preprocessor">  #if defined(ARDUINO_ARCH_RENESAS)</span></div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    delayMicroseconds(10);          <span class="comment">// wait a bit to ensure LIN echo is in Rx buffer</span></div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    <span class="keywordtype">int</span> num = this-&gt;SWSerial.readBytes(bufEcho, min((<span class="keywordtype">int</span>) (this-&gt;SWSerial.available()), (<span class="keywordtype">int</span>) (this-&gt;lenTx-1)));</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>  <span class="comment">// for STM32 core flush Rx buffer</span></div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span><span class="preprocessor">  #elif defined(ARDUINO_ARCH_STM32) </span></div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    delayMicroseconds(10);          <span class="comment">// wait a bit to ensure LIN echo is in Rx buffer</span></div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    <span class="keywordtype">int</span> num = this-&gt;SWSerial.readBytes(bufEcho, min((<span class="keywordtype">int</span>) (this-&gt;SWSerial.available()), (<span class="keywordtype">int</span>) (this-&gt;lenTx-1)));</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>  <span class="comment">// for other cores re-enable reception</span></div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span><span class="preprocessor">  #else</span></div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    this-&gt;SWSerial.listen();</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span><span class="preprocessor">  #endif</span></div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>  <span class="comment">// Emulate LIN echo for sent bytes (w/o BREAK)</span></div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>  memcpy(this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#ac6bbfd69df662ed6c0019b51b76c4e83">bufRx</a>, this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a2a80464f73f0cfb45cdea83236288b14">bufTx</a>, this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a5ee05d7a680e31032e33c0f2556b03c5">lenTx</a>);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>  <span class="comment">// temp buffer for echo bytes (max: SYNC+ID+DATA[8]+CHK)</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="preprocessor">  #if defined(ARDUINO_ARCH_RENESAS) || defined(ARDUINO_ARCH_STM32)</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    uint8_t   bufEcho[11];</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span><span class="preprocessor">  #endif</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>  <span class="comment">// if state is wrong, exit immediately</span></div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>  <span class="keywordflow">if</span> (this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a> != <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7a4f14178dcc9bcdf8144f34656c1e69a6">LIN_Master_Base::STATE_BREAK</a>)</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>  {</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    <span class="comment">// print debug message</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    DEBUG_PRINT(1, <span class="stringliteral">&quot;wrong state 0x%02X&quot;</span>, this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a>);</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <span class="comment">// set error state and return immediately</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a4b28ff295b853573cc1cf7646bcb2c4f">error</a> = (<a class="code hl_enumeration" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348">LIN_Master_Base::error_t</a>) ((<span class="keywordtype">int</span>) this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a4b28ff295b853573cc1cf7646bcb2c4f">error</a> | (int) <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348a2a046d29b51d83f906899f0ce79fac4c">LIN_Master_Base::ERROR_STATE</a>);</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a> = <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7ab880004a8e64ac15545797fd129a9be2">LIN_Master_Base::STATE_DONE</a>;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    this-&gt;<a class="code hl_function" href="../../d8/d3d/classLIN__Master__Base.html#a98e59593b2cda9b66453a05dadf224a2">_disableTransmitter</a>();</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="keywordflow">return</span> this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a>;</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>  }</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>  <span class="comment">// restore nominal baudrate not required, used digitalWrite() for BREAK above</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>  <span class="comment">// for Renesas core re-open SW serial &amp; flush Rx buffer. Notes:</span></div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>  <span class="comment">//   - listen()/stopListening() not yet implemented, see https://github.com/arduino/ArduinoCore-renesas/issues/522</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span><span class="preprocessor">  #if defined(ARDUINO_ARCH_RENESAS)</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    this-&gt;SWSerial.begin(this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a0d76d6fa578a5c41570a7370e08b05b0">baudrate</a>, this-&gt;inverseLogic);</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    <span class="keywordflow">while</span> (this-&gt;SWSerial.available())</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>      this-&gt;SWSerial.read();</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="preprocessor">  #endif</span></div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>  <span class="comment">// for STM32 core re-enable reception. Apparently listen() takes long to take effect, so we call it before write()</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span><span class="preprocessor">  #if defined (ARDUINO_ARCH_STM32)</span></div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    this-&gt;SWSerial.listen();</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span><span class="preprocessor">  #endif</span></div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>  <span class="comment">// send rest of frame (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID). Is blocking and receive is disabled!</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>  this-&gt;SWSerial.write(this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a2a80464f73f0cfb45cdea83236288b14">bufTx</a>+1, this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a5ee05d7a680e31032e33c0f2556b03c5">lenTx</a>-1);</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>  this-&gt;SWSerial.flush();</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>  <span class="comment">// optionally disable RS485 transmitter for slave response frames</span></div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>  <span class="keywordflow">if</span> (this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#ad3d89373f776a8733b7c9c31ca5c5c93">type</a> == <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#a0db700d612a65867ab78498922816b3ead0e17a676a6b6dde15950b5ff658291a">LIN_Master_Base::SLAVE_RESPONSE</a>)</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    this-&gt;<a class="code hl_function" href="../../d8/d3d/classLIN__Master__Base.html#a98e59593b2cda9b66453a05dadf224a2">_disableTransmitter</a>();</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>  <span class="comment">// for Renesas core flush Rx buffer. Notes:</span></div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>  <span class="comment">//   - listen()/stopListening() not yet implemented, see https://github.com/arduino/ArduinoCore-renesas/issues/522</span></div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span><span class="preprocessor">  #if defined(ARDUINO_ARCH_RENESAS)</span></div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    delayMicroseconds(10);          <span class="comment">// wait a bit to ensure LIN echo is in Rx buffer</span></div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    this-&gt;SWSerial.readBytes(bufEcho, min((<span class="keywordtype">int</span>) (this-&gt;SWSerial.available()), (<span class="keywordtype">int</span>) (this-&gt;lenTx-1)));</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>  <span class="comment">// for STM32 core flush Rx buffer</span></div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span><span class="preprocessor">  #elif defined(ARDUINO_ARCH_STM32) </span></div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    delayMicroseconds(10);          <span class="comment">// wait a bit to ensure LIN echo is in Rx buffer</span></div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    this-&gt;SWSerial.readBytes(bufEcho, min((<span class="keywordtype">int</span>) (this-&gt;SWSerial.available()), (<span class="keywordtype">int</span>) (this-&gt;lenTx-1)));</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>  <span class="comment">// for other cores re-enable reception</span></div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span><span class="preprocessor">  #else</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    this-&gt;SWSerial.listen();</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span><span class="preprocessor">  #endif</span></div>
 <div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>  <span class="comment">// progress state</span></div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>  this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a> = <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7a08ec7459c22126587ae36e09884b8805">LIN_Master_Base::STATE_BODY</a>;</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>  </div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>  <span class="comment">// print debug message</span></div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>  DEBUG_PRINT(2, <span class="stringliteral">&quot; &quot;</span>);</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    </div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>  <span class="comment">// return state</span></div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>  <span class="keywordflow">return</span> this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a>;</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>} <span class="comment">// LIN_Master_SoftwareSerial::_sendFrame()</span></div>
-</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span> </div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>  <span class="comment">// Emulate LIN echo for sent bytes (w/o BREAK)</span></div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>  memcpy(this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#ac6bbfd69df662ed6c0019b51b76c4e83">bufRx</a>, this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a2a80464f73f0cfb45cdea83236288b14">bufTx</a>, this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a5ee05d7a680e31032e33c0f2556b03c5">lenTx</a>);</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span> </div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>  <span class="comment">// progress state</span></div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>  this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a> = <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7a08ec7459c22126587ae36e09884b8805">LIN_Master_Base::STATE_BODY</a>;</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>  </div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>  <span class="comment">// print debug message</span></div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>  DEBUG_PRINT(2, <span class="stringliteral">&quot; &quot;</span>);</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    </div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>  <span class="comment">// return state</span></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>  <span class="keywordflow">return</span> this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a>;</div>
 <div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
-<div class="foldopen" id="foldopen00158" data-start="{" data-end="}">
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno"><a class="line" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#ad062b6c3c47962bd970a871fff089b37">  158</a></span><a class="code hl_enumeration" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7">LIN_Master_Base::state_t</a> <a class="code hl_function" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#ad062b6c3c47962bd970a871fff089b37">LIN_Master_SoftwareSerial::_receiveFrame</a>(<span class="keywordtype">void</span>)</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>{</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>  <span class="comment">// if state is wrong, exit immediately</span></div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>  <span class="keywordflow">if</span> (this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a> != <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7a08ec7459c22126587ae36e09884b8805">LIN_Master_Base::STATE_BODY</a>)</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>  {</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    <span class="comment">// print debug message</span></div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    DEBUG_PRINT(1, <span class="stringliteral">&quot;wrong state 0x%02X&quot;</span>, this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a>);</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> </div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    <span class="comment">// set error state and return immediately</span></div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a4b28ff295b853573cc1cf7646bcb2c4f">error</a> = (<a class="code hl_enumeration" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348">LIN_Master_Base::error_t</a>) ((<span class="keywordtype">int</span>) this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a4b28ff295b853573cc1cf7646bcb2c4f">error</a> | (int) <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348a2a046d29b51d83f906899f0ce79fac4c">LIN_Master_Base::ERROR_STATE</a>);</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a> = <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7ab880004a8e64ac15545797fd129a9be2">LIN_Master_Base::STATE_DONE</a>;</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    this-&gt;<a class="code hl_function" href="../../d8/d3d/classLIN__Master__Base.html#a98e59593b2cda9b66453a05dadf224a2">_disableTransmitter</a>();</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    <span class="keywordflow">return</span> this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a>;</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>  }</div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> </div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>  <span class="comment">// master request frame</span></div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>  <span class="keywordflow">if</span> (this-&gt; <a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#ad3d89373f776a8733b7c9c31ca5c5c93">type</a> == <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#a0db700d612a65867ab78498922816b3ea8251525c2e23f210c040968ec94f8b33">LIN_Master_Base::MASTER_REQUEST</a>)</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>  {</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    <span class="comment">// LIN echo already emulated in _sendFrame()</span></div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>    </div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>    <span class="comment">// check frame for errors</span></div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>    this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a4b28ff295b853573cc1cf7646bcb2c4f">error</a> = (<a class="code hl_enumeration" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348">LIN_Master_Base::error_t</a>) ((<span class="keywordtype">int</span>) this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a4b28ff295b853573cc1cf7646bcb2c4f">error</a> | (int) this-&gt;<a class="code hl_function" href="../../d8/d3d/classLIN__Master__Base.html#a43fb37f17555f9de2e0fa32084acb3fa">_checkFrame</a>());</div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> </div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    <span class="comment">// optionally disable RS485 transmitter after frame is completed</span></div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    this-&gt;<a class="code hl_function" href="../../d8/d3d/classLIN__Master__Base.html#a98e59593b2cda9b66453a05dadf224a2">_disableTransmitter</a>();</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>    </div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    <span class="comment">// progress state</span></div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a> = <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7ab880004a8e64ac15545797fd129a9be2">LIN_Master_Base::STATE_DONE</a>;</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>  } <span class="comment">// master request frame</span></div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>  </div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>  <span class="comment">// slave response frame</span></div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>  <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>  {</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>    <span class="comment">// slave response received (-lenTx because header already emulated in _sendFrame())</span></div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    <span class="keywordflow">if</span> (this-&gt;SWSerial.available() &gt;= this-&gt;lenRx - this-&gt;lenTx)</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>    {</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>      <span class="comment">// store bytes in Rx</span></div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>      this-&gt;SWSerial.readBytes(this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#ac6bbfd69df662ed6c0019b51b76c4e83">bufRx</a>+3, this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a062f27c0fd41dcdae2c6b055a3a09a08">lenRx</a> - this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a5ee05d7a680e31032e33c0f2556b03c5">lenTx</a>);</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span> </div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>      <span class="comment">// check frame for errors</span></div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>      this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a4b28ff295b853573cc1cf7646bcb2c4f">error</a> = (<a class="code hl_enumeration" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348">LIN_Master_Base::error_t</a>) ((<span class="keywordtype">int</span>) this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a4b28ff295b853573cc1cf7646bcb2c4f">error</a> | (int) this-&gt;<a class="code hl_function" href="../../d8/d3d/classLIN__Master__Base.html#a43fb37f17555f9de2e0fa32084acb3fa">_checkFrame</a>());</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>} <span class="comment">// LIN_Master_SoftwareSerial::_sendFrame()</span></div>
+</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
+<div class="foldopen" id="foldopen00161" data-start="{" data-end="}">
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno"><a class="line" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#ad062b6c3c47962bd970a871fff089b37">  161</a></span><a class="code hl_enumeration" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7">LIN_Master_Base::state_t</a> <a class="code hl_function" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#ad062b6c3c47962bd970a871fff089b37">LIN_Master_SoftwareSerial::_receiveFrame</a>(<span class="keywordtype">void</span>)</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>{</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>  <span class="comment">// if state is wrong, exit immediately</span></div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>  <span class="keywordflow">if</span> (this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a> != <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7a08ec7459c22126587ae36e09884b8805">LIN_Master_Base::STATE_BODY</a>)</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>  {</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    <span class="comment">// print debug message</span></div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    DEBUG_PRINT(1, <span class="stringliteral">&quot;wrong state 0x%02X&quot;</span>, this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a>);</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    <span class="comment">// set error state and return immediately</span></div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>    this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a4b28ff295b853573cc1cf7646bcb2c4f">error</a> = (<a class="code hl_enumeration" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348">LIN_Master_Base::error_t</a>) ((<span class="keywordtype">int</span>) this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a4b28ff295b853573cc1cf7646bcb2c4f">error</a> | (int) <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348a2a046d29b51d83f906899f0ce79fac4c">LIN_Master_Base::ERROR_STATE</a>);</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>    this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a> = <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7ab880004a8e64ac15545797fd129a9be2">LIN_Master_Base::STATE_DONE</a>;</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>    this-&gt;<a class="code hl_function" href="../../d8/d3d/classLIN__Master__Base.html#a98e59593b2cda9b66453a05dadf224a2">_disableTransmitter</a>();</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    <span class="keywordflow">return</span> this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a>;</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>  }</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span> </div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>  <span class="comment">// master request frame</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>  <span class="keywordflow">if</span> (this-&gt; <a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#ad3d89373f776a8733b7c9c31ca5c5c93">type</a> == <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#a0db700d612a65867ab78498922816b3ea8251525c2e23f210c040968ec94f8b33">LIN_Master_Base::MASTER_REQUEST</a>)</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>  {</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>    <span class="comment">// LIN echo already emulated in _sendFrame()</span></div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>    </div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>    <span class="comment">// check frame for errors</span></div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a4b28ff295b853573cc1cf7646bcb2c4f">error</a> = (<a class="code hl_enumeration" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348">LIN_Master_Base::error_t</a>) ((<span class="keywordtype">int</span>) this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a4b28ff295b853573cc1cf7646bcb2c4f">error</a> | (int) this-&gt;<a class="code hl_function" href="../../d8/d3d/classLIN__Master__Base.html#a43fb37f17555f9de2e0fa32084acb3fa">_checkFrame</a>());</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span> </div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>    <span class="comment">// optionally disable RS485 transmitter after frame is completed</span></div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>    this-&gt;<a class="code hl_function" href="../../d8/d3d/classLIN__Master__Base.html#a98e59593b2cda9b66453a05dadf224a2">_disableTransmitter</a>();</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>    </div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    <span class="comment">// progress state</span></div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a> = <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7ab880004a8e64ac15545797fd129a9be2">LIN_Master_Base::STATE_DONE</a>;</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> </div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>  } <span class="comment">// master request frame</span></div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>  </div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>  <span class="comment">// slave response frame</span></div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>  <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>  {</div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>    <span class="comment">// slave response received (-lenTx because header already emulated in _sendFrame())</span></div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>    <span class="keywordflow">if</span> (this-&gt;SWSerial.available() &gt;= this-&gt;lenRx - this-&gt;lenTx)</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>    {</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>      <span class="comment">// store bytes in Rx</span></div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>      this-&gt;SWSerial.readBytes(this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#ac6bbfd69df662ed6c0019b51b76c4e83">bufRx</a>+3, this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a062f27c0fd41dcdae2c6b055a3a09a08">lenRx</a> - this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a5ee05d7a680e31032e33c0f2556b03c5">lenTx</a>);</div>
 <div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>      <span class="comment">// progress state</span></div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>      this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a> = <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7ab880004a8e64ac15545797fd129a9be2">LIN_Master_Base::STATE_DONE</a>;</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>      <span class="comment">// check frame for errors</span></div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>      this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a4b28ff295b853573cc1cf7646bcb2c4f">error</a> = (<a class="code hl_enumeration" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348">LIN_Master_Base::error_t</a>) ((<span class="keywordtype">int</span>) this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a4b28ff295b853573cc1cf7646bcb2c4f">error</a> | (int) this-&gt;<a class="code hl_function" href="../../d8/d3d/classLIN__Master__Base.html#a43fb37f17555f9de2e0fa32084acb3fa">_checkFrame</a>());</div>
 <div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span> </div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    } <span class="comment">// frame body received</span></div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>  </div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    <span class="comment">// frame body received not yet received</span></div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>    <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    {</div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>      <span class="comment">// check for timeout</span></div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>      <span class="keywordflow">if</span> (micros() - this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a54921dd312023ab79b09ecf527032e1f">timeStart</a> &gt; this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#af65bae99e0ad2faa6b340b8e3f5ee38f">timeoutFrame</a>)</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>      {</div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>        <span class="comment">// print debug message</span></div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>        DEBUG_PRINT(1, <span class="stringliteral">&quot;Rx timeout (%dB vs. %dB)&quot;</span>, this-&gt;SWSerial.available(), this-&gt;lenRx - this-&gt;lenTx);</div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span> </div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>        <span class="comment">// for debug only</span></div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span><span class="preprocessor">        #if defined(LIN_MASTER_DEBUG_SERIAL)</span></div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>          <span class="keywordtype">int</span> num = this-&gt;SWSerial.available();</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;num; i++) {</div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>            LIN_MASTER_DEBUG_SERIAL.print(i);</div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>            LIN_MASTER_DEBUG_SERIAL.print(<span class="stringliteral">&quot;: 0x&quot;</span>);</div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>            <span class="keywordtype">int</span> c = this-&gt;SWSerial.read();</div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>            LIN_MASTER_DEBUG_SERIAL.println(c, HEX);</div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>          }</div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>          LIN_MASTER_DEBUG_SERIAL.println(<span class="stringliteral">&quot;---&quot;</span>);</div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span><span class="preprocessor">        #endif</span></div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span> </div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>        <span class="comment">// set error state and return immediately</span></div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a4b28ff295b853573cc1cf7646bcb2c4f">error</a> = (<a class="code hl_enumeration" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348">LIN_Master_Base::error_t</a>) ((<span class="keywordtype">int</span>) this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a4b28ff295b853573cc1cf7646bcb2c4f">error</a> | (int) <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348a714b85000e7c932a324fd553573ca128">LIN_Master_Base::ERROR_TIMEOUT</a>);</div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a> = <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7ab880004a8e64ac15545797fd129a9be2">LIN_Master_Base::STATE_DONE</a>;</div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        this-&gt;<a class="code hl_function" href="../../d8/d3d/classLIN__Master__Base.html#a98e59593b2cda9b66453a05dadf224a2">_disableTransmitter</a>();</div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>        <span class="keywordflow">return</span> this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a>;</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>      }</div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span> </div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    } <span class="comment">// not enough bytes received</span></div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span> </div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>  } <span class="comment">// slave response frame</span></div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>  </div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>  <span class="comment">// print debug message</span></div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>  DEBUG_PRINT(2, <span class="stringliteral">&quot; &quot;</span>);</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>      <span class="comment">// progress state</span></div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>      this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a> = <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7ab880004a8e64ac15545797fd129a9be2">LIN_Master_Base::STATE_DONE</a>;</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span> </div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>    } <span class="comment">// frame body received</span></div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>  </div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>    <span class="comment">// frame body received not yet received</span></div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    {</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>      <span class="comment">// check for timeout</span></div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>      <span class="keywordflow">if</span> (micros() - this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a54921dd312023ab79b09ecf527032e1f">timeStart</a> &gt; this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#af65bae99e0ad2faa6b340b8e3f5ee38f">timeoutFrame</a>)</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>      {</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>        <span class="comment">// print debug message</span></div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>        DEBUG_PRINT(1, <span class="stringliteral">&quot;Rx timeout (%dB vs. %dB)&quot;</span>, this-&gt;SWSerial.available(), this-&gt;lenRx - this-&gt;lenTx);</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span> </div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>        <span class="comment">// for debug only</span></div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span><span class="preprocessor">        #if defined(LIN_MASTER_DEBUG_SERIAL)</span></div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>          <span class="keywordtype">int</span> num = this-&gt;SWSerial.available();</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>          <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;num; i++) {</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>            LIN_MASTER_DEBUG_SERIAL.print(i);</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>            LIN_MASTER_DEBUG_SERIAL.print(<span class="stringliteral">&quot;: 0x&quot;</span>);</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>            <span class="keywordtype">int</span> c = this-&gt;SWSerial.read();</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>            LIN_MASTER_DEBUG_SERIAL.println(c, HEX);</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>          }</div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>          LIN_MASTER_DEBUG_SERIAL.println(<span class="stringliteral">&quot;---&quot;</span>);</div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span><span class="preprocessor">        #endif</span></div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span> </div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        <span class="comment">// set error state and return immediately</span></div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>        this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a4b28ff295b853573cc1cf7646bcb2c4f">error</a> = (<a class="code hl_enumeration" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348">LIN_Master_Base::error_t</a>) ((<span class="keywordtype">int</span>) this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a4b28ff295b853573cc1cf7646bcb2c4f">error</a> | (int) <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#a9ad5b96675e1995b42effacca2d01348a714b85000e7c932a324fd553573ca128">LIN_Master_Base::ERROR_TIMEOUT</a>);</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>        this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a> = <a class="code hl_enumvalue" href="../../d8/d3d/classLIN__Master__Base.html#aadf3f01fd628820cc103b3a5b1fcdcf7ab880004a8e64ac15545797fd129a9be2">LIN_Master_Base::STATE_DONE</a>;</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>        this-&gt;<a class="code hl_function" href="../../d8/d3d/classLIN__Master__Base.html#a98e59593b2cda9b66453a05dadf224a2">_disableTransmitter</a>();</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>        <span class="keywordflow">return</span> this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a>;</div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno">  235</span>      }</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span> </div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>    } <span class="comment">// not enough bytes received</span></div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span> </div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno">  239</span>  } <span class="comment">// slave response frame</span></div>
 <div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>  </div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>  <span class="comment">// return state</span></div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>  <span class="keywordflow">return</span> this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a>;</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span> </div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>} <span class="comment">// LIN_Master_SoftwareSerial::_receiveFrame()</span></div>
-</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span> </div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>  <span class="comment">// print debug message</span></div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>  DEBUG_PRINT(2, <span class="stringliteral">&quot; &quot;</span>);</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>  </div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>  <span class="comment">// return state</span></div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>  <span class="keywordflow">return</span> this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a7abdcaca964329e47a5012e6b9e1adf2">state</a>;</div>
 <div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span> </div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span> </div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span><span class="preprocessor">#if defined(ARDUINO_ARCH_RENESAS)   </span><span class="comment">// for Renesas core inverse logic is parameter for begin()</span></div>
-<div class="foldopen" id="foldopen00258" data-start="{" data-end="}">
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno"><a class="line" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#a942c43df9c774cbd862f8cf3bf4f75f6">  258</a></span>  <a class="code hl_function" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#a942c43df9c774cbd862f8cf3bf4f75f6">LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial</a>(uint8_t PinRx, uint8_t PinTx, <span class="keywordtype">bool</span> InverseLogic, <span class="keyword">const</span> <span class="keywordtype">char</span> NameLIN[], <span class="keyword">const</span> int8_t PinTxEN) : </div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    <a class="code hl_class" href="../../d8/d3d/classLIN__Master__Base.html">LIN_Master_Base</a>::<a class="code hl_class" href="../../d8/d3d/classLIN__Master__Base.html">LIN_Master_Base</a>(NameLIN, PinTxEN), SWSerial(PinRx, PinTx)</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>#else</div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>  <a class="code hl_class" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html">LIN_Master_SoftwareSerial</a>::<a class="code hl_class" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html">LIN_Master_SoftwareSerial</a>(uint8_t PinRx, uint8_t PinTx, bool InverseLogic, const char NameLIN[], const int8_t PinTxEN) : </div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    <a class="code hl_class" href="../../d8/d3d/classLIN__Master__Base.html">LIN_Master_Base</a>::<a class="code hl_class" href="../../d8/d3d/classLIN__Master__Base.html">LIN_Master_Base</a>(NameLIN, PinTxEN), SWSerial(PinRx, PinTx, InverseLogic)</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>#endif</div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>{</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>  <span class="comment">// Debug serial initialized in begin() -&gt; no debug output here</span></div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span> </div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>  <span class="comment">// store pins used for SW serial</span></div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>  this-&gt;pinRx = PinRx;</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>  this-&gt;pinTx = PinTx;</div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>  this-&gt;inverseLogic = InverseLogic;</div>
-<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>  </div>
-<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>  <span class="comment">// must not open connection here, else (at least) ESP32 and ESP8266 fail</span></div>
-<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span> </div>
-<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>  <span class="comment">// cannot print debug message, as constructor is called before setup()</span></div>
-<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span> </div>
-<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>} <span class="comment">// LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial()</span></div>
-<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span> </div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>} <span class="comment">// LIN_Master_SoftwareSerial::_receiveFrame()</span></div>
+</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span> </div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span> </div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span> </div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span><span class="preprocessor">#if defined(ARDUINO_ARCH_RENESAS)   </span><span class="comment">// for Renesas core inverse logic is parameter for begin()</span></div>
+<div class="foldopen" id="foldopen00261" data-start="{" data-end="}">
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno"><a class="line" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#a942c43df9c774cbd862f8cf3bf4f75f6">  261</a></span>  <a class="code hl_function" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#a942c43df9c774cbd862f8cf3bf4f75f6">LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial</a>(uint8_t PinRx, uint8_t PinTx, <span class="keywordtype">bool</span> InverseLogic, <span class="keyword">const</span> <span class="keywordtype">char</span> NameLIN[], <span class="keyword">const</span> int8_t PinTxEN) : </div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    <a class="code hl_class" href="../../d8/d3d/classLIN__Master__Base.html">LIN_Master_Base</a>::<a class="code hl_class" href="../../d8/d3d/classLIN__Master__Base.html">LIN_Master_Base</a>(NameLIN, PinTxEN), SWSerial(PinRx, PinTx)</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>#else</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>  <a class="code hl_class" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html">LIN_Master_SoftwareSerial</a>::<a class="code hl_class" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html">LIN_Master_SoftwareSerial</a>(uint8_t PinRx, uint8_t PinTx, bool InverseLogic, const char NameLIN[], const int8_t PinTxEN) : </div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    <a class="code hl_class" href="../../d8/d3d/classLIN__Master__Base.html">LIN_Master_Base</a>::<a class="code hl_class" href="../../d8/d3d/classLIN__Master__Base.html">LIN_Master_Base</a>(NameLIN, PinTxEN), SWSerial(PinRx, PinTx, InverseLogic)</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>#endif</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>{</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>  <span class="comment">// Debug serial initialized in begin() -&gt; no debug output here</span></div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span> </div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>  <span class="comment">// store pins used for SW serial</span></div>
+<div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>  this-&gt;pinRx = PinRx;</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span>  this-&gt;pinTx = PinTx;</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>  this-&gt;inverseLogic = InverseLogic;</div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span>  </div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>  <span class="comment">// must not open connection here, else (at least) ESP32 and ESP8266 fail</span></div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span> </div>
+<div class="line"><a id="l00277" name="l00277"></a><span class="lineno">  277</span>  <span class="comment">// cannot print debug message, as constructor is called before setup()</span></div>
 <div class="line"><a id="l00278" name="l00278"></a><span class="lineno">  278</span> </div>
-<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span> </div>
-<div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#a20a7dc54471bd9e2a388773577a9e8d2">LIN_Master_SoftwareSerial::begin</a>(uint16_t Baudrate)</div>
-<div class="line"><a id="l00286" name="l00286"></a><span class="lineno">  286</span>{</div>
-<div class="line"><a id="l00287" name="l00287"></a><span class="lineno">  287</span>  <span class="comment">// call base class method</span></div>
-<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>  <a class="code hl_function" href="../../d8/d3d/classLIN__Master__Base.html#a0846986eb4b3110fa2f3c53bdb76a455">LIN_Master_Base::begin</a>(Baudrate);</div>
-<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>  </div>
-<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>  <span class="comment">// open serial interface. Timeout not required here</span></div>
-<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>  this-&gt;SWSerial.end();</div>
-<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span><span class="preprocessor">  #if defined(ARDUINO_ARCH_RENESAS)       </span><span class="comment">// for Renesas core inverse logic is parameter for begin()</span></div>
-<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>    this-&gt;SWSerial.begin(this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a0d76d6fa578a5c41570a7370e08b05b0">baudrate</a>, this-&gt;inverseLogic);</div>
-<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span><span class="preprocessor">  #else</span></div>
-<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span>    this-&gt;SWSerial.begin(this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a0d76d6fa578a5c41570a7370e08b05b0">baudrate</a>);</div>
-<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span><span class="preprocessor">  #endif</span></div>
-<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span> </div>
-<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>  <span class="comment">// calculate duration of BREAK</span></div>
-<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>  this-&gt;durationBreak = this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#aaa4e8f44deab28db2ef3066950a3059e">timePerByte</a> * 16 / 10;</div>
+<div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>} <span class="comment">// LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial()</span></div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span> </div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span> </div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span> </div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#a20a7dc54471bd9e2a388773577a9e8d2">LIN_Master_SoftwareSerial::begin</a>(uint16_t Baudrate)</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>{</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>  <span class="comment">// call base class method</span></div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>  <a class="code hl_function" href="../../d8/d3d/classLIN__Master__Base.html#a0846986eb4b3110fa2f3c53bdb76a455">LIN_Master_Base::begin</a>(Baudrate);</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>  </div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>  <span class="comment">// open serial interface. Timeout not required here</span></div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>  this-&gt;SWSerial.end();</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span><span class="preprocessor">  #if defined(ARDUINO_ARCH_RENESAS)       </span><span class="comment">// for Renesas core inverse logic is parameter for begin()</span></div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>    this-&gt;SWSerial.begin(this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a0d76d6fa578a5c41570a7370e08b05b0">baudrate</a>, this-&gt;inverseLogic);</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span><span class="preprocessor">  #else</span></div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>    this-&gt;SWSerial.begin(this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#a0d76d6fa578a5c41570a7370e08b05b0">baudrate</a>);</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span><span class="preprocessor">  #endif</span></div>
 <div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span> </div>
-<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>  <span class="comment">// print debug message</span></div>
-<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>  DEBUG_PRINT(2, <span class="stringliteral">&quot;ok&quot;</span>);</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span>  <span class="comment">// calculate duration of BREAK</span></div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span>  this-&gt;durationBreak = this-&gt;<a class="code hl_variable" href="../../d8/d3d/classLIN__Master__Base.html#aaa4e8f44deab28db2ef3066950a3059e">timePerByte</a> * 16 / 10;</div>
 <div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span> </div>
-<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>} <span class="comment">// LIN_Master_SoftwareSerial::begin()</span></div>
-</div>
-<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span> </div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>  <span class="comment">// print debug message</span></div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span>  DEBUG_PRINT(2, <span class="stringliteral">&quot;ok&quot;</span>);</div>
 <div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span> </div>
-<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span> </div>
-<div class="foldopen" id="foldopen00312" data-start="{" data-end="}">
-<div class="line"><a id="l00312" name="l00312"></a><span class="lineno"><a class="line" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#a847c581da1b3574cd66f615d831992a1">  312</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#a847c581da1b3574cd66f615d831992a1">LIN_Master_SoftwareSerial::end</a>()</div>
-<div class="line"><a id="l00313" name="l00313"></a><span class="lineno">  313</span>{</div>
-<div class="line"><a id="l00314" name="l00314"></a><span class="lineno">  314</span>  <span class="comment">// call base class method</span></div>
-<div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span>  <a class="code hl_function" href="../../d8/d3d/classLIN__Master__Base.html#ab3c9b02e3f1b4576b23b38d1dec876b5">LIN_Master_Base::end</a>();</div>
-<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>    </div>
-<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>  <span class="comment">// close serial interface</span></div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>  this-&gt;SWSerial.end();</div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span> </div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>  <span class="comment">// print debug message</span></div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>  DEBUG_PRINT(2, <span class="stringliteral">&quot; &quot;</span>);</div>
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span> </div>
-<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>} <span class="comment">// LIN_Master_SoftwareSerial::end()</span></div>
+<div class="line"><a id="l00307" name="l00307"></a><span class="lineno">  307</span>} <span class="comment">// LIN_Master_SoftwareSerial::begin()</span></div>
 </div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span> </div>
+<div class="line"><a id="l00308" name="l00308"></a><span class="lineno">  308</span> </div>
+<div class="line"><a id="l00309" name="l00309"></a><span class="lineno">  309</span> </div>
+<div class="line"><a id="l00310" name="l00310"></a><span class="lineno">  310</span> </div>
+<div class="foldopen" id="foldopen00315" data-start="{" data-end="}">
+<div class="line"><a id="l00315" name="l00315"></a><span class="lineno"><a class="line" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#a847c581da1b3574cd66f615d831992a1">  315</a></span><span class="keywordtype">void</span> <a class="code hl_function" href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#a847c581da1b3574cd66f615d831992a1">LIN_Master_SoftwareSerial::end</a>()</div>
+<div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span>{</div>
+<div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span>  <span class="comment">// call base class method</span></div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>  <a class="code hl_function" href="../../d8/d3d/classLIN__Master__Base.html#ab3c9b02e3f1b4576b23b38d1dec876b5">LIN_Master_Base::end</a>();</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>    </div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>  <span class="comment">// close serial interface</span></div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>  this-&gt;SWSerial.end();</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span> </div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>  <span class="comment">// print debug message</span></div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>  DEBUG_PRINT(2, <span class="stringliteral">&quot; &quot;</span>);</div>
 <div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span> </div>
-<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span><span class="preprocessor">#endif </span><span class="comment">// ARDUINO_ARCH_AVR || ARDUINO_ARCH_ESP8266 || ARDUINO_ARCH_ESP32 || ARDUINO_ARCH_MEGAAVR || ARDUINO_ARCH_STM32 || ARDUINO_ARCH_RENESAS</span></div>
+<div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>} <span class="comment">// LIN_Master_SoftwareSerial::end()</span></div>
+</div>
 <div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span> </div>
 <div class="line"><a id="l00328" name="l00328"></a><span class="lineno">  328</span> </div>
-<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span><span class="comment">/*-----------------------------------------------------------------------------</span></div>
-<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span><span class="comment">    END OF FILE</span></div>
-<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span><span class="comment">-----------------------------------------------------------------------------*/</span></div>
+<div class="line"><a id="l00329" name="l00329"></a><span class="lineno">  329</span><span class="preprocessor">#endif </span><span class="comment">// ARDUINO_ARCH_AVR || ARDUINO_ARCH_ESP8266 || ARDUINO_ARCH_ESP32 || ARDUINO_ARCH_MEGAAVR || ARDUINO_ARCH_STM32 || ARDUINO_ARCH_RENESAS</span></div>
+<div class="line"><a id="l00330" name="l00330"></a><span class="lineno">  330</span> </div>
+<div class="line"><a id="l00331" name="l00331"></a><span class="lineno">  331</span> </div>
+<div class="line"><a id="l00332" name="l00332"></a><span class="lineno">  332</span><span class="comment">/*-----------------------------------------------------------------------------</span></div>
+<div class="line"><a id="l00333" name="l00333"></a><span class="lineno">  333</span><span class="comment">    END OF FILE</span></div>
+<div class="line"><a id="l00334" name="l00334"></a><span class="lineno">  334</span><span class="comment">-----------------------------------------------------------------------------*/</span></div>
 <div class="ttc" id="aLIN__master__SoftwareSerial_8h_html"><div class="ttname"><a href="../../d7/d94/LIN__master__SoftwareSerial_8h.html">LIN_master_SoftwareSerial.h</a></div><div class="ttdoc">LIN master emulation library for SoftwareSerial.</div></div>
 <div class="ttc" id="aclassLIN__Master__Base_html"><div class="ttname"><a href="../../d8/d3d/classLIN__Master__Base.html">LIN_Master_Base</a></div><div class="ttdoc">LIN master node base class.</div><div class="ttdef"><b>Definition</b> <a href="../../db/d56/LIN__master__Base_8h_source.html#l00105">LIN_master_Base.h:106</a></div></div>
 <div class="ttc" id="aclassLIN__Master__Base_html_a062f27c0fd41dcdae2c6b055a3a09a08"><div class="ttname"><a href="../../d8/d3d/classLIN__Master__Base.html#a062f27c0fd41dcdae2c6b055a3a09a08">LIN_Master_Base::lenRx</a></div><div class="ttdeci">uint8_t lenRx</div><div class="ttdoc">receive buffer length (max. 12)</div><div class="ttdef"><b>Definition</b> <a href="../../db/d56/LIN__master__Base_8h_source.html#l00166">LIN_master_Base.h:166</a></div></div>
@@ -431,9 +434,9 @@ $(document).ready(function(){initNavTree('dd/dcb/LIN__master__SoftwareSerial_8cp
 <div class="ttc" id="aclassLIN__Master__SoftwareSerial_html"><div class="ttname"><a href="../../d5/dc8/classLIN__Master__SoftwareSerial.html">LIN_Master_SoftwareSerial</a></div><div class="ttdoc">LIN master node class via SoftwareSerial.</div><div class="ttdef"><b>Definition</b> <a href="../../d7/d94/LIN__master__SoftwareSerial_8h_source.html#l00037">LIN_master_SoftwareSerial.h:38</a></div></div>
 <div class="ttc" id="aclassLIN__Master__SoftwareSerial_html_a20a7dc54471bd9e2a388773577a9e8d2"><div class="ttname"><a href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#a20a7dc54471bd9e2a388773577a9e8d2">LIN_Master_SoftwareSerial::begin</a></div><div class="ttdeci">void begin(uint16_t Baudrate=19200)</div><div class="ttdoc">Open serial interface.</div></div>
 <div class="ttc" id="aclassLIN__Master__SoftwareSerial_html_a42f87bbd6ff615595943890fc7e27cdc"><div class="ttname"><a href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#a42f87bbd6ff615595943890fc7e27cdc">LIN_Master_SoftwareSerial::_sendBreak</a></div><div class="ttdeci">LIN_Master_Base::state_t _sendBreak(void)</div><div class="ttdoc">Send LIN break.</div><div class="ttdef"><b>Definition</b> <a href="../../dd/dcb/LIN__master__SoftwareSerial_8cpp_source.html#l00022">LIN_master_SoftwareSerial.cpp:22</a></div></div>
-<div class="ttc" id="aclassLIN__Master__SoftwareSerial_html_a847c581da1b3574cd66f615d831992a1"><div class="ttname"><a href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#a847c581da1b3574cd66f615d831992a1">LIN_Master_SoftwareSerial::end</a></div><div class="ttdeci">void end(void)</div><div class="ttdoc">Close serial interface.</div><div class="ttdef"><b>Definition</b> <a href="../../dd/dcb/LIN__master__SoftwareSerial_8cpp_source.html#l00312">LIN_master_SoftwareSerial.cpp:312</a></div></div>
-<div class="ttc" id="aclassLIN__Master__SoftwareSerial_html_a942c43df9c774cbd862f8cf3bf4f75f6"><div class="ttname"><a href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#a942c43df9c774cbd862f8cf3bf4f75f6">LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial</a></div><div class="ttdeci">LIN_Master_SoftwareSerial(uint8_t PinRx, uint8_t PinTx, bool InverseLogic=false, const char NameLIN[]=&quot;Master&quot;, const int8_t PinTxEN=INT8_MIN)</div><div class="ttdoc">Class constructor.</div><div class="ttdef"><b>Definition</b> <a href="../../dd/dcb/LIN__master__SoftwareSerial_8cpp_source.html#l00258">LIN_master_SoftwareSerial.cpp:258</a></div></div>
-<div class="ttc" id="aclassLIN__Master__SoftwareSerial_html_ad062b6c3c47962bd970a871fff089b37"><div class="ttname"><a href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#ad062b6c3c47962bd970a871fff089b37">LIN_Master_SoftwareSerial::_receiveFrame</a></div><div class="ttdeci">LIN_Master_Base::state_t _receiveFrame(void)</div><div class="ttdoc">Read and check LIN frame.</div><div class="ttdef"><b>Definition</b> <a href="../../dd/dcb/LIN__master__SoftwareSerial_8cpp_source.html#l00158">LIN_master_SoftwareSerial.cpp:158</a></div></div>
+<div class="ttc" id="aclassLIN__Master__SoftwareSerial_html_a847c581da1b3574cd66f615d831992a1"><div class="ttname"><a href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#a847c581da1b3574cd66f615d831992a1">LIN_Master_SoftwareSerial::end</a></div><div class="ttdeci">void end(void)</div><div class="ttdoc">Close serial interface.</div><div class="ttdef"><b>Definition</b> <a href="../../dd/dcb/LIN__master__SoftwareSerial_8cpp_source.html#l00315">LIN_master_SoftwareSerial.cpp:315</a></div></div>
+<div class="ttc" id="aclassLIN__Master__SoftwareSerial_html_a942c43df9c774cbd862f8cf3bf4f75f6"><div class="ttname"><a href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#a942c43df9c774cbd862f8cf3bf4f75f6">LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial</a></div><div class="ttdeci">LIN_Master_SoftwareSerial(uint8_t PinRx, uint8_t PinTx, bool InverseLogic=false, const char NameLIN[]=&quot;Master&quot;, const int8_t PinTxEN=INT8_MIN)</div><div class="ttdoc">Class constructor.</div><div class="ttdef"><b>Definition</b> <a href="../../dd/dcb/LIN__master__SoftwareSerial_8cpp_source.html#l00261">LIN_master_SoftwareSerial.cpp:261</a></div></div>
+<div class="ttc" id="aclassLIN__Master__SoftwareSerial_html_ad062b6c3c47962bd970a871fff089b37"><div class="ttname"><a href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#ad062b6c3c47962bd970a871fff089b37">LIN_Master_SoftwareSerial::_receiveFrame</a></div><div class="ttdeci">LIN_Master_Base::state_t _receiveFrame(void)</div><div class="ttdoc">Read and check LIN frame.</div><div class="ttdef"><b>Definition</b> <a href="../../dd/dcb/LIN__master__SoftwareSerial_8cpp_source.html#l00161">LIN_master_SoftwareSerial.cpp:161</a></div></div>
 <div class="ttc" id="aclassLIN__Master__SoftwareSerial_html_af6d1189bc5096208407311ad8da25db2"><div class="ttname"><a href="../../d5/dc8/classLIN__Master__SoftwareSerial.html#af6d1189bc5096208407311ad8da25db2">LIN_Master_SoftwareSerial::_sendFrame</a></div><div class="ttdeci">LIN_Master_Base::state_t _sendFrame(void)</div><div class="ttdoc">Send LIN bytes (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID)</div><div class="ttdef"><b>Definition</b> <a href="../../dd/dcb/LIN__master__SoftwareSerial_8cpp_source.html#l00081">LIN_master_SoftwareSerial.cpp:81</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

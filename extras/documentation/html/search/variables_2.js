@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['id_0',['id',['../d8/d3d/classLIN__Master__Base.html#aed2a845462718c30e9a73a3815e0aed1',1,'LIN_Master_Base']]]
+  ['huart_0',['huart',['../d5/d99/classLIN__Master__HardwareSerial__STM32.html#a1634ba67b590c41202a5528ae042df2a',1,'LIN_Master_HardwareSerial_STM32']]]
 ];
