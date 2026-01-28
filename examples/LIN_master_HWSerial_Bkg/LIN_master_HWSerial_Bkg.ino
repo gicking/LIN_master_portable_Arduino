@@ -33,7 +33,7 @@ Tested boards:
 
   #include "LIN_master_HardwareSerial.h"                // matching LIN master header
 
-  //#define PIN_TXEN            18                        // optional Tx direction pin (=DE) for RS485 physical I/F. Comment out for LIN I/F 
+  //#define PIN_TXEN            17                        // optional Tx direction pin (=DE) for RS485 physical I/F. Comment out for LIN I/F 
   #define PIN_TOGGLE          30                        // pin to show CPU idle
   #define PIN_ERROR           32                        // LIN error status pin (high=error)
   #define SERIAL_CONSOLE      Serial                    // serial I/F for console output (comment for no output)
@@ -53,7 +53,7 @@ Tested boards:
 
   #include "LIN_master_HardwareSerial.h"                // matching LIN master header
 
-  //#define PIN_TXEN            18                        // optional Tx direction pin (=DE) for RS485 physical I/F. Comment out for LIN I/F 
+  //#define PIN_TXEN            17                        // optional Tx direction pin (=DE) for RS485 physical I/F. Comment out for LIN I/F 
   #define PIN_TOGGLE          30                        // pin to show CPU idle
   #define PIN_ERROR           32                        // LIN error status pin (high=error)
   #define SERIAL_CONSOLE      Serial                    // serial I/F for console output (comment for no output). Use SerialUSB for native USB port
@@ -175,20 +175,20 @@ Tested boards:
 ////////////////////
 #elif defined(ARDUINO_NUCLEO_L432KC)
 
-  #include "LIN_master_HardwareSerial.h"                // matching LIN master header
+  #include "LIN_master_HardwareSerial_STM32.h"          // matching LIN master header
 
   //#define PIN_TXEN            D5                        // optional Tx direction pin (=DE) for RS485 physical I/F. Comment out for LIN I/F 
   #define PIN_TOGGLE          D3                        // pin to show CPU idle
   #define PIN_ERROR           D4                        // LIN error status pin (high=error)
-  #define SERIAL_CONSOLE      Serial2                   // serial I/F for console output (comment for no output)
+  #define SERIAL_CONSOLE      Serial                    // serial I/F for console output (comment for no output)
 
-  HardwareSerial              Serial1(PA_10, PA_9);       // Serial1 is not allocated by default. Parametes: Rx=D0, Tx=D1
+  HardwareSerial              Serial1(D1, D0);          // Serial1 not always instantiated by default
 
-  // setup LIN node. Parameters: interface, name, TxEN
+  // setup LIN node. Parameters: interface, Rx, Tx, name, TxEN
   #if defined(PIN_TXEN)
-    LIN_Master_HardwareSerial   LIN(Serial1, "Master", PIN_TXEN);
+    LIN_Master_HardwareSerial_STM32   LIN(Serial1, D0, D1, "Master", PIN_TXEN);
   #else
-    LIN_Master_HardwareSerial   LIN(Serial1, "Master");
+    LIN_Master_HardwareSerial_STM32   LIN(Serial1, D0, D1, "Master");
   #endif
 
 

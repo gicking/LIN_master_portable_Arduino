@@ -56,7 +56,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_sendBreak(void)
 
   // print debug message
   DEBUG_PRINT(3, " ");
-  
+
   // return state
   return this->state;
 
@@ -102,7 +102,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_sendFrame(void)
     
   // print debug message
   DEBUG_PRINT(2, " ");
-    
+  
   // return state
   return this->state;
 
@@ -171,7 +171,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_ESP32::_receiveFrame(void)
   
   // print debug message
   DEBUG_PRINT(2, " ");
-    
+  
   // return state
   return this->state;
 

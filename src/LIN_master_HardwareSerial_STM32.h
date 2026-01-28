@@ -1,19 +1,19 @@
 /**
-  \file     LIN_master_HardwareSerial_ESP32.h
-  \brief    LIN master emulation library using a HardwareSerial interface of ESP32
-  \details  This library provides a master node emulation for a LIN bus via a HardwareSerial interface of ESP32, optionally via RS485.
+  \file     LIN_master_HardwareSerial_STM32.h
+  \brief    LIN master emulation library using a HardwareSerial interface of STM32
+  \details  This library provides a master node emulation for a LIN bus via a HardwareSerial interface of STM32, optionally via RS485.
             For an explanation of the LIN bus and protocol e.g. see https://en.wikipedia.org/wiki/Local_Interconnect_Network
   \author   Georg Icking-Konert
 */
 
-// assert ESP32 platform
-#if defined(ARDUINO_ARCH_ESP32)
+// assert STM32 platform
+#if defined(ARDUINO_ARCH_STM32)
 
 /*-----------------------------------------------------------------------------
   MODULE DEFINITION FOR MULTIPLE INCLUSION
 -----------------------------------------------------------------------------*/
-#ifndef _LIN_MASTER_HW_SERIAL_ESP32_H_
-#define _LIN_MASTER_HW_SERIAL_ESP32_H_
+#ifndef _LIN_MASTER_HW_SERIAL_STM32_H_
+#define _LIN_MASTER_HW_SERIAL_STM32_H_
 
 
 /*-----------------------------------------------------------------------------
@@ -28,20 +28,19 @@
   GLOBAL CLASS
 -----------------------------------------------------------------------------*/
 /**
-  \brief  LIN master node class via ESP32 HardwareSerial
+  \brief  LIN master node class via STM32 HardwareSerial
 
-  \details LIN master node class via ESP32 HardwareSerial.
+  \details LIN master node class via STM32 HardwareSerial.
 */
-class LIN_Master_HardwareSerial_ESP32 : public LIN_Master_Base
+class LIN_Master_HardwareSerial_STM32 : public LIN_Master_Base
 {
   // PROTECTED VARIABLES
   protected:
 
     HardwareSerial        *pSerial;           //!< serial interface used for LIN
-    uint8_t               pinRx;              //!< pin used for receive
-    uint8_t               pinTx;              //!< pin used for transmit
-    uint32_t              timeStartBreak;     //!< micros() when BREAK was sent
-
+    UART_HandleTypeDef    *huart;             //!< pointer to underlying HAL UART handle
+    uint32_t              pinRx;              //!< pin used for receive
+    uint32_t              pinTx;              //!< pin used for transmit
 
   // PROTECTED METHODS
   protected:
@@ -60,7 +59,7 @@ class LIN_Master_HardwareSerial_ESP32 : public LIN_Master_Base
   public:
 
     /// @brief Class constructor
-    LIN_Master_HardwareSerial_ESP32(HardwareSerial &Interface, uint8_t PinRx, uint8_t PinTx, 
+    LIN_Master_HardwareSerial_STM32(HardwareSerial &Interface, uint32_t PinRx, uint32_t PinTx,
       const char NameLIN[] = "Master", const int8_t PinTxEN = INT8_MIN);
      
     /// @brief Open serial interface
@@ -69,15 +68,15 @@ class LIN_Master_HardwareSerial_ESP32 : public LIN_Master_Base
     /// @brief Close serial interface
     void end(void);
 
-}; // class LIN_master_HardwareSerial_ESP32
+}; // class LIN_master_HardwareSerial_STM32
 
 
 /*-----------------------------------------------------------------------------
     END OF MODULE DEFINITION FOR MULTIPLE INLUSION
 -----------------------------------------------------------------------------*/
-#endif // _LIN_MASTER_HW_SERIAL_ESP32_H_
+#endif // _LIN_MASTER_HW_SERIAL_STM32_H_
 
-#endif // ARDUINO_ARCH_ESP32
+#endif // ARDUINO_ARCH_STM32
 
 /*-----------------------------------------------------------------------------
     END OF FILE
