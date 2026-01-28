@@ -60,8 +60,9 @@ Revision History
 
 **v1.9 (2026-01-xx)**
   - remove `Ticker` examples, due to standard 1ms min. period too long
-  - add support for ESP32-S3 and Nano Every
-  - start support for Uno R4 Minima and STM32, but not yet fully functional
+  - remove `Event` examples, due to `serialEvent()`offers no benefit and is [becoming obsolete](https://docs.arduino.cc/language-reference/en/functions/communication/serial/serialEvent/)
+  - add support for ESP32-S3, Nano Every and STM32
+  - start support for Uno R4 Minima, but not yet functional
   - consolidate examples for different boards and LIN/RS485 interfaces
 
 **v1.8 (2025-10-28)**
