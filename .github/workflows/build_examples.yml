@@ -98,7 +98,6 @@ jobs:
           SKETCHES_FLAGS=(
             "examples/LIN_master_Dual_HWSerial_Bkg"
             "examples/LIN_master_HWSerial_Bkg"
-            "examples/LIN_master_HWSerial_Bkg_Evt"
             "examples/LIN_master_HWSerial_Blk"
             "examples/LIN_master_SWSerial_Blk"
           )
@@ -161,7 +160,6 @@ jobs:
           SKETCHES_FLAGS=(
             "examples/LIN_master_Dual_HWSerial_Bkg"
             "examples/LIN_master_HWSerial_Bkg"
-            "examples/LIN_master_HWSerial_Bkg_Evt"
             "examples/LIN_master_HWSerial_Blk"
           )
 
@@ -339,7 +337,6 @@ jobs:
           # list of sketches with optional build flags
           SKETCHES_FLAGS=(
             "examples/LIN_master_HWSerial_Bkg"
-            "examples/LIN_master_HWSerial_Bkg_Evt"
             "examples/LIN_master_HWSerial_Blk"
             "examples/LIN_master_SWSerial_Blk"
           )
@@ -402,7 +399,6 @@ jobs:
           SKETCHES_FLAGS=(
             "examples/LIN_master_HWSerial_Blk"
             "examples/LIN_master_HWSerial_Bkg"
-            "examples/LIN_master_HWSerial_Bkg_Evt"
             "examples/LIN_master_SWSerial_Blk"
           )
 
@@ -463,7 +459,6 @@ jobs:
           SKETCHES_FLAGS=(
             "examples/LIN_master_HWSerial_Blk"
             "examples/LIN_master_HWSerial_Bkg"
-            "examples/LIN_master_HWSerial_Bkg_Evt"
             "examples/LIN_master_SWSerial_Blk"
           )
 
@@ -524,7 +519,6 @@ jobs:
           SKETCHES_FLAGS=(
             "examples/LIN_master_HWSerial_Blk"
             "examples/LIN_master_HWSerial_Bkg"
-            "examples/LIN_master_HWSerial_Bkg_Evt"
             "examples/LIN_master_SWSerial_Blk"
           )
 
