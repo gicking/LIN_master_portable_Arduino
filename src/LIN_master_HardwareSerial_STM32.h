@@ -41,7 +41,10 @@ class LIN_Master_HardwareSerial_STM32 : public LIN_Master_Base
     UART_HandleTypeDef    *huart;             //!< pointer to underlying HAL UART handle
     uint32_t              pinRx;              //!< pin used for receive
     uint32_t              pinTx;              //!< pin used for transmit
-
+    #if !defined(USART_CR2_LINEN)
+      uint32_t            brr;                //!< BRR value if LIN mode is not available
+    #endif
+    
   // PROTECTED METHODS
   protected:
   

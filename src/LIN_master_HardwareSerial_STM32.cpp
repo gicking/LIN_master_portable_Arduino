@@ -39,14 +39,26 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_STM32::_sendBreak(void)
   while (this->pSerial->available())
     this->pSerial->read();
 
-  // clear BREAK detection flag for debugging purposes
-  this->huart->Instance->ICR = USART_ICR_LBDCF;
+  // if LIN mode is available clear BREAK detection flag for debugging purposes
+  #if defined(USART_CR2_LINEN)
+    this->huart->Instance->ICR = USART_ICR_LBDCF;
+  #endif
 
   // optionally enable transmitter
   this->_enableTransmitter();
 
-  // send BREAK (>=13 bit low)
-  this->huart->Instance->RQR |= USART_RQR_SBKRQ;
+  // if LIN mode is available generate LIN BREAK (>=13 bit low)
+  #if defined(USART_CR2_LINEN)
+    this->huart->Instance->RQR |= USART_RQR_SBKRQ;
+
+  // w/o LIN mode send 0x00 at 1/2 baudrate
+  // Note: don't use Serial.begin() or TE=1 due to HW latency, see https://github.com/stm32duino/Arduino_Core_STM32/issues/2907#issuecomment-3816058235
+  #else
+    //this->huart->Instance->CR1 &= ~USART_CR1_UE;
+    this->huart->Instance->BRR = this->brr * 2;
+    //this->huart->Instance->CR1 |= USART_CR1_UE;
+    this->pSerial->write((int) 0x00);
+  #endif
 
   // progress state
   this->state = LIN_Master_Base::STATE_BREAK;
@@ -87,8 +99,14 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_STM32::_sendFrame(void)
     // store echo in Rx
     this->bufRx[0] = this->pSerial->read();
 
-    // no baudrate update due to long delay, see https://github.com/stm32duino/Arduino_Core_STM32/issues/2907
-    // Instead BREAK is generated using dedicated LIN mode above
+    // if LIN mode is available do nothing. BREAK generated using dedicated LIN mode above
+    #if defined(USART_CR2_LINEN)
+
+    // w/o LIN mode revert baudrate
+    // Note: don't use Serial.begin() or TE=1 due to HW latency, see https://github.com/stm32duino/Arduino_Core_STM32/issues/2907#issuecomment-3816058235
+    #else
+      this->huart->Instance->BRR = this->brr;
+    #endif
 
     // send rest of frame (request frame: SYNC+ID+DATA[]+CHK; response frame: SYNC+ID)
     this->pSerial->write(this->bufTx+1, this->lenTx-1);
@@ -245,10 +263,16 @@ void LIN_Master_HardwareSerial_STM32::begin(uint16_t Baudrate)
     while(!(*(this->pSerial)));
   #endif
 
-  // enable LIN mode -> BREAK 13b & enable BREAK detection
-  this->huart->Instance->CR1 &= ~USART_CR1_UE;
-  this->huart->Instance->CR2 |= USART_CR2_LINEN;
-  this->huart->Instance->CR1 |= USART_CR1_UE;
+  // if LIN mode is available enable LIN mode -> BREAK 13b & enable BREAK detection
+  #if defined(USART_CR2_LINEN)
+    this->huart->Instance->CR1 &= ~USART_CR1_UE;
+    this->huart->Instance->CR2 |= USART_CR2_LINEN;
+    this->huart->Instance->CR1 |= USART_CR1_UE;
+  
+  // w/o LIN mode store BRR value for BRK generation
+  #else
+    this->brr = this->huart->Instance->BRR;
+  #endif
 
   // print debug message
   DEBUG_PRINT(2, "ok");
