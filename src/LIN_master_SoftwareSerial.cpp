@@ -54,10 +54,10 @@ LIN_Master_Base::state_t LIN_Master_SoftwareSerial::_sendBreak(void)
     this->SWSerial.stopListening();
   #endif
 
-  // generate BREAK directly via GPIO (less overhead)
-  digitalWrite(this->pinTx, LOW);
+  // generate BREAK directly via GPIO (less overhead than begin())
+  digitalWrite(this->pinTx, this->inverseLogic ? HIGH : LOW);
   delayMicroseconds(this->durationBreak);      
-  digitalWrite(this->pinTx, HIGH);
+  digitalWrite(this->pinTx, this->inverseLogic ? LOW : HIGH);
   delayMicroseconds(100);           // stop bit + 1b delimiter
 
   // progress state
