@@ -11,11 +11,12 @@ Tested boards:
   - Arduino Mega 2560       https://docs.arduino.cc/hardware/mega-2560/
   - Arduino Due             https://docs.arduino.cc/hardware/due/
   - Arduino Nano Every      https://docs.arduino.cc/hardware/nano-every/
-  x - Arduino Uno R4 Minima   https://docs.arduino.cc/hardware/uno-r4-minima/
+  x Adafruit Trinket (no HW-Serial available)   https://www.adafruit.com/product/1501
+  x Arduino Uno R4 Minima (see https://github.com/arduino/ArduinoCore-renesas/issues/524)  https://docs.arduino.cc/hardware/uno-r4-minima/ 
   - Arduino Nano ESP32-S3   https://docs.arduino.cc/hardware/nano-esp32/
   - ESP32 WROOM-32UE        https://documentation.espressif.com/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf
   - ESP8266 D1 Mini         https://www.wemos.cc/en/latest/d1/d1_mini.html
-  x - Nucleo-STM32L432KC      https://www.st.com/en/evaluation-tools/nucleo-l432kc.html
+  - Nucleo-STM32L432KC      https://www.st.com/en/evaluation-tools/nucleo-l432kc.html
 
 **********************/
 

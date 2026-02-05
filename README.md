@@ -26,11 +26,11 @@ For a similar Arduino libary for LIN slave emulation see https://github.com/gick
   
 ## Supported Boards (with additional LIN hardware)
   - Arduino AVR boards, e.g. [Uno](https://store.arduino.cc/products/arduino-uno-rev3), [Mega](https://store.arduino.cc/products/arduino-mega-2560-rev3) or [Nano](https://store.arduino.cc/products/arduino-nano)
-  - Arduino ARM Cortex-M boards, e.g. [Due](https://store.arduino.cc/products/arduino-due) or [Uno R4 Minima](https://docs.arduino.cc/hardware/uno-r4-minima/) (in progress)
+  - Arduino ARM Cortex-M boards, e.g. [Due](https://store.arduino.cc/products/arduino-due) or [Uno R4 Minima](https://docs.arduino.cc/hardware/uno-r4-minima/) (only SoftwareSerial)
   - ATtiny boards, e.g. [Adafruit Trinket](https://www.adafruit.com/product/1501) (only SoftwareSerial)
   - ESP32 boards, e.g. [Arduino Nano-ESP32](https://docs.arduino.cc/hardware/nano-esp32/) or [Espressif Wroom-32U](https://www.etechnophiles.com/esp32-dev-board-pinout-specifications-datasheet-and-schematic/)
   - ESP8266 boards, e.g. [Wemos D1 mini](https://www.wemos.cc/en/latest/d1/d1_mini.html)
-  - STM32 boards, e.g. [Nucleo-STM32L432KC](https://www.st.com/en/evaluation-tools/nucleo-l432kc.html) (in progress)
+  - STM32 boards, e.g. [Nucleo-STM32L432KC](https://www.st.com/en/evaluation-tools/nucleo-l432kc.html)
 
 
 ## Notes
@@ -58,12 +58,11 @@ Have fun!, Georg
 Revision History
 ----------------
 
-**v1.9 (2026-01-xx)**
+**v1.9 (2026-02-05)**
+  - add support for ESP32-S3, Nano Every, STM32, and Uno R4 Minima (no HWSerial, see [issue](https://github.com/arduino/ArduinoCore-renesas/issues/524))
+  - consolidate examples for different boards and LIN/RS485 interfaces
   - remove `Ticker` examples, due to standard 1ms min. period too long
   - remove `Event` examples, due to `serialEvent()`offers no benefit and is [becoming obsolete](https://docs.arduino.cc/language-reference/en/functions/communication/serial/serialEvent/)
-  - add support for ESP32-S3, Nano Every and STM32
-  - start support for Uno R4 Minima, but not yet functional
-  - consolidate examples for different boards and LIN/RS485 interfaces
 
 **v1.8 (2025-10-28)**
   - add dependency on `EspSoftwareSerial` in `library.properties`

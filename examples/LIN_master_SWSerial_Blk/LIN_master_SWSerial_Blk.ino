@@ -7,9 +7,10 @@ In this case, permanently enable Rx (REN=GND) for receiving echo
 
 Tested boards:
   - Arduino Mega 2560       https://docs.arduino.cc/hardware/mega-2560/
+  x Arduino Due (SoftwareSerial not available)   https://docs.arduino.cc/hardware/due/
   - Arduino Nano Every      https://docs.arduino.cc/hardware/nano-every/
   - Adafruit Trinket        https://www.adafruit.com/product/1501
-  - Arduino Uno R4 Minima   https://docs.arduino.cc/hardware/uno-r4-minima/
+  - Arduino Uno R4 Minima (blocking)  https://docs.arduino.cc/hardware/uno-r4-minima/ 
   - Arduino Nano ESP32-S3   https://docs.arduino.cc/hardware/nano-esp32/
   - ESP32 WROOM-32UE        https://documentation.espressif.com/esp32-wroom-32e_esp32-wroom-32ue_datasheet_en.pdf
   - ESP8266 D1 Mini         https://www.wemos.cc/en/latest/d1/d1_mini.html
@@ -109,9 +110,9 @@ Important:
 // Nucleo-STM32L432KC
 ////////////////////
 #elif defined(ARDUINO_NUCLEO_L432KC)
-  #define PIN_LIN_TX      11
-  #define PIN_LIN_RX      10
-  //#define PIN_TXEN      9
+  #define PIN_LIN_TX      1
+  #define PIN_LIN_RX      0
+  //#define PIN_TXEN      5
   #define PIN_TOGGLE      3
   #define PIN_ERROR       4
   #define SERIAL_CONSOLE  Serial
@@ -126,9 +127,9 @@ Important:
 
 // setup LIN node. Parameters: Rx, Tx, inverse, name, TxEN
 #if defined(PIN_TXEN)
-  LIN_Master_SoftwareSerial   LIN(PIN_LIN_RX, PIN_LIN_TX, false, "Master", PIN_TXEN);
+  LIN_master_SoftwareSerial   LIN(PIN_LIN_RX, PIN_LIN_TX, false, "Master", PIN_TXEN);
 #else
-  LIN_Master_SoftwareSerial   LIN(PIN_LIN_RX, PIN_LIN_TX, false, "Master");
+  LIN_master_SoftwareSerial   LIN(PIN_LIN_RX, PIN_LIN_TX, false, "Master");
 #endif
 
 
@@ -207,7 +208,7 @@ void loop()
   {
     digitalWrite(PIN_TOGGLE, !digitalRead(PIN_TOGGLE));
   }
-
+  
   
   // send/receive slave response frame and get result immediately
   error = LIN.receiveSlaveResponseBlocking(LIN_Master_Base::LIN_V2, 0x05, 6, Data);

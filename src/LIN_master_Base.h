@@ -29,7 +29,7 @@
 
 // optional debug output @ 115.2kBaud. Comment out for none. When using together with NeoHWSerial on AVR must use NeoSerialx to avoid linker conflict
 #if !defined(LIN_MASTER_DEBUG_SERIAL)
-  //#define LIN_MASTER_DEBUG_SERIAL       Serial1       //!< serial interface used for debug output 
+  //#define LIN_MASTER_DEBUG_SERIAL       Serial       //!< serial interface used for debug output 
   //#define LIN_MASTER_DEBUG_SERIAL       NeoSerial     //!< serial interface used for debug output (optional on AVR, not together with HardwareSerial!)
   //#include <NeoHWSerial.h>                            // comment in/out together with previous line
   //#define LIN_MASTER_DEBUG_SERIAL       SerialUSB     //!< serial interface used for debug output (optional on Due)
@@ -254,7 +254,7 @@ class LIN_Master_Base
     inline LIN_Master_Base::state_t getState(void)
     {
       // print debug message
-      DEBUG_PRINT(3, " ");
+      DEBUG_PRINT(3, " %d", (int) this->state);
 
       // return state
       return this->state;
@@ -277,7 +277,7 @@ class LIN_Master_Base
     inline LIN_Master_Base::error_t getError(void)
     {
       // print debug message
-      DEBUG_PRINT(3, " ");
+      DEBUG_PRINT(3, " %d", (int) this->error);
 
       // return error
       return this->error;

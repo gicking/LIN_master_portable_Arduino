@@ -34,7 +34,7 @@
 
   \details LIN master node class via SoftwareSerial.
 */
-class LIN_Master_SoftwareSerial : public LIN_Master_Base
+class LIN_master_SoftwareSerial : public LIN_Master_Base
 {
   // PRIVATE VARIABLES
   private:
@@ -43,6 +43,7 @@ class LIN_Master_SoftwareSerial : public LIN_Master_Base
     uint8_t               pinRx;              //!< pin used for receive
     uint8_t               pinTx;              //!< pin used for transmit
     bool                  inverseLogic;       //!< use inverse logic
+    uint32_t              startBreak;         //!< start time [us] of sync break
     uint32_t              durationBreak;      //!< duration [us] of sync break
 
 
@@ -63,7 +64,7 @@ class LIN_Master_SoftwareSerial : public LIN_Master_Base
   public:
   
     /// @brief Class constructor
-    LIN_Master_SoftwareSerial(uint8_t PinRx, uint8_t PinTx, bool InverseLogic = false, const char NameLIN[] = "Master", const int8_t PinTxEN = INT8_MIN);
+    LIN_master_SoftwareSerial(uint8_t PinRx, uint8_t PinTx, bool InverseLogic = false, const char NameLIN[] = "Master", const int8_t PinTxEN = INT8_MIN);
 
     
     /// @brief Open serial interface
@@ -72,7 +73,7 @@ class LIN_Master_SoftwareSerial : public LIN_Master_Base
     /// @brief Close serial interface
     void end(void);
 
-}; // class LIN_Master_SoftwareSerial
+}; // class LIN_master_SoftwareSerial
 
 
 /*-----------------------------------------------------------------------------
@@ -82,7 +83,7 @@ class LIN_Master_SoftwareSerial : public LIN_Master_Base
 
 #else // ARDUINO_ARCH_AVR || ARDUINO_ARCH_ESP8266 || ARDUINO_ARCH_ESP32 || ARDUINO_ARCH_MEGAAVR || ARDUINO_ARCH_STM32 || ARDUINO_ARCH_RENESAS
 
-  #error LIN_master_SoftwareSerial.h is only compatible with AVR, ESP8266 or ESP32 architecture!
+  #error architecture not yet supported
 
 #endif
 

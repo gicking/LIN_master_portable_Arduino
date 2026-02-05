@@ -17,7 +17,7 @@ var searchData=
   ['lin_5fmaster_5fhardwareserial_5fstm32_14',['lin_master_hardwareserial_stm32',['../d5/d99/classLIN__Master__HardwareSerial__STM32.html#a2af0adfeaaca449c771b83e73be7705e',1,'LIN_Master_HardwareSerial_STM32::LIN_Master_HardwareSerial_STM32()'],['../d5/d99/classLIN__Master__HardwareSerial__STM32.html',1,'LIN_Master_HardwareSerial_STM32']]],
   ['lin_5fmaster_5fhardwareserial_5fstm32_2ecpp_15',['LIN_master_HardwareSerial_STM32.cpp',['../da/d9d/LIN__master__HardwareSerial__STM32_8cpp.html',1,'']]],
   ['lin_5fmaster_5fhardwareserial_5fstm32_2eh_16',['LIN_master_HardwareSerial_STM32.h',['../d9/d52/LIN__master__HardwareSerial__STM32_8h.html',1,'']]],
-  ['lin_5fmaster_5fsoftwareserial_17',['lin_master_softwareserial',['../d5/dc8/classLIN__Master__SoftwareSerial.html',1,'LIN_Master_SoftwareSerial'],['../d5/dc8/classLIN__Master__SoftwareSerial.html#a942c43df9c774cbd862f8cf3bf4f75f6',1,'LIN_Master_SoftwareSerial::LIN_Master_SoftwareSerial()']]],
+  ['lin_5fmaster_5fsoftwareserial_17',['lin_master_softwareserial',['../dc/d9e/classLIN__master__SoftwareSerial.html',1,'LIN_master_SoftwareSerial'],['../dc/d9e/classLIN__master__SoftwareSerial.html#a588cb86c352e7b217fbb761f257e76d1',1,'LIN_master_SoftwareSerial::LIN_master_SoftwareSerial()']]],
   ['lin_5fmaster_5fsoftwareserial_2ecpp_18',['LIN_master_SoftwareSerial.cpp',['../dd/dcb/LIN__master__SoftwareSerial_8cpp.html',1,'']]],
   ['lin_5fmaster_5fsoftwareserial_2eh_19',['LIN_master_SoftwareSerial.h',['../d7/d94/LIN__master__SoftwareSerial_8h.html',1,'']]],
   ['lin_5fv1_20',['LIN_V1',['../d8/d3d/classLIN__Master__Base.html#a401f498c7238602354ab063f487d5402a7b76dd938b748292cd8dcd04aaac50b6',1,'LIN_Master_Base']]],
