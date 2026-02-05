@@ -81,10 +81,6 @@ class LIN_master_SoftwareSerial : public LIN_Master_Base
 -----------------------------------------------------------------------------*/
 #endif // _LIN_MASTER_SW_SERIAL_H_
 
-#else // ARDUINO_ARCH_AVR || ARDUINO_ARCH_ESP8266 || ARDUINO_ARCH_ESP32 || ARDUINO_ARCH_MEGAAVR || ARDUINO_ARCH_STM32 || ARDUINO_ARCH_RENESAS
-
-  #error architecture not yet supported
-
 #endif
 
 /*-----------------------------------------------------------------------------
