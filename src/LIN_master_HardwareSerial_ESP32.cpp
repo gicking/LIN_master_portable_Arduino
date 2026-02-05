@@ -7,11 +7,11 @@
   \author   Georg Icking-Konert
 */
 
-// assert ESP32 platform
-#if defined(ARDUINO_ARCH_ESP32)
-
 // include files
 #include <LIN_master_HardwareSerial_ESP32.h>
+
+// assert ESP32 platform
+#if defined(_LIN_MASTER_HW_SERIAL_ESP32_H_)
 
 
 /**
@@ -248,7 +248,7 @@ void LIN_Master_HardwareSerial_ESP32::end()
 
 } // LIN_Master_HardwareSerial_ESP32::end()
 
-#endif // ARDUINO_ARCH_ESP32
+#endif // _LIN_MASTER_HW_SERIAL_ESP32_H_
 
 /*-----------------------------------------------------------------------------
     END OF FILE

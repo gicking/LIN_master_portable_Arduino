@@ -6,12 +6,11 @@
   \author   Georg Icking-Konert
 */
 
-// assert platform which supports SoftwareSerial. Note: ARDUINO_ARCH_ESP32 requires library ESPSoftwareSerial
-#if defined(ARDUINO_ARCH_AVR) || defined(ARDUINO_ARCH_ESP8266) || defined(ARDUINO_ARCH_ESP32) || \
-  defined(ARDUINO_ARCH_MEGAAVR) || defined(ARDUINO_ARCH_STM32) || defined(ARDUINO_ARCH_RENESAS)
-
 // include files
 #include <LIN_master_SoftwareSerial.h>
+
+// assert platform which supports SoftwareSerial. Note: ARDUINO_ARCH_ESP32 requires library ESPSoftwareSerial
+#if defined(_LIN_MASTER_SW_SERIAL_H_)
 
 
 /**
@@ -298,7 +297,7 @@ void LIN_master_SoftwareSerial::end()
 } // LIN_master_SoftwareSerial::end()
 
 
-#endif // ARDUINO_ARCH_AVR || ARDUINO_ARCH_ESP8266 || ARDUINO_ARCH_ESP32 || ARDUINO_ARCH_MEGAAVR || ARDUINO_ARCH_STM32 || ARDUINO_ARCH_RENESAS
+#endif // _LIN_MASTER_SW_SERIAL_H_
 
 
 /*-----------------------------------------------------------------------------

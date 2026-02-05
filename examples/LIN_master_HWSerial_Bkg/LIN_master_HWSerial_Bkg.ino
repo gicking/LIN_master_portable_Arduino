@@ -32,7 +32,7 @@ Tested boards:
 ////////////////////
 #if defined(ARDUINO_AVR_MEGA2560)
 
-  #include "LIN_master_HardwareSerial.h"                // matching LIN master header
+  #include <LIN_master_HardwareSerial.h>                // matching LIN master header
 
   //#define PIN_TXEN            17                        // optional Tx direction pin (=DE) for RS485 physical I/F. Comment out for LIN I/F 
   #define PIN_TOGGLE          30                        // pin to show CPU idle
@@ -52,7 +52,7 @@ Tested boards:
 ////////////////////
 #elif defined(ARDUINO_SAM_DUE)
 
-  #include "LIN_master_HardwareSerial.h"                // matching LIN master header
+  #include <LIN_master_HardwareSerial.h>                // matching LIN master header
 
   //#define PIN_TXEN            17                        // optional Tx direction pin (=DE) for RS485 physical I/F. Comment out for LIN I/F 
   #define PIN_TOGGLE          30                        // pin to show CPU idle
@@ -72,7 +72,7 @@ Tested boards:
 ////////////////////
 #elif defined(ARDUINO_AVR_NANO_EVERY)
 
-  #include "LIN_master_HardwareSerial.h"                // matching LIN master header
+  #include <LIN_master_HardwareSerial.h>                // matching LIN master header
 
   //#define PIN_TXEN            7                         // optional Tx direction pin (=DE) for RS485 physical I/F. Comment out for LIN I/F 
   #define PIN_TOGGLE          4                         // pin to show CPU idle
@@ -92,7 +92,7 @@ Tested boards:
 ////////////////////
 #elif defined(ARDUINO_UNOR4_MINIMA)
 
-  #include "LIN_master_HardwareSerial.h"                // matching LIN master header
+  #include <LIN_master_HardwareSerial.h>                // matching LIN master header
 
   //#define PIN_TXEN            10                        // optional Tx direction pin (=DE) for RS485 physical I/F. Comment out for LIN I/F 
   #define PIN_TOGGLE          4                         // pin to show CPU idle
@@ -112,7 +112,7 @@ Tested boards:
 ////////////////////
 #elif defined(ARDUINO_NANO_ESP32)
 
-  #include "LIN_master_HardwareSerial_ESP32.h"          // matching LIN master header
+  #include <LIN_master_HardwareSerial_ESP32.h>          // matching LIN master header
 
   //#define PIN_TXEN            10                        // optional Tx direction pin (=DE) for RS485 physical I/F. Comment out for LIN I/F 
   #define PIN_LIN_TX          3                         // LIN transmit pin
@@ -134,7 +134,7 @@ Tested boards:
 ////////////////////
 #elif defined(ARDUINO_ESP32_WROOM_DA)
 
-  #include "LIN_master_HardwareSerial_ESP32.h"          // matching LIN master header
+  #include <LIN_master_HardwareSerial_ESP32.h>          // matching LIN master header
 
   //#define PIN_TXEN            21                        // optional Tx direction pin (=DE) for RS485 physical I/F. Comment out for LIN I/F 
   #define PIN_LIN_TX          17                        // LIN transmit pin
@@ -156,7 +156,7 @@ Tested boards:
 ////////////////////
 #elif defined(ARDUINO_ESP8266_WEMOS_D1MINI)
 
-  #include "LIN_master_HardwareSerial_ESP8266.h"        // matching LIN master header
+  #include <LIN_master_HardwareSerial_ESP8266.h>        // matching LIN master header
 
   //#define PIN_TXEN            D3                        // optional Tx direction pin (=DE) for RS485 physical I/F. Comment out for LIN I/F 
   #define PIN_TOGGLE          D1                        // pin to show CPU idle
@@ -176,7 +176,7 @@ Tested boards:
 ////////////////////
 #elif defined(ARDUINO_NUCLEO_L432KC)
 
-  #include "LIN_master_HardwareSerial_STM32.h"          // matching LIN master header
+  #include <LIN_master_HardwareSerial_STM32.h>          // matching LIN master header
 
   //#define PIN_TXEN            D5                        // optional Tx direction pin (=DE) for RS485 physical I/F. Comment out for LIN I/F 
   #define PIN_TOGGLE          D3                        // pin to show CPU idle

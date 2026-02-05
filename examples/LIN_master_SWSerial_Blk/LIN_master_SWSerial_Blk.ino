@@ -138,6 +138,13 @@ void setup()
 {
   // open optional console
   #if defined(SERIAL_CONSOLE)
+
+    // Nucleo-STM32L432KC, if solder bridges for VCP via STLink have been removed 
+    #if defined(ARDUINO_NUCLEO_L432KC) && (1)
+      Serial2.setTx(PA_2_ALT1);   // pin A7 on Nucleo-STM32L432KC / uC pin 8
+      Serial2.setRx(PA_3_ALT1);   // pin A2 on Nucleo-STM32L432KC / uC pin 9. Optional Rx pin
+    #endif 
+
     SERIAL_CONSOLE.begin(115200);
   #endif // SERIAL_CONSOLE
 

@@ -7,11 +7,11 @@
   \author   Georg Icking-Konert
 */
 
-// assert STM32 platform
-#if defined(ARDUINO_ARCH_STM32)
-
 // include files
 #include <LIN_master_HardwareSerial_STM32.h>
+
+// assert STM32 platform
+#if defined(_LIN_MASTER_HW_SERIAL_STM32_H_)
 
 
 /**
@@ -303,7 +303,7 @@ void LIN_Master_HardwareSerial_STM32::end()
 
 } // LIN_Master_HardwareSerial_STM32::end()
 
-#endif // ARDUINO_ARCH_STM32
+#endif // _LIN_MASTER_HW_SERIAL_STM32_H_
 
 /*-----------------------------------------------------------------------------
     END OF FILE
