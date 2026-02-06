@@ -26,7 +26,8 @@ For a similar Arduino libary for LIN slave emulation see https://github.com/gick
   
 ## Supported Boards (with additional LIN hardware)
   - Arduino AVR boards, e.g. [Uno](https://store.arduino.cc/products/arduino-uno-rev3), [Mega](https://store.arduino.cc/products/arduino-mega-2560-rev3) or [Nano](https://store.arduino.cc/products/arduino-nano)
-  - Arduino ARM Cortex-M boards, e.g. [Due](https://store.arduino.cc/products/arduino-due) or [Uno R4 Minima](https://docs.arduino.cc/hardware/uno-r4-minima/) (only SoftwareSerial)
+  - Arduino AVR Cortex-M boards, e.g. [Due](https://store.arduino.cc/products/arduino-due)
+  - Arduino Renesas Cortex-M boards, e.g. [Uno R4 Minima](https://docs.arduino.cc/hardware/uno-r4-minima/) (only SoftwareSerial)
   - ATtiny boards, e.g. [Adafruit Trinket](https://www.adafruit.com/product/1501) (only SoftwareSerial)
   - ESP32 boards, e.g. [Arduino Nano-ESP32](https://docs.arduino.cc/hardware/nano-esp32/) or [Espressif Wroom-32U](https://www.etechnophiles.com/esp32-dev-board-pinout-specifications-datasheet-and-schematic/)
   - ESP8266 boards, e.g. [Wemos D1 mini](https://www.wemos.cc/en/latest/d1/d1_mini.html)
