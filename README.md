@@ -29,7 +29,9 @@ For a similar Arduino libary for LIN slave emulation see https://github.com/gick
   - Arduino AVR Cortex-M boards, e.g. [Due](https://store.arduino.cc/products/arduino-due)
   - Arduino Renesas Cortex-M boards, e.g. [Uno R4 Minima](https://docs.arduino.cc/hardware/uno-r4-minima/) (only SoftwareSerial)
   - ATtiny boards, e.g. [Adafruit Trinket](https://www.adafruit.com/product/1501) (only SoftwareSerial)
-  - ESP32 boards, e.g. [Arduino Nano-ESP32](https://docs.arduino.cc/hardware/nano-esp32/) or [Espressif Wroom-32U](https://www.etechnophiles.com/esp32-dev-board-pinout-specifications-datasheet-and-schematic/)
+  - ESP32 Classic boards, e.g. [Espressif Wroom-32U](https://www.etechnophiles.com/esp32-dev-board-pinout-specifications-datasheet-and-schematic/)
+  - ESP32-S3 boards, e.g. [Arduino Nano-ESP32](https://docs.arduino.cc/hardware/nano-esp32/)
+  - ESP32-C3 boards, e.g. [ESP32-C3 Super Mini](https://www.sudo.is/docs/esphome/boards/esp32c3supermini/)
   - ESP8266 boards, e.g. [Wemos D1 mini](https://www.wemos.cc/en/latest/d1/d1_mini.html)
   - STM32 boards, e.g. [Nucleo-STM32L432KC](https://www.st.com/en/evaluation-tools/nucleo-l432kc.html)
 
@@ -40,7 +42,9 @@ For a similar Arduino libary for LIN slave emulation see https://github.com/gick
 
   - For background operation, the `handler()` method must be called at least every 500us, especially after initiating a frame. Optionally it can be called from within [serialEvent()](https://reference.arduino.cc/reference/de/language/functions/communication/serial/serialevent/)
 
-  - For ESP32 and ESP8266, library `EspSoftwareSerial` must be installed, even if `SoftwareSerial` is not used in project 
+  - For ESP32 and ESP8266, library `EspSoftwareSerial` must be installed, even if `SoftwareSerial` is not used in project
+
+  - SoftwareSerial sending is blocking on all platforms, i.e. "background operation" only applies to receiving slave responses
   
 
 # Test Matrix
@@ -79,7 +83,7 @@ Revision History
   - update reference
   
 **v1.6 (2025-04-27)**
-  - for clarity add "this->" for all internal method calls and class variable access  
+  - for clarity add "this->" for all internal method calls and class variable access
   - full regresstion tests and add some comments
   - update reference
 
@@ -95,13 +99,13 @@ Revision History
 
 **v1.3 (2024-12-14)**
   - add support for LIN protocol via RS485 PHY
-  - add Github Actions for CI tests  
-  - add more examples  
-  - increase test coverage  
+  - add Github Actions for CI tests
+  - add more examples
+  - increase test coverage
 
 **v1.2 (2023-06-02)**
   - Make SoftwareSerial optional for ESP32 to avoid library issue
-  - add examples & increase test coverage for more boards  
+  - add examples & increase test coverage for more boards
 
 **v1.1 (2022-12-10)**
   - minor cosmetic changes and bugfixes

@@ -1,6 +1,6 @@
 name: Build library examples
 
-# Trigger workflow on push & pull requests, and periodically
+# Trigger workflow on push & pull requests, and periodically (min, hour, day of month, month, day of week)
 on:
   push:
   pull_request:
