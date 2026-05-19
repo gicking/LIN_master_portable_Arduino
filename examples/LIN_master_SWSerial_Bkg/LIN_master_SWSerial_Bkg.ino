@@ -109,7 +109,7 @@ Important:
   //#define PIN_TXEN        10
   #define PIN_TOGGLE      3
   #define PIN_ERROR       8
-  //#define SERIAL_CONSOLE  Serial
+  #define SERIAL_CONSOLE  Serial
 
 ////////////////////
 // ESP8266 D1 Mini

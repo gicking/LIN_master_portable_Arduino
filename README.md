@@ -63,6 +63,9 @@ Have fun!, Georg
 Revision History
 ----------------
 
+**v2.0 (2026-02-05)**
+  - add support for ESP32-C3 Super Mini board
+
 **v1.9 (2026-02-05)**
   - add support for ESP32-S3, Nano Every, STM32, and Uno R4 Minima (no HWSerial, see [issue](https://github.com/arduino/ArduinoCore-renesas/issues/524))
   - consolidate examples for different boards and LIN/RS485 interfaces
