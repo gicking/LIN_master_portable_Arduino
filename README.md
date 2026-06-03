@@ -31,7 +31,7 @@ For a similar Arduino libary for LIN slave emulation see https://github.com/gick
   - ATtiny boards, e.g. [Adafruit Trinket](https://www.adafruit.com/product/1501) (only SoftwareSerial)
   - ESP32 Classic boards, e.g. [Espressif Wroom-32U](https://www.etechnophiles.com/esp32-dev-board-pinout-specifications-datasheet-and-schematic/)
   - ESP32-S3 boards, e.g. [Arduino Nano-ESP32](https://docs.arduino.cc/hardware/nano-esp32/)
-  - ESP32-C3 boards, e.g. [ESP32-C3 Super Mini](https://www.sudo.is/docs/esphome/boards/esp32c3supermini/)
+  - ESP32-C3 and -C6 boards, e.g. [ESP32-C3 Super Mini](https://www.sudo.is/docs/esphome/boards/esp32c3supermini/)
   - ESP8266 boards, e.g. [Wemos D1 mini](https://www.wemos.cc/en/latest/d1/d1_mini.html)
   - STM32 boards, e.g. [Nucleo-STM32L432KC](https://www.st.com/en/evaluation-tools/nucleo-l432kc.html)
 
@@ -62,6 +62,9 @@ Have fun!, Georg
 
 Revision History
 ----------------
+
+**v2.1 (2026-06-03)**
+  - fixed a bug in STM32 break generation
 
 **v2.0 (2026-02-05)**
   - add support for ESP32-C3 Super Mini board
