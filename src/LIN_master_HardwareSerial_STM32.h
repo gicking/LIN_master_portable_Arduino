@@ -37,7 +37,7 @@ class LIN_Master_HardwareSerial_STM32 : public LIN_Master_Base
   // PROTECTED VARIABLES
   protected:
 
-    HardwareSerial        *pSerial;           //!< serial interface used for LIN
+    Uart                  *pSerial;           //!< serial interface used for LIN
     UART_HandleTypeDef    *huart;             //!< pointer to underlying HAL UART handle
     uint32_t              pinRx;              //!< pin used for receive
     uint32_t              pinTx;              //!< pin used for transmit
@@ -60,7 +60,7 @@ class LIN_Master_HardwareSerial_STM32 : public LIN_Master_Base
   public:
 
     /// @brief Class constructor
-    LIN_Master_HardwareSerial_STM32(HardwareSerial &Interface, uint32_t PinRx, uint32_t PinTx,
+    LIN_Master_HardwareSerial_STM32(Uart &Interface, uint32_t PinRx, uint32_t PinTx,
       const char NameLIN[] = "Master", const int8_t PinTxEN = INT8_MIN);
      
     /// @brief Open serial interface

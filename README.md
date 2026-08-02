@@ -63,6 +63,9 @@ Have fun!, Georg
 Revision History
 ----------------
 
+**v2.2 (2026-08-02)**
+  - account for breaking change in STM32 Core v3.0.0 (see https://github.com/stm32duino/Arduino_Core_STM32/releases/tag/3.0.0)
+
 **v2.1 (2026-06-03)**
   - fixed a bug in STM32 break generation
 
