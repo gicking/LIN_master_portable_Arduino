@@ -206,7 +206,7 @@ LIN_Master_Base::state_t LIN_Master_HardwareSerial_STM32::_receiveFrame(void)
   \param[in]  NameLIN     LIN node name (default = "Master")
   \param[in]  PinTxEN     optional Tx enable pin (high active) e.g. for LIN via RS485 (default = -127/none)
 */
-LIN_Master_HardwareSerial_STM32::LIN_Master_HardwareSerial_STM32(Uart &Interface, uint32_t PinRx, 
+LIN_Master_HardwareSerial_STM32::LIN_Master_HardwareSerial_STM32(HWSERIAL &Interface, uint32_t PinRx, 
   uint32_t PinTx, const char NameLIN[], const int8_t PinTxEN) : LIN_Master_Base::LIN_Master_Base(NameLIN, PinTxEN)
 {
   // Debug serial initialized in begin() -> no debug output here

@@ -25,6 +25,22 @@
 
 
 /*-----------------------------------------------------------------------------
+  GLOBAL MACROS
+-----------------------------------------------------------------------------*/
+
+/// account for breaking change in v3.0.0 for Serial, see https://github.com/stm32duino/Arduino_Core_STM32/releases/tag/3.0.0
+#if defined(STM32_CORE_VERSION_MAJOR)
+  #if (STM32_CORE_VERSION_MAJOR >= 3)
+    #define HWSERIAL Uart
+  #else
+    #define HWSERIAL HardwareSerial
+  #endif
+#else
+  #error "STM32_CORE_VERSION_MAJOR not defined"
+#endif
+
+
+/*-----------------------------------------------------------------------------
   GLOBAL CLASS
 -----------------------------------------------------------------------------*/
 /**
@@ -37,7 +53,7 @@ class LIN_Master_HardwareSerial_STM32 : public LIN_Master_Base
   // PROTECTED VARIABLES
   protected:
 
-    Uart                  *pSerial;           //!< serial interface used for LIN
+    HWSERIAL              *pSerial;           //!< serial interface used for LIN
     UART_HandleTypeDef    *huart;             //!< pointer to underlying HAL UART handle
     uint32_t              pinRx;              //!< pin used for receive
     uint32_t              pinTx;              //!< pin used for transmit
@@ -60,7 +76,7 @@ class LIN_Master_HardwareSerial_STM32 : public LIN_Master_Base
   public:
 
     /// @brief Class constructor
-    LIN_Master_HardwareSerial_STM32(Uart &Interface, uint32_t PinRx, uint32_t PinTx,
+    LIN_Master_HardwareSerial_STM32(HWSERIAL &Interface, uint32_t PinRx, uint32_t PinTx,
       const char NameLIN[] = "Master", const int8_t PinTxEN = INT8_MIN);
      
     /// @brief Open serial interface

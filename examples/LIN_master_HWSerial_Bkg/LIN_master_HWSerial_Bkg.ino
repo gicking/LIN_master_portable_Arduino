@@ -206,7 +206,7 @@ Tested boards:
   #define PIN_ERROR           D4                        // LIN error status pin (high=error)
   #define SERIAL_CONSOLE      Serial                    // serial I/F for console output (comment for no output)
 
-  Uart                        Serial1(D1, D0);          // Serial1 not always instantiated by default
+  HWSERIAL                        Serial1(D1, D0);          // Serial1 not always instantiated by default
 
   // setup LIN node. Parameters: interface, Rx, Tx, name, TxEN
   #if defined(PIN_TXEN)
